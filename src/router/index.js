@@ -7,6 +7,7 @@ import DashboardLayout from '@/views/layout-dashboard.vue'
 import EmployeeLayout from '@/views/layout-employees.vue'
 import AttendanceLogsLayout from '@/views/layout-logs.vue'
 import LoginLayout from '@/views/layout-login.vue'
+import SentimentSelectionLayout from '@/views/layout-sentimentselection.vue'
 
 // Components
 import LoginForm from '@/components/LoginForm.vue'
@@ -40,18 +41,25 @@ const routes = [
     redirect: "/dashboard",
     children: [
       {
-        path: '/dashboard',
+        path: 'dashboard',
+        alias: '/dashboard',
         component: DashboardLayout
       },
       {
-        path: '/employees',
+        path: 'employees',
+        alias: '/employees',
         component: EmployeeLayout
       },
       {
-        path: '/attendance',
+        path: 'attendance',
+        alias: '/attendance',
         component: AttendanceLogsLayout
       },
     ]
+  },
+  {
+    path: '/employee',
+    component: SentimentSelectionLayout
   }
 ]
 
