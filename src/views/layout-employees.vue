@@ -5,7 +5,7 @@
 			<!-- Search Field -->
 			<div class="search-field">
 				<v-autocomplete
-					:search-input.sync="employeeDataTable.search"
+					:search-input.sync="employeeDataTableOptions.search"
 					color="#779AEC"
 					hide-no-data
 					label="Search Employees"
@@ -37,17 +37,17 @@
 			</div>
 		</div>
 		<v-data-table
-			v-model="employeeDataTable.selected"
-			:headers="employeeDataTable.headers"
-			:items="employeeDataTable.data"
-			:search="employeeDataTable.search"
+			v-model="employeeDataTableOptions.selected"
+			:headers="employeeDataTableOptions.headers"
+			:items="employeeDataTableOptions.data"
+			:search="employeeDataTableOptions.search"
 			:loading="loadingEmployeeDataTable"
 			loading-text="Loading... Please wait"
 			item-key="name"
 			show-select
 			class="elevation-1"
 		>
-			<template v-slot:item.actions>
+			<template v-slot:item.actions="{ item }">
 				<button class="action-button">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -62,7 +62,7 @@
 						/>
 					</svg>
 				</button>
-				<button class="action-button action-delete">
+				<button class="action-button action-delete" @click="deleteEmployee(item)">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="12.25"
@@ -83,13 +83,13 @@
 
 <script>
 import AddEmployeeForm from "@/components/AddEmployeeForm.vue";
-import employeeDataTable from "@/data_modules/dt-employees.js";
+import { options, loadTableData } from "@/employees/data_table.js";
 
 export default {
 	data() {
 		return {
 			showAddEmployeeForm: false,
-			employeeDataTable,
+			employeeDataTableOptions: options,
 			loadingEmployeeDataTable: false,
 		};
 	},
@@ -99,7 +99,15 @@ export default {
 	methods: {
 		closeAddEmployeeForm() {
 			this.showAddEmployeeForm = false;
+		},
+		deleteEmployee(employee) {
+			this.$store.dispatch('employees/DELETE_EMPLOYEE', employee.objectId);
 		}
+	},
+	created() {
+		this.$store.dispatch('employees/FETCH_EMPLOYEES').then(employees => {
+			loadTableData(employees);
+		})
 	}
 };
 </script>

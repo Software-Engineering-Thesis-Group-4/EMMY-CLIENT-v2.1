@@ -5,7 +5,7 @@
 			<!-- Search Field -->
 			<div class="search-field">
 				<v-autocomplete
-					:search-input.sync="AttendanceDataTableOptions.search"
+					:search-input.sync="dataTableOptions.search"
 					color="#779AEC"
 					hide-no-data
 					label="Search Employees"
@@ -22,10 +22,10 @@
 		</div>
 
 		<v-data-table
-			v-model="AttendanceDataTableOptions.selected"
-			:headers="AttendanceDataTableOptions.headers"
-			:items="AttendanceDataTableOptions.data"
-			:search="AttendanceDataTableOptions.search"
+			v-model="dataTableOptions.selected"
+			:headers="dataTableOptions.headers"
+			:items="dataTableOptions.data"
+			:search="dataTableOptions.search"
 			:loading="loadingEmployeeDataTable"
 			loading-text="Loading... Please wait"
 			item-key="name"
@@ -44,7 +44,7 @@
 			<template v-slot:item.timeOut="{ item }">
 				<div class="time-in">
 					<img
-						:src="getEmotionImagePath(item.emotionOut)"
+						:src="getEmotionImagePath(item.emotionOut, item.timeOut)"
 						v-if="admin"
 						class="emotion-log"
 					/>{{ item.timeOut }}
@@ -86,24 +86,29 @@
 </template>
 
 <script>
-import AttendanceDataTableOptions from "@/data_modules/dt-logs.js";
+import { options, loadTableData } from "@/attendance-logs/data_table.js";
 
 export default {
 	data() {
 		return {
 			admin: true,
-			AttendanceDataTableOptions,
+			dataTableOptions: options,
 			loadingEmployeeDataTable: false
 		};
 	},
 	methods: {
-		getEmotionImagePath(emotion) {
-			if (emotion === 0) {
+		getEmotionImagePath(emotion, timeOut) {
+			if(timeOut === null) {
 				return null;
 			}
-
-			return `/emotions/${emotion}.svg`;
-		}
+			
+			return `/emotions/${emotion}.png`;
+		},
+	},
+	created() {
+		this.$store.dispatch('employees/FETCH_ATTENDANCELOGS').then(logs => {
+			loadTableData(logs);
+		})
 	}
 };
 </script>
