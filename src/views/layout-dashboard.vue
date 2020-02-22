@@ -4,29 +4,39 @@
 
 		<div class="dv-group-1" :elevation="3">
 			<apexchart
+				ref="chart"
 				id="OSP-stacked-bars"
 				type="bar"
 				height="380"
-				:options="OverallSentimentStackedBar.chartOptions"
-				:series="OverallSentimentStackedBar.series"
+				:options="chartData.chartOptions"
+				:series="chartData.series"
 			></apexchart>
 		</div>
 	</div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import VueApexCharts from "vue-apexcharts";
-import OverallSentimentStackedBar from "@/charts/OverallSentimentStackedBar.js";
+import { chartData, updateData } from "@/dashboard/chart.overall_sentiment.js";
 
 export default {
 	data() {
 		return {
-			OverallSentimentStackedBar,
+			chartData
 		};
 	},
 	components: {
-		apexchart: VueApexCharts
-	}
+		apexchart: VueApexCharts,
+		...mapGetters({
+			logs: 'employees/attendanceLogs'
+		})
+	},
+	created() {
+		this.$store.dispatch("employees/FETCH_ATTENDANCELOGS").then(logs => {
+			this.$refs.chart.updateSeries(updateData(logs), true);
+		});
+	},
 };
 </script>
 

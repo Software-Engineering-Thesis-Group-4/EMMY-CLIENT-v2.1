@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import EmotionModule from './modules/module.dailysentiment.js';
+import EmotionModule from './modules/dailysentiment.js';
+import EmployeesModule from './modules/employees.js';
 
 Vue.use(Vuex)
 
@@ -13,6 +14,7 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
-    emotions: EmotionModule
+    emotions: EmotionModule,
+    employees: EmployeesModule
   }
 })
