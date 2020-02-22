@@ -126,7 +126,7 @@ export default {
 		async show() {
 			this.showEmotionOverlay = true;
 
-			 await setTimeout(() => {
+			await setTimeout(() => {
 				this.showEmotionOverlay = false;
 				this.$store.commit("emotions/CLEAR");
 			}, 1500);

@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { loadTableData } from '../../tabledata-modules/dt.employees';
+import { loadTableData } from '../../employees/data_table.js';
 
 const EmployeesModule = {
     namespaced: true,
