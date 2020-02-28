@@ -8,6 +8,7 @@ import EmployeeLayout from '@/views/layout-employees.vue'
 import AttendanceLogsLayout from '@/views/layout-logs.vue'
 import LoginLayout from '@/views/layout-login.vue'
 import SentimentSelectionLayout from '@/views/layout-sentimentselection.vue'
+import NotificationLayout from '@/views/layout-notifications.vue';
 
 // Components
 import LoginForm from '@/components/LoginForm.vue'
@@ -55,6 +56,11 @@ const routes = [
         alias: '/attendance',
         component: AttendanceLogsLayout
       },
+      {
+        path: 'notifications',
+        alias: '/notifications',
+        component: NotificationLayout,
+      }
     ]
   },
   {

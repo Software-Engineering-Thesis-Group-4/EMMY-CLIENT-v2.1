@@ -1,6 +1,6 @@
 <template>
 	<div class="sidebar">
-		<img src="@/assets/logo.png" id="emmy-logo" />
+		<img src="@/assets/images/iACADEMY_Seal.svg" id="emmy-logo" />
 
 		<div class="navigation">
 			<!-- Dashboard Icon -->
@@ -61,7 +61,7 @@
 		<div class="bottom-group">
 			<!-- notification icon -->
 			<div class="group-item">
-				<button id="notifications">
+				<router-link to="/notifications" id="notifications">
 					<!-- badge -->
 					<svg
 						v-if="notificationsCount"
@@ -85,7 +85,7 @@
 							fill="#fff"
 						/>
 					</svg>
-				</button>
+				</router-link>
 			</div>
 
 			<!-- user icon -->
