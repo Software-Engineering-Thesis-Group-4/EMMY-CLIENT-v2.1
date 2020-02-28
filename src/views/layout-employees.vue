@@ -6,7 +6,9 @@
 			<div class="search-field">
 				<v-autocomplete
 					:search-input.sync="employeeDataTableOptions.search"
+					clearable
 					color="#779AEC"
+					:items="employees"
 					hide-no-data
 					label="Search Employees"
 					placeholder="Start typing to Search"
@@ -33,7 +35,7 @@
 
 			<!-- Employee Count -->
 			<div class="employee-count">
-				<span>Employee count: 500</span>
+				<span>Employee count: {{ this.employeeCount }}</span>
 			</div>
 		</div>
 		<v-data-table
@@ -43,11 +45,19 @@
 			:search="employeeDataTableOptions.search"
 			:loading="loadingEmployeeDataTable"
 			loading-text="Loading... Please wait"
-			item-key="name"
+			item-key="id"
 			show-select
+			sort-by="department"
 			class="elevation-1"
 		>
+			<template v-slot:items.name="{ item }">
+				<router-link to="">
+					{{ item.name }}
+				</router-link>
+			</template>
+
 			<template v-slot:item.actions="{ item }">
+				<!-- Edit Employee Details -->
 				<button class="action-button">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -62,7 +72,12 @@
 						/>
 					</svg>
 				</button>
-				<button class="action-button action-delete" @click="deleteEmployee(item)">
+
+				<!-- Delete employee -->
+				<button
+					class="action-button action-delete"
+					@click="deleteEmployee(item)"
+				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="12.25"
@@ -86,6 +101,9 @@ import AddEmployeeForm from "@/components/AddEmployeeForm.vue";
 import { options, loadTableData } from "@/employees/data_table.js";
 
 export default {
+	components: {
+		AddEmployeeForm
+	},
 	data() {
 		return {
 			showAddEmployeeForm: false,
@@ -93,9 +111,18 @@ export default {
 			loadingEmployeeDataTable: false,
 		};
 	},
-	components: {
-		AddEmployeeForm
-	},
+	computed: {
+		employeeCount: () => {
+			return options.data.length;
+		},
+		employees() {
+			let employees = options.data.map(employee => {
+				return employee.name
+			});
+
+			return employees;
+		}
+	},	
 	methods: {
 		closeAddEmployeeForm() {
 			this.showAddEmployeeForm = false;

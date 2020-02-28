@@ -7,11 +7,42 @@
 				<v-autocomplete
 					:search-input.sync="dataTableOptions.search"
 					color="#779AEC"
+					:items="autocompleteItems"
+					clearable
 					hide-no-data
 					label="Search Employees"
 					placeholder="Start typing to Search"
 					prepend-icon="mdi-database-search"
 				></v-autocomplete>
+			</div>
+
+			<!-- Datepicker Field -->
+			<div class="datepicker-field">
+				<v-menu
+					:close-on-content-click="false"
+					transition="scale-transition"
+					offset-y
+					min-width="290px"
+				>
+					<template v-slot:activator="{ on }">
+						<v-text-field
+							v-model="dateRangeText"
+							color="#779AEC"
+							label="Date range filter"
+							prepend-icon="mdi-calendar"
+							readonly
+							v-on="on"
+						></v-text-field>
+					</template>
+
+					<v-date-picker
+						v-model="dates"
+						:max="maxDate"
+						range
+						color="#567DD8"
+						@change="filterOnDateRange()"
+					></v-date-picker>
+				</v-menu>
 			</div>
 
 			<!-- Filters Button -->
@@ -28,7 +59,8 @@
 			:search="dataTableOptions.search"
 			:loading="loadingEmployeeDataTable"
 			loading-text="Loading... Please wait"
-			item-key="name"
+			item-key="id"
+			multi-sort
 			show-select
 			class="elevation-1"
 		>
@@ -86,6 +118,7 @@
 </template>
 
 <script>
+import moment from "moment";
 import { options, loadTableData } from "@/attendance-logs/data_table.js";
 
 export default {
@@ -93,22 +126,65 @@ export default {
 		return {
 			admin: true,
 			dataTableOptions: options,
-			loadingEmployeeDataTable: false
+			loadingEmployeeDataTable: false,
+			dates: [new Date().toISOString().substr(0, 10)],
+			selectedItems: options.selected
 		};
+	},
+	computed: {
+		dateRangeText() {
+			let today = new Date().toISOString().substr(0, 10);
+
+			if(this.dates.length === 1) {
+				if(this.dates[0] === today) {
+					return "Today"
+				}
+
+				return moment(this.dates[0]).format('ll');
+
+			} else if(this.dates.length === 2) {
+				if(this.dates[0] === today) {
+					return "Today"
+				} else if(this.dates[0] === this.dates[1]) {
+					return moment(this.dates[0]).format('ll');
+				}
+				
+				let d1 = moment(this.dates[0]).format("ll");
+				let d2 = moment(this.dates[1]).format("ll");
+
+				return `${d1} - ${d2}`;
+			}
+
+			return 'Invalid Date'
+		},
+		autocompleteItems() {
+			let employees = options.data.map(item => {
+				return item.employee;
+			});
+
+			return employees;
+		},
+		maxDate() {
+			let today = new Date();
+			let tomorrow = today;
+			tomorrow.setDate(today.getDate() + 1);
+			return tomorrow.toISOString();
+		}
 	},
 	methods: {
 		getEmotionImagePath(emotion, timeOut) {
-			if(timeOut === null) {
+			if (timeOut === null) {
 				return null;
 			}
-			
+
 			return `/emotions/${emotion}.png`;
 		},
+		filterOnDateRange() {}
 	},
 	created() {
-		this.$store.dispatch('employees/FETCH_ATTENDANCELOGS').then(logs => {
+		this.$store.dispatch("employees/FETCH_ATTENDANCELOGS").then(logs => {
 			loadTableData(logs);
-		})
+		});
 	}
 };
 </script>
@@ -118,14 +194,22 @@ export default {
 	// background-color: red;
 	display: flex;
 	align-items: center;
+
 	height: 60px;
 	margin-top: 13px;
 	margin-bottom: 5px;
 
 	.search-field {
+		// background-color: turquoise;
 		height: 58px;
 		width: 400px;
-		// background-color: red;
+	}
+
+	.datepicker-field {
+		// background-color: blue;
+		height: 58px;
+		width: 300px;
+		margin-left: 20px;
 	}
 
 	#button-filters {
@@ -138,7 +222,7 @@ export default {
 		height: 40px;
 
 		padding: 5px 9px 5px 15px;
-		margin-left: 10px;
+		margin-left: 20px;
 
 		font-weight: 500;
 		color: white;
@@ -164,7 +248,7 @@ export default {
 .time-in {
 	// background-color: red;
 	display: flex;
-	justify-content: center;
+	justify-content: flex-start;
 	align-items: center;
 }
 

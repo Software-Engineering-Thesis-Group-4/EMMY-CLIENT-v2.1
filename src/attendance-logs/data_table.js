@@ -2,11 +2,15 @@ import moment from 'moment';
 
 // this function is called in the attendance logs vue component (create lifecycle) to render all the items in the attendance logs 
 // OR any changes in the attendance logs...
-export function loadTableData(logs) {
+export function loadTableData(logs, /* dateRange */) {
     let attendanceTableData = [];
+    // let dateFilter = new Date();
 
     logs.forEach(log => {
-        attendanceTableData.push({
+        attendanceTableData.unshift({
+            id: log._id,
+            firstname: log.employee.firstName,
+            lastname: log.employee.lastName,
             employee: `${log.employee.lastName}, ${log.employee.firstName}`,
             department: log.employee.department,
             date: moment(log.dateCreated).format('LL'),
@@ -23,19 +27,17 @@ export function loadTableData(logs) {
 export let options = {
     // the search textfield value is binded to this and filters the items from the data table that matches the input value.
     search: null,
-
-    // TODO: REMOVEREMOVEREMOVEREMOVEREMOVEREMOVEREMOVEREMOVEREMOVEREMOVEREMOVEREMOVEREMOVE
+    
     selected: [],
-    // REMOVEREMOVEREMOVEREMOVEREMOVEREMOVEREMOVEREMOVEREMOVEREMOVEREMOVEREMOVEREMOVEREMOVE
 
     // these are the data table headers
     headers: [
-        { text: "TIME-IN", align: "center", value: "timeIn", sortable: true, },
-        { text: "TIME-OUT", align: "center", value: "timeOut", sortable: true, },
-        { text: "DATE", value: "date", sortable: true },
-        { text: "EMPLOYEE", value: "employee", sortable: true },
-        { text: "DEPARTMENT", value: "department", sortable: true },
-        { text: "", value: "actions", sortable: false }
+        { text: "TIME-IN", align: "start", value: "timeIn", sortable: true, },
+        { text: "TIME-OUT", align: "start", value: "timeOut", sortable: true, },
+        { text: "DATE", align:"start", value: "date", sortable: true },
+        { text: "EMPLOYEE", align:"start", value: "employee", sortable: true },
+        { text: "DEPARTMENT", align:"start", value: "department", sortable: true },
+        { text: "EDIT / DELETE", align: "center", value: "actions", sortable: false }
     ],
 
     // this is where all the data table items will be stored and shown in the page
