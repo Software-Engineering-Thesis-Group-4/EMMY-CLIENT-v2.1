@@ -7,11 +7,13 @@ import vuetify from './plugins/vuetify';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import VueSocketIO from 'vue-socket.io';
+import VueSession from 'vue-session';
 
 Vue.config.productionTip = false
 
 const port = 3000;
-const server_url = `http://192.168.1.4:${port}/`;
+// const server_url = `http://192.168.1.5:${port}/`;
+const server_url = `http://192.168.1.5:${port}/`;
 
 // AXIOS
 axios.defaults.baseURL = server_url;
@@ -32,5 +34,6 @@ new Vue({
   router,
   store,
   vuetify,
+  VueSession,
   render: h => h(App)
 }).$mount('#app')

@@ -128,7 +128,7 @@ export default {
 			this.showAddEmployeeForm = false;
 		},
 		deleteEmployee(employee) {
-			this.$store.dispatch('employees/DELETE_EMPLOYEE', employee.objectId);
+			this.$store.dispatch('employees/DELETE_EMPLOYEE', employee.id);
 		}
 	},
 	created() {

@@ -5,14 +5,20 @@
 				<img src="@/assets/images/Logo.svg" class="logo" alt srcset />
 			</div>
 
-			<form action class="login-form">
+			<form class="login-form" @submit.prevent="login()">
 				<div class="field">
 					<img src="@/assets/images/input-field-icon_user.svg" alt srcset />
-					<input type="text" name placeholder="Email" />
+					<input type="text" name="email" placeholder="Email" v-model="email" />
 				</div>
 				<div class="field">
 					<img src="@/assets/images/input-field-icon_padlock.svg" alt srcset />
-					<input type="password" name placeholder="Password" />
+					<input
+						type="password"
+						name="password"
+						id="password_field"
+						placeholder="Password"
+						v-model="password"
+					/>
 				</div>
 
 				<div v-if="loginError" class="login-error-message">
@@ -42,12 +48,24 @@
 </template>
 
 <script>
+console.log('Login Form');
+
 export default {
 	name: "LoginForm",
 	data: () => {
 		return {
-			loginError: true
+			loginError: false,
+			email: null,
+			password: null
 		};
+	},
+	methods: {
+		login() {
+			this.$store.dispatch("user/LOGIN", {
+				email: this.email,
+				password: this.password
+			});
+		}
 	}
 };
 </script>
@@ -101,12 +119,17 @@ export default {
 				border: none;
 				padding: 15px;
 				width: 230px;
-				font-size: 16px;
+				font-size: 15px;
 				outline: none;
 
 				&::placeholder {
 					color: #bbbbbb;
+					letter-spacing: 0px;
 				}
+			}
+
+			#password_field {
+				letter-spacing: 2px;
 			}
 		}
 

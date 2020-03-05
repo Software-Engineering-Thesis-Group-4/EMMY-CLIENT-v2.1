@@ -98,6 +98,7 @@ export default {
 			this.$emit("close");
 		},
 		addEmployee() {
+			// TODO: ADD EMPLOYEE ACTION UNDER EMPLOYEE STORE MODULE
 			this.$store.dispatch("employees/addEmployee", this.formData).then(() => {
 				this.closeForm();
 			});

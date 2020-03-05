@@ -172,7 +172,7 @@ export default {
 			clearTimeout(this.timeOut);
 			this.timeOut = setTimeout(() => {
 				this.$store.commit("emotions/CLEAR");
-			}, 4000);
+			}, 1500);
 		}
 	}
 };

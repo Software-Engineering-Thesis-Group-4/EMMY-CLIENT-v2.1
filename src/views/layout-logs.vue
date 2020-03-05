@@ -1,8 +1,9 @@
 <template>
 	<div>
 		<h1 class="page-header">Daily Attendance Log</h1>
+
 		<div class="controls">
-			<!-- Search Field -->
+			<!-- Search Field ------------------------------------------------------------------------------------- -->
 			<div class="search-field">
 				<v-autocomplete
 					:search-input.sync="dataTableOptions.search"
@@ -16,7 +17,7 @@
 				></v-autocomplete>
 			</div>
 
-			<!-- Datepicker Field -->
+			<!-- Datepicker Field ------------------------------------------------------------------------------------- -->
 			<div class="datepicker-field">
 				<v-menu
 					:close-on-content-click="false"
@@ -45,7 +46,7 @@
 				</v-menu>
 			</div>
 
-			<!-- Filters Button -->
+			<!-- Filters Button ------------------------------------------------------------------------------------- -->
 			<button id="button-filters">
 				<v-icon class="button-icon">mdi-filter</v-icon> Filters
 				<v-icon class="button-icon-right">mdi-chevron-down</v-icon>
@@ -135,27 +136,26 @@ export default {
 		dateRangeText() {
 			let today = new Date().toISOString().substr(0, 10);
 
-			if(this.dates.length === 1) {
-				if(this.dates[0] === today) {
-					return "Today"
+			if (this.dates.length === 1) {
+				if (this.dates[0] === today) {
+					return "Today";
 				}
 
-				return moment(this.dates[0]).format('ll');
-
-			} else if(this.dates.length === 2) {
-				if(this.dates[0] === today) {
-					return "Today"
-				} else if(this.dates[0] === this.dates[1]) {
-					return moment(this.dates[0]).format('ll');
+				return moment(this.dates[0]).format("ll");
+			} else if (this.dates.length === 2) {
+				if (this.dates[0] === today) {
+					return "Today";
+				} else if (this.dates[0] === this.dates[1]) {
+					return moment(this.dates[0]).format("ll");
 				}
-				
+
 				let d1 = moment(this.dates[0]).format("ll");
 				let d2 = moment(this.dates[1]).format("ll");
 
 				return `${d1} - ${d2}`;
 			}
 
-			return 'Invalid Date'
+			return "Invalid Date";
 		},
 		autocompleteItems() {
 			let employees = options.data.map(item => {

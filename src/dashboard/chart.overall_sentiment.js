@@ -77,7 +77,7 @@ export const chartData = {
             },
             offsetX: 0,
         },
-        colors: ["#FF8484", "#FFB546", "#FFF23B", "#A8FF84", "#65FBDC", "#EFEFEF"],
+        colors: ["#FF8484", "#FFB546", "#FFF23B", "#A8FF84", "#65FBDC", "#645656"],
         dataLabels: {
             enabled: false
         },
