@@ -17,7 +17,6 @@
     "vue-apexcharts": "^1.5.2",
     "vue-axios": "^2.1.5",
     "vue-router": "^3.1.5",
-    "vue-session": "^1.0.0",
     "vue-socket.io": "^3.0.7",
     "vue-socketio": "^2.1.1-c",
     "vuetify": "^2.2.11",
