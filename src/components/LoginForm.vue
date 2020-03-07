@@ -21,8 +21,8 @@
 					/>
 				</div>
 
-				<div v-if="loginError" class="login-error-message">
-					Invalid email or password.
+				<div v-if="errorMessage" class="login-error-message">
+					{{ errorMessage }}
 				</div>
 
 				<input type="submit" value="LOGIN" class="login-button" />
@@ -48,16 +48,20 @@
 </template>
 
 <script>
-console.log('Login Form');
+import { mapGetters } from "vuex";
 
 export default {
 	name: "LoginForm",
 	data: () => {
 		return {
-			loginError: false,
 			email: null,
 			password: null
 		};
+	},
+	computed: {
+		...mapGetters({
+			errorMessage: "user/errorMessage"
+		})
 	},
 	methods: {
 		login() {
@@ -66,7 +70,8 @@ export default {
 				password: this.password
 			});
 		}
-	}
+	},
+	created() {}
 };
 </script>
 
