@@ -9,6 +9,7 @@ import AttendanceLogsLayout from '@/views/layout-logs.vue'
 import LoginLayout from '@/views/layout-login.vue'
 import SentimentSelectionLayout from '@/views/layout-sentimentselection.vue'
 import NotificationLayout from '@/views/layout-notifications.vue';
+import AccountSettingsLayout from '@/views/layout-account.vue';
 
 // Components
 import LoginForm from '@/components/LoginForm.vue'
@@ -48,7 +49,7 @@ const routes = [
       {
         path: 'dashboard',
         alias: '/dashboard',
-        component: DashboardLayout
+        component: DashboardLayout,
       },
       {
         path: 'employees',
@@ -64,6 +65,11 @@ const routes = [
         path: 'notifications',
         alias: '/notifications',
         component: NotificationLayout,
+      },
+      {
+        path: 'account',
+        alias: '/account',
+        component: AccountSettingsLayout,
       }
     ]
   },
