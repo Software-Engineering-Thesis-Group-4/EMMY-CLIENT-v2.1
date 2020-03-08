@@ -14,7 +14,11 @@ import NotificationLayout from '@/views/layout-notifications.vue';
 import LoginForm from '@/components/LoginForm.vue'
 import ResetPasswordForm from '@/components/ResetPasswordForm.vue'
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
+
+const isAuthenticated = (to, from, next) => {
+  next();
+}
 
 const routes = [
   {
@@ -64,7 +68,7 @@ const routes = [
     ]
   },
   {
-    path: '/employee',
+    path: '/dailysentiment',
     component: SentimentSelectionLayout
   }
 ]
