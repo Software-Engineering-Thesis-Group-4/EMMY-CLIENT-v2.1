@@ -51,7 +51,6 @@
 import { mapGetters } from "vuex";
 
 export default {
-	name: "LoginForm",
 	data: () => {
 		return {
 			email: null,
@@ -70,8 +69,7 @@ export default {
 				password: this.password
 			});
 		}
-	},
-	created() {}
+	}
 };
 </script>
 
