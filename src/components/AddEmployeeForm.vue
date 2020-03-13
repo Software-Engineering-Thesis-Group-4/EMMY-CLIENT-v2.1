@@ -1,5 +1,7 @@
 <template>
 	<div>
+		<!-- FIXME: Change the form into vuetify's form -->
+		<!-- TODO: add the upload csv button for adding multiple employees -->
 		<form method="POST" v-on:submit.prevent="addEmployee">
 			<h1>Add New Employee</h1>
 
@@ -98,7 +100,6 @@ export default {
 			this.$emit("close");
 		},
 		addEmployee() {
-			// TODO: ADD EMPLOYEE ACTION UNDER EMPLOYEE STORE MODULE
 			this.$store.dispatch("employees/addEmployee", this.formData).then(() => {
 				this.closeForm();
 			});

@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <h1 class="page-header">Accounts</h1>
-    </div>
+  <div>
+     <h1 class="page-header">Account</h1>
+  </div>
 </template>
 
 <script>

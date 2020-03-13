@@ -19,14 +19,19 @@ import ResetPasswordForm from '@/components/ResetPasswordForm.vue'
 Vue.use(VueRouter);
 
 // NAVIGATION GUARD ----------------------------------------------------------------------------------------------------
-const isAuthenticated = async (to, from, next) => {
-	let auth_token = localStorage.getItem('auth_token');
-	let isValid = await store.dispatch('user/VERIFY', auth_token);
+let isAuthenticated = null;
+let authActivated = false; // set this to true if you want the nav guards to take effect.
 
-	if(isValid) {
-		next();
-	} else {
-		next('/login');
+if(authActivated) {
+	isAuthenticated = async (to, from, next) => {
+		let auth_token = localStorage.getItem('auth_token');
+		let isValid = await store.dispatch('user/VERIFY', auth_token);
+	
+		if (isValid) {
+			next();
+		} else {
+			next('/login');
+		}
 	}
 }
 
@@ -57,7 +62,7 @@ const routes = [
 	{
 		path: '/',
 		component: MainLayout,
-		redirect: "/dashboard",
+		// redirect: "/dashboard", 
 		children: [
 			{
 				path: 'dashboard',
@@ -84,10 +89,10 @@ const routes = [
 				beforeEnter: isAuthenticated, // PROTECTED
 			},
 			{
-			  path: 'account',
-			  alias: '/account',
-			  component: AccountSettingsLayout,
-			  beforeEnter: isAuthenticated, // PROTECTED
+				path: 'account',
+				alias: '/account-settings',
+				component: AccountSettingsLayout,
+				beforeEnter: isAuthenticated,
 			}
 		]
 	},
