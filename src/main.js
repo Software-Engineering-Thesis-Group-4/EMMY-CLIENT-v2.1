@@ -7,8 +7,6 @@ import vuetify from './plugins/vuetify';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import VueSocketIO from 'vue-socket.io';
-// import VueSession from 'vue-session';
-// import VueCookie from 'vue-cookie';
 
 Vue.config.productionTip = false
 
@@ -20,14 +18,6 @@ const server_url = `http://${host}:${port}/`;
 axios.defaults.baseURL = server_url;
 
 Vue.use(VueAxios, axios);
-
-// VUE SESSION INTEGRATION -------------------------------------------------------------------------------
-// Vue.use(VueSession, {
-//   persist: true
-// })
-
-// VUE COOKIE PLUGIN -------------------------------------------------------------------------------------
-// Vue.use(VueCookie);
 
 // SOCKET INTEGRATION ------------------------------------------------------------------------------------
 Vue.use(new VueSocketIO({
