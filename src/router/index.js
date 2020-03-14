@@ -62,7 +62,7 @@ const routes = [
 	{
 		path: '/',
 		component: MainLayout,
-		// redirect: "/dashboard", 
+		redirect: "/dashboard", 
 		children: [
 			{
 				path: 'dashboard',
