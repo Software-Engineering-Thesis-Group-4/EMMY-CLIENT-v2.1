@@ -92,7 +92,7 @@
 					</svg>
 				</button>
 			</template>
-		</v-data-table>
+		</template>
 	</div>
 </template>
 
