@@ -108,7 +108,7 @@ export default {
 		return {
 			showAddEmployeeForm: false,
 			employeeDataTableOptions: options,
-			loadingEmployeeDataTable: false,
+			loadingEmployeeDataTable: false
 		};
 	},
 	computed: {
@@ -117,24 +117,24 @@ export default {
 		},
 		employees() {
 			let employees = options.data.map(employee => {
-				return employee.name
+				return employee.name;
 			});
 
 			return employees;
 		}
-	},	
+	},
 	methods: {
 		closeAddEmployeeForm() {
 			this.showAddEmployeeForm = false;
 		},
 		deleteEmployee(employee) {
-			this.$store.dispatch('employees/DELETE_EMPLOYEE', employee.id);
+			this.$store.dispatch("employees/DELETE_EMPLOYEE", employee.id);
 		}
 	},
 	created() {
-		this.$store.dispatch('employees/FETCH_EMPLOYEES').then(employees => {
+		this.$store.dispatch("employees/FETCH_EMPLOYEES").then(employees => {
 			loadTableData(employees);
-		})
+		});
 	}
 };
 </script>

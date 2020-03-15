@@ -11,6 +11,7 @@ import LoginLayout from '@/views/layout-login.vue'
 import SentimentSelectionLayout from '@/views/layout-sentimentselection.vue'
 import NotificationLayout from '@/views/layout-notifications.vue';
 import AccountSettingsLayout from '@/views/layout-account.vue';
+import AdminLoginLayout from '@/views/layout-admin-login.vue'
 
 // Components
 import LoginForm from '@/components/LoginForm.vue'
@@ -95,6 +96,10 @@ const routes = [
 				beforeEnter: isAuthenticated,
 			}
 		]
+	},
+	{
+		path: '/admin',
+		component: AdminLoginLayout
 	},
 	{
 		path: '/dailysentiment',
