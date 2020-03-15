@@ -23,7 +23,7 @@
           </div>
 
           <div v-if="errorMessage" class="login-error-message">{{ errorMessage }}</div>
-
+         
           <input type="submit" value="LOGIN" class="login-button" />
           <router-link to="/forgotpassword" class="forgot-password">Forgot your password?</router-link>
         </form>
@@ -39,9 +39,7 @@
 </template>
 
 <script>
-export default {
-    
-};
+export default {};
 </script>
 
 <style lang="scss" scoped>
@@ -53,7 +51,7 @@ export default {
 
 .form-container {
   position: relative;
-  background-color: white;
+  background-color: #3c454d;
   padding: 50px;
   // border-radius: 10px;
 
@@ -83,7 +81,7 @@ export default {
     margin: 80px 0px;
 
     .field {
-      background-color: #e2e2e2;
+      background-color: #2c3237;
       padding: 0px 22px;
       border-radius: 5px;
       margin-bottom: 10px;
@@ -141,7 +139,7 @@ export default {
   .no-account {
     position: absolute;
     bottom: 10px;
-    color: #bdbdbd;
+    color: #ffffff;
     font-family: "Cera Pro", sans-serif;
     font-size: 13px;
     // display: none;
@@ -167,21 +165,21 @@ export default {
 }
 
 .root {
-	background: rgb(123, 194, 255);
-	background: url("../assets/images/hexagon-pattern.svg") no-repeat -100px 200px,
-		linear-gradient(
-			138deg,
-			rgba(123, 194, 255, 1) 0%,
-			rgba(87, 136, 251, 1) 100%
-		);
-	background-attachment: fixed;
-	background-size: contain;
-	padding: 0px;
-	margin: 0px;
-	height: 100vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
+  background: rgb(123, 194, 255);
+  background: url("../assets/images/hexagon-pattern.svg") no-repeat -100px 200px,
+    linear-gradient(
+      138deg,
+      rgba(123, 194, 255, 1) 0%,
+      rgba(87, 136, 251, 1) 100%
+    );
+  background-attachment: fixed;
+  background-size: contain;
+  padding: 0px;
+  margin: 0px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 </style>
