@@ -12,10 +12,13 @@ import SentimentSelectionLayout from '@/views/layout-sentimentselection.vue'
 import NotificationLayout from '@/views/layout-notifications.vue';
 import AccountSettingsLayout from '@/views/layout-account.vue';
 import AdminLoginLayout from '@/views/layout-admin-login.vue'
+import AdminLayout from '@/views/layout-admin.vue'
+import AccountManagementLayout from '@/views/layout-account-management.vue'
 
 // Components
 import LoginForm from '@/components/LoginForm.vue'
 import ResetPasswordForm from '@/components/ResetPasswordForm.vue'
+
 
 Vue.use(VueRouter);
 
@@ -98,8 +101,20 @@ const routes = [
 		]
 	},
 	{
-		path: '/admin',
+		path: '/admin-login',
 		component: AdminLoginLayout
+	},
+	{
+		path: '/admin',
+		component: AdminLayout,
+		// redirect: "/account-management",
+		children: [
+			{
+				path: 'account-management',
+				alias: '/account-management',
+				component: AccountManagementLayout, 
+			}
+		]
 	},
 	{
 		path: '/dailysentiment',
