@@ -13,7 +13,7 @@ import NotificationLayout from '@/views/layout-notifications.vue';
 import AccountSettingsLayout from '@/views/layout-account.vue';
 import AdminLoginLayout from '@/views/layout-admin-login.vue'
 import AdminLayout from '@/views/layout-admin.vue'
-import AccountManagementLayout from '@/views/layout-account-management.vue'
+// import AccountManagementLayout from '@/views/layout-account-management.vue'
 
 // Components
 import LoginForm from '@/components/LoginForm.vue'
@@ -102,6 +102,7 @@ const routes = [
 	},
 	{
 		path: '/admin-login',
+		alias: '/admin/login',
 		component: AdminLoginLayout
 	},
 	{
@@ -112,7 +113,7 @@ const routes = [
 			{
 				path: 'account-management',
 				alias: '/account-management',
-				component: AccountManagementLayout, 
+				// component: AccountManagementLayout, 
 			}
 		]
 	},
