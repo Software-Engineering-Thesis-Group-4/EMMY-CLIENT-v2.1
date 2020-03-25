@@ -1,7 +1,5 @@
 <template>
 	<div>
-		<h1 class="page-header">Daily Attendance Log</h1>
-
 		<div class="controls">
 			<!-- Search Field ------------------------------------------------------------------------------------- -->
 			<div class="search-field">

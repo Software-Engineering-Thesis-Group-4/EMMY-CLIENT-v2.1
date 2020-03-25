@@ -1,10 +1,8 @@
 <template>
 	<div>
-		<h1 class="page-header">Notifications</h1>
 		<div class="content-container">
 			<h3 class="notifications-daterange">Today</h3>
 			<ul class="notifications-itemlist">
-
 				<!-- template: extreme emotion : angry --------------------------------------------------------------------->
 				<li class="extreme-emotion-notification unread">
 					<div class="employee">
@@ -19,8 +17,8 @@
 					</span>
 				</li>
 
-                <!-- template: extreme emotion : amazing --------------------------------------------------------------------->
-                <li class="extreme-emotion-notification unread">
+				<!-- template: extreme emotion : amazing --------------------------------------------------------------------->
+				<li class="extreme-emotion-notification unread">
 					<div class="employee">
 						<img src="/sample-image.png" class="avatar" />
 						<img src="/emotions/5.png" class="sentiment" />
@@ -40,19 +38,19 @@
 					</div>
 					<span class="notification-message">
 						Your password has been changed on
-						<span class="date-time">(Thursday - 11:36 AM, February 27, 2019)</span>. If this
-						looks suspicious please contact your administrator immediately.
+						<span class="date-time"
+							>(Thursday - 11:36 AM, February 27, 2019)</span
+						>. If this looks suspicious please contact your administrator
+						immediately.
 					</span>
 				</li>
 			</ul>
 
 			<h3 class="notifications-daterange">Yesterday</h3>
-			<ul class="notifications-itemlist">
-			</ul>
+			<ul class="notifications-itemlist"></ul>
 
 			<h3 class="notifications-daterange">Last 7 Days</h3>
-			<ul class="notifications-itemlist">
-			</ul>
+			<ul class="notifications-itemlist"></ul>
 		</div>
 	</div>
 </template>

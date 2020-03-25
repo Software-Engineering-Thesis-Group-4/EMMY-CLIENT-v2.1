@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1 class="page-header">Employees</h1>
     <div class="controls">
       <!-- Search Field -->
       <div class="search-field">

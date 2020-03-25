@@ -2,17 +2,24 @@
 	<div>
 		<Sidebar />
 		<div class="view-container">
+			<h1 class="page-header">{{ getPageTitle }}</h1>
+			<v-divider></v-divider>
 			<router-view />
 		</div>
 	</div>
 </template>
 
 <script>
-import Sidebar from "@/components/sidebar.vue";
+import Sidebar from "@/components/Sidebar.vue";
 
 export default {
 	components: {
 		Sidebar
+	},
+	computed: {
+		getPageTitle() {
+			return this.$route.meta.title;
+		}
 	}
 };
 </script>

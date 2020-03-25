@@ -1,8 +1,5 @@
 <template>
 	<div class="main-container">
-		<h1 class="page-header">Dashboard</h1>
-		<v-divider></v-divider>
-
 		<div class="dv-group">
 			<h2 class="group-label">General Statistics</h2>
 			<!-- REFACTOR: Convert this to a component -->
@@ -19,21 +16,32 @@
 			<OverallEmployeeSentiment />
 		</div>
 
-		<div class="dv-group">
-			<!-- TODO: Create a component composing both the gender and department charts -->
+		<div class="dv-group dual-column">
+			<div class="dv-group-item">
+				<h2 class="group-label">Overall Employee Sentiment (by gender)</h2>
+				<GenderSentiment class="sentiment-chart" />
+			</div>
+			<div class="dv-group-item">
+				<h2 class="group-label">Overall Employee Sentiment (by department)</h2>
+				<DepartmentSentiment class="sentiment-chart" />
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
 import OverallEmployeeSentiment from "@/components/dashboard/OverallEmployeeSentiment.vue";
+import GenderSentiment from "@/components/dashboard/Sentiment-Gender.vue";
+import DepartmentSentiment from "@/components/dashboard/Sentiment-Department.vue";
 
 export default {
 	data() {
 		return {};
 	},
 	components: {
-		OverallEmployeeSentiment
+		OverallEmployeeSentiment,
+		GenderSentiment,
+		DepartmentSentiment
 	},
 	created() {}
 };
@@ -41,19 +49,46 @@ export default {
 
 <style lang="scss" scoped>
 .main-container {
-	// background-color: #00ffbf36;
+	// background-color: #ffe60036; // FOR DEBUGGING
 	min-width: 1024px;
+	padding-bottom: 50px;
 }
 
 .dv-group {
-	// background-color: red;
+	// background-color: #00eaff3b; // FOR DEBUGGING
 	margin-top: 20px;
+
+	.group-label {
+		font-size: 20px;
+		margin-bottom: 10px;
+		color: rgb(56, 56, 56);
+	}
+
+	.dv-group-item {
+		// background-color: red; // FOR DEBUGGING
+		width: 100%;
+
+		&:first-child {
+			margin-right: 20px;
+		}
+
+		.sentiment-chart {
+			background-color: #ffffff;
+			display: flex;
+			flex-direction: column;
+			padding: 15px;
+			border: 1px solid #e0e0e0;
+			border-radius: 8px;
+			height: 400px;
+		}
+	}
 }
 
-.group-label {
-	font-size: 20px;
-	margin-bottom: 10px;
-	color: rgb(56, 56, 56);
+// Gender & Department Group
+.dual-column {
+	// background-color: red;
+	display: flex;
+	justify-content: space-between;
 }
 
 .general-statistics-container {
@@ -63,21 +98,19 @@ export default {
 	flex-direction: row;
 	width: 100%;
 	padding: 10px 0px 10px 10px;
-}
 
-.card {
-	background: linear-gradient(-230deg, #f0f0f0, #ffffff);
-	box-shadow: 6px 6px 12px #eeeeee, -6px -6px 12px #ffffff;
-	// border: 1px solid #dddddd;
-	width: 100%;
-	height: 180px;
-	margin-right: 30px;
-	padding: 10px;
-	border-radius: 10px;
-}
+	.card {
+		background: linear-gradient(-230deg, #f0f0f0, #ffffff);
+		box-shadow: 6px 6px 12px #eeeeee, -6px -6px 12px #ffffff;
+		// border: 1px solid #dddddd;
+		width: 100%;
+		height: 180px;
+		padding: 10px;
+		border-radius: 10px;
 
-// .red {
-// 	background: linear-gradient(145deg, #ff8181, #e66d6d);
-// 	box-shadow: inset 5px 5px 8px #e86e6e, inset -5px -5px 8px #ff8484;
-// }
+		&:not(:last-child) {
+			margin-right: 20px;
+		}
+	}
+}
 </style>

@@ -1,7 +1,5 @@
 <template>
 	<div>
-		<h1 class="page-header">Account</h1>
-
 		<v-card outlined class="table-container">
 			<h2 class="account-header">Basic Information</h2>
 
@@ -101,6 +99,7 @@ export default {
 .table-container {
 	width: 50%;
 	padding: 20px;
+	margin-top: 20px;
 	display: flex;
 	flex-direction: column;
 

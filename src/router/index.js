@@ -72,29 +72,44 @@ const routes = [
 				path: 'dashboard',
 				alias: '/dashboard',
 				component: DashboardLayout,
+				meta: {
+					title: 'Dashboard'
+				},
 				beforeEnter: isAuthenticated, // PROTECTED
 			},
 			{
 				path: 'employees',
 				alias: '/employees',
+				meta: {
+					title: 'Employees'
+				},
 				component: EmployeeLayout,
 				beforeEnter: isAuthenticated, // PROTECTED
 			},
 			{
 				path: 'attendance',
 				alias: '/attendance',
+				meta: {
+					title: 'Daily Attendance Log'
+				},
 				component: AttendanceLogsLayout,
 				beforeEnter: isAuthenticated, // PROTECTED
 			},
 			{
 				path: 'notifications',
 				alias: '/notifications',
+				meta: {
+					title: 'Notifications'
+				},
 				component: NotificationLayout,
 				beforeEnter: isAuthenticated, // PROTECTED
 			},
 			{
 				path: 'account',
-				alias: '/account-settings',
+				alias: '/settings',
+				meta: {
+					title: 'Account Settings'
+				},
 				component: AccountSettingsLayout,
 				beforeEnter: isAuthenticated,
 			}
