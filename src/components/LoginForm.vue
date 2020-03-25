@@ -2,7 +2,7 @@
 	<v-container class="root-container">
 		<v-card class="form-container" :elevation="2">
 			<div class="logo-container">
-				<img src="@/assets/images/Logo.svg" class="logo" alt srcset />
+				<img src="/logo/logo-light@2x.png" class="logo" alt srcset />
 			</div>
 
 			<form class="login-form" @submit.prevent="login()">

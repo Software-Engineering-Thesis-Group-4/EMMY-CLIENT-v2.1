@@ -1,6 +1,6 @@
 <template>
 	<div class="container">
-		<img src="@/assets/images/Logo.svg" alt srcset class="logo" />
+		<img src="/logo/logo-light.png" alt srcset class="logo" />
 
 		<div class="description">
 			<h3>Reset Password</h3>
