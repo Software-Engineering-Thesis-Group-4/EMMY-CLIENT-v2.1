@@ -165,10 +165,8 @@ export default {
 			return employees;
 		},
 		maxDate() {
-			let today = new Date();
-			let tomorrow = today;
-			tomorrow.setDate(today.getDate() + 1);
-			return tomorrow.toISOString();
+			let today = moment().format();
+			return today;
 		}
 	},
 	methods: {
