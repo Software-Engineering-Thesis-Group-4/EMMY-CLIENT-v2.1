@@ -16,26 +16,16 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import VueApexCharts from "vue-apexcharts";
-import { chartData, updateData } from "@/dashboard/chart.overall_sentiment.js";
 
 export default {
 	data() {
 		return {
-			chartData
 		};
 	},
 	components: {
-		apexchart: VueApexCharts,
-		...mapGetters({
-			logs: 'employees/attendanceLogs'
-		})
 	},
 	created() {
-		this.$store.dispatch("employees/FETCH_ATTENDANCELOGS").then(logs => {
-			this.$refs.chart.updateSeries(updateData(logs), true);
-		});
 	},
 };
 </script>

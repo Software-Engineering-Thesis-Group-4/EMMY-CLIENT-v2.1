@@ -14,7 +14,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import apexchart from "vue-apexcharts";
-import { chartData, updateData } from "@/dashboard/chart.overall_sentiment.js";
+import { chartData, updateData } from "./chart-options/overall-employee-sentiment.js";
 
 export default {
 	data() {
