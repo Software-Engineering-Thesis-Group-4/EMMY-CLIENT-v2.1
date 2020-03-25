@@ -11,9 +11,9 @@ import LoginLayout from '@/views/layout-login.vue'
 import SentimentSelectionLayout from '@/views/layout-sentimentselection.vue'
 import NotificationLayout from '@/views/layout-notifications.vue';
 import AccountSettingsLayout from '@/views/layout-account.vue';
-import AdminLoginLayout from '@/views/layout-admin-login.vue'
-import AdminLayout from '@/views/layout-admin.vue'
 // import AccountManagementLayout from '@/views/layout-account-management.vue'
+import AdminLoginLayout from '@/views/layout-admin-login.vue';
+import PageNotFoundLayout  from "@/views/layout-404.vue";
 
 // Components
 import LoginForm from '@/components/LoginForm.vue'
@@ -120,6 +120,10 @@ const routes = [
 	{
 		path: '/dailysentiment',
 		component: SentimentSelectionLayout
+	},
+	{
+		path: '*',
+		component: PageNotFoundLayout
 	}
 ]
 
