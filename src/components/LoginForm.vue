@@ -8,7 +8,13 @@
 			<form class="login-form" @submit.prevent="login()">
 				<div class="field">
 					<img src="@/assets/images/input-field-icon_user.svg" alt srcset />
-					<input type="text" name="email" placeholder="Email" v-model="email" />
+					<input
+						type="text"
+						name="email"
+						placeholder="Email"
+						v-model="email"
+						autocomplete="off"
+					/>
 				</div>
 				<div class="field">
 					<img src="@/assets/images/input-field-icon_padlock.svg" alt srcset />
@@ -18,6 +24,7 @@
 						id="password_field"
 						placeholder="Password"
 						v-model="password"
+						autocomplete="off"
 					/>
 				</div>
 
