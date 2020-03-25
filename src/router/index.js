@@ -105,18 +105,18 @@ const routes = [
 		alias: '/admin/login',
 		component: AdminLoginLayout
 	},
-	{
-		path: '/admin',
-		component: AdminLayout,
-		// redirect: "/account-management",
-		children: [
-			{
-				path: 'account-management',
-				alias: '/account-management',
-				// component: AccountManagementLayout, 
-			}
-		]
-	},
+	// {
+	// 	path: '/admin',
+	// 	component: AdminLayout,
+	// 	// redirect: "/account-management",
+	// 	children: [
+	// 		{
+	// 			path: 'account-management',
+	// 			alias: '/account-management',
+	// 			// component: AccountManagementLayout, 
+	// 		}
+	// 	]
+	// },
 	{
 		path: '/dailysentiment',
 		component: SentimentSelectionLayout
