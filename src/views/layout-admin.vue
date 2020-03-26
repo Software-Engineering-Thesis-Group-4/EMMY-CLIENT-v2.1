@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Sidebar from "@/components/adminSidebar.vue";
+import Sidebar from "@/components/AdminSidebar.vue";
 
 export default {
 	components: {
