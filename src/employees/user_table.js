@@ -1,3 +1,5 @@
+
+// FIX: Fix user data table options
 export function loadTableData(employees) {
     let employeeTableData = [];
 
