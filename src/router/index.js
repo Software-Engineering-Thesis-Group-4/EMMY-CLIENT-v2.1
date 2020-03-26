@@ -12,6 +12,7 @@ import SentimentSelectionLayout from '@/views/layout-sentimentselection.vue'
 import NotificationLayout from '@/views/layout-notifications.vue';
 import AccountSettingsLayout from '@/views/layout-account.vue';
 // import AccountManagementLayout from '@/views/layout-account-management.vue'
+import AdminLayout from '@/views/layout-admin.vue';
 import AdminLoginLayout from '@/views/layout-admin-login.vue';
 import PageNotFoundLayout  from "@/views/layout-404.vue";
 
@@ -120,18 +121,18 @@ const routes = [
 		alias: '/admin/login',
 		component: AdminLoginLayout
 	},
-	// {
-	// 	path: '/admin',
-	// 	component: AdminLayout,
-	// 	// redirect: "/account-management",
-	// 	children: [
-	// 		{
-	// 			path: 'account-management',
-	// 			alias: '/account-management',
-	// 			// component: AccountManagementLayout, 
-	// 		}
-	// 	]
-	// },
+	{
+		path: '/admin',
+		component: AdminLayout,
+		// redirect: "/account-management",
+		children: [
+			{
+				path: 'account-management',
+				alias: '/account-management',
+				// component: AccountManagementLayout, 
+			}
+		]
+	},
 	{
 		path: '/dailysentiment',
 		component: SentimentSelectionLayout
