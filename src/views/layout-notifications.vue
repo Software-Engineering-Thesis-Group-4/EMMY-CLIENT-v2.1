@@ -52,7 +52,7 @@
             class="notification_item"
           >
             <div class="employee">
-              <img :src="reciever.photo" alt="employee" class="avatar" />
+              <img :src="'/default-avatar.png' || reciever.photo" alt="employee" class="avatar" />
             </div>
             <span class="notification-message">
               Your password has been changed on
@@ -121,10 +121,10 @@ export default {
       // FIX: This is just a sample format
       notifications: [
         {
-          _id: 1,
+          _id: 1, // should be the actual document _id of user
           type: "USER-CHANGED_PASSWORD",
           date: moment().calendar(),
-          reciever: "{user.firstname} {user.lastname}", // should be object _id of user
+          reciever: "{user.firstname} {user.lastname}", // should be the actual user document
           author: null,
           employee: null,
           emotion: null
@@ -133,7 +133,7 @@ export default {
           _id: 2,
           type: "EMPLOYEE-EXTREME_EMOTION",
           date: moment().calendar(),
-          reciever: "{user.firstname} {user.lastname}", // should be object _id of user
+          reciever: "{user.firstname} {user.lastname}",
           author: null,
           employee: "{emp.firstname} {emp.lastname}",
           emotion: 1
@@ -142,7 +142,7 @@ export default {
           _id: 3,
           type: "EMPLOYEE-EXTREME_EMOTION",
           date: moment().calendar(),
-          reciever: "{user.firstname} {user.lastname}", // should be object _id of user
+          reciever: "{user.firstname} {user.lastname}",
           author: null,
           employee: "{emp.firstname} {emp.lastname}",
           emotion: 5
