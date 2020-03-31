@@ -22,7 +22,9 @@
 				<GenderSentiment class="sentiment-chart" />
 			</div>
 			<div class="dv-group-item">
-				<h2 class="group-label">Overall Employee Sentiment (by department)</h2>
+				<h2 class="group-label">
+					Overall Employee Sentiment (by department)
+				</h2>
 				<DepartmentSentiment class="sentiment-chart" />
 			</div>
 		</div>
