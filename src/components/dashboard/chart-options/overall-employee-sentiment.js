@@ -32,6 +32,10 @@ let data = [
 ];
 
 export function updateData(logs) {
+	if(!logs) {
+		return data;
+	}
+
 	// get all the emotions per month
 	let emotions = {
 		'unsubmitted': [[],[],[],[],[],[],[],[],[],[],[],[]],
