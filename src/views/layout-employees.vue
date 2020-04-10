@@ -15,14 +15,21 @@
 				></v-autocomplete>
 			</div>
 
-			<v-dialog max-width="600px" v-model="showAddEmployeeDialog" persistent>
+			<v-dialog
+				max-width="600px"
+				v-model="showAddEmployeeDialog"
+				persistent
+			>
 				<template v-slot:activator="{ on }">
-					<button id="button-add-employee" v-on="on">
+					<button
+						id="button-add-employee"
+						v-on="on"
+					>
 						<v-icon class="button-icon">mdi-plus</v-icon>Add New Employee
 					</button>
 				</template>
 
-				<AddEmployeeForm @closeDialog="toggleAddEmployeeDialog"/>
+				<AddEmployeeForm @closeDialog="toggleAddEmployeeDialog" />
 			</v-dialog>
 			<!-- Add Employee Button -->
 
@@ -95,17 +102,20 @@
 </template>
 
 <script>
-import AddEmployeeForm from "@/components/AddEmployeeForm.vue";
-import { options, loadTableData } from "@/employees/data_table.js";
+import AddEmployeeForm from "@/components/employees/AddEmployeeForm.vue";
+import {
+	options,
+	loadTableData
+} from "@/components/employees/data-table-options/data_table.js";
 
 export default {
-   data() {
-      return {
-         employeeDataTableOptions: options,
-         loadingEmployeeDataTable: false,
-         showAddEmployeeDialog: false,
-      };
-   },
+	data() {
+		return {
+			employeeDataTableOptions: options,
+			loadingEmployeeDataTable: false,
+			showAddEmployeeDialog: false
+		};
+	},
 	components: {
 		AddEmployeeForm
 	},
@@ -124,10 +134,10 @@ export default {
 	methods: {
 		deleteEmployee(employee) {
 			this.$store.dispatch("employees/DELETE_EMPLOYEE", employee.id);
-      },
-      toggleAddEmployeeDialog() {
-         this.showAddEmployeeDialog = false;
-      }
+		},
+		toggleAddEmployeeDialog() {
+			this.showAddEmployeeDialog = false;
+		}
 	},
 	created() {
 		this.$store.dispatch("employees/FETCH_EMPLOYEES").then(employees => {
@@ -170,6 +180,7 @@ export default {
 
 #button-add-employee {
 	background-color: #7198f3;
+	background: linear-gradient(0deg, #5a79c2 0%, #7198f3 100%);
 
 	display: flex;
 	align-items: center;
@@ -182,11 +193,19 @@ export default {
 
 	font-weight: 500;
 	color: white;
+
+	border: 1.5px solid #5F7BBE;
 	border-radius: 5px;
+	transition: filter 0.1s ease;
+
+	&:hover {
+		filter: brightness(0.95);
+	}
 }
 
 #button-filters {
 	background-color: #7198f3;
+	background: linear-gradient(0deg, #5a79c2 0%, #7198f3 100%);
 
 	display: flex;
 	align-items: center;
@@ -199,7 +218,14 @@ export default {
 
 	font-weight: 500;
 	color: white;
+
+	border: 1.5px solid #5F7BBE;
 	border-radius: 5px;
+	transition: filter 0.1s ease;
+
+	&:hover {
+		filter: brightness(0.95);
+	}
 }
 
 .employee-count {
