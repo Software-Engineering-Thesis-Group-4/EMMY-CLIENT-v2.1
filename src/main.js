@@ -22,18 +22,18 @@ Vue.use(VueAxios, axios);
 
 // SOCKET INTEGRATION ------------------------------------------------------------------------------------
 Vue.use(new VueSocketIO({
-  debug: true,
-  connection: server_url,
-  vuex: {
-    store,
-    actionPrefix: 'SOCKET_',
-    mutationPrefix: 'SOCKET_'
-  },
+	debug: true,
+	connection: server_url,
+	vuex: {
+		store,
+		actionPrefix: 'SOCKET_',
+		mutationPrefix: 'SOCKET_'
+	},
 }));
 
-new Vue({  
-  router,
-  store,
-  vuetify,
-  render: h => h(App)
+new Vue({
+	router,
+	store,
+	vuetify,
+	render: h => h(App)
 }).$mount('#app')
