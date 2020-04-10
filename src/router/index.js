@@ -15,6 +15,8 @@ import AccountSettingsLayout from '@/views/layout-account.vue';
 import AdminLayout from '@/views/layout-admin.vue';
 import AdminLoginLayout from '@/views/layout-admin-login.vue';
 import PageNotFoundLayout  from "@/views/layout-404.vue";
+import AccountManagementLayout  from "@/views/layout-account-management.vue";
+
 
 // Components
 import LoginForm from '@/components/LoginForm.vue'
@@ -129,7 +131,7 @@ const routes = [
 			{
 				path: 'account-management',
 				alias: '/account-management',
-				// component: AccountManagementLayout, 
+				component: AccountManagementLayout, 
 			}
 		]
 	},
