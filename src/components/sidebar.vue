@@ -57,44 +57,6 @@
 				</router-link>
 			</div>
 		</div>
-
-		<div class="bottom-group">
-			<!-- notification icon -->
-			<div class="group-item">
-				<router-link to="/notifications" id="notifications">
-					<!-- badge -->
-					<svg
-						v-if="notificationsCount"
-						xmlns="http://www.w3.org/2000/svg"
-						width="11"
-						height="11"
-						viewBox="0 0 11 11"
-						id="badge"
-					>
-						<circle cx="5.5" cy="5.5" r="5.5" fill="#fb6464" />
-					</svg>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="21.054"
-						height="26.564"
-						viewBox="0 0 21.054 26.564"
-					>
-						<path
-							d="M-343.146-6054.833h7.344a4.017,4.017,0,0,1-3.672,2.4A4.017,4.017,0,0,1-343.146-6054.833Zm-6.054-1.559a.794.794,0,0,1-.783-.609.757.757,0,0,1,.417-.86,4.136,4.136,0,0,0,1.257-1.708,19.745,19.745,0,0,0,1.309-7.81,7.535,7.535,0,0,1,7.526-7.526,7.535,7.535,0,0,1,7.526,7.5v.029a19.72,19.72,0,0,0,1.311,7.81,4.126,4.126,0,0,0,1.256,1.708.755.755,0,0,1,.417.86.793.793,0,0,1-.781.609Zm9.726-20.07a9.042,9.042,0,0,0-3.082.537v-.116A2.962,2.962,0,0,1-339.6-6079h.246a2.962,2.962,0,0,1,2.958,2.959v.118A9.015,9.015,0,0,0-339.474-6076.461Z"
-							transform="translate(350 6079)"
-							fill="#fff"
-						/>
-					</svg>
-				</router-link>
-			</div>
-
-			<!-- user icon -->
-			<div class="group-item">
-				<button id="user">
-					<img src="/sample-image.png" />
-				</button>
-			</div>
-		</div>
 	</div>
 </template>
 
@@ -111,7 +73,7 @@ export default {
 <style lang="scss" scoped>
 .sidebar {
 	background-color: #567dd8;
-	width: 80px;
+	width: 60px;
 	height: 100vh;
 	display: flex;
 	flex-direction: column;
@@ -135,44 +97,6 @@ export default {
 	.nav-item {
 		margin: 12px 0px;
 	}
-}
-
-.bottom-group {
-	// background-color: turquoise;
-	display: flex;
-	flex-grow: 1;
-	flex-direction: column;
-	align-items: center;
-	justify-content: flex-end;
-	padding-bottom: 10px;
-
-	button {
-		background-color: transparent;
-		margin: 10px 0px;
-		border: none;
-	}
-
-	#user {
-		width: 32px;
-		height: 32px;
-		overflow: hidden;
-		border-radius: 999px;
-		border: none;
-
-		img {
-			width: 100%;
-			object-fit: contain;
-		}
-	}
-}
-
-#notifications {
-	position: relative;
-
-	#badge {
-		position: absolute;
-		right: -2px;
-	} 
 }
 
 // apply style to icon if route is active
