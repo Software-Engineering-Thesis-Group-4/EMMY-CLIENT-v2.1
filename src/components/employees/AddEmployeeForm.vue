@@ -265,6 +265,17 @@ export default {
 
 			return alert("upload_csv() not implemented!");
 		},
+		resetFormData() {
+			this.firstname         = null;
+			this.lastname          = null;
+			this.email             = null;
+			this.isMale            = null;
+			this.fingerprint_id    = null;
+			this.employee_id       = null;
+			this.department        = null;
+			this.employment_status = null;
+			this.job_title         = null;
+		},
 		resetCSVFileUploadForm() {
 			this.$refs.csvFileUpload.reset();
 			this.uploadFileLoading = false;
@@ -275,6 +286,7 @@ export default {
 		closeDialog() {
 			if (this.multipleUpload) {
 				this.resetCSVFileUploadForm();
+				this.resetFormData();
 				this.multipleUpload = false;
 				return this.$emit("closeDialog");
 			}
