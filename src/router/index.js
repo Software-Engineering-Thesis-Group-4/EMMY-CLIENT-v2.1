@@ -15,6 +15,7 @@ import AccountSettingsLayout from '@/views/layout-account.vue';
 import AdminLayout from '@/views/layout-admin.vue';
 import AdminLoginLayout from '@/views/layout-admin-login.vue';
 import PageNotFoundLayout  from "@/views/layout-404.vue";
+import EmployeeProfileLayout from "@/views/layout-employeeprofile.vue";
 
 // Components
 import LoginForm from '@/components/LoginForm.vue'
@@ -67,7 +68,7 @@ const routes = [
 	{
 		path: '/',
 		component: MainLayout,
-		redirect: "/dashboard", 
+		// redirect: "/dashboard", 
 		children: [
 			{
 				path: 'dashboard',
@@ -112,7 +113,16 @@ const routes = [
 					title: 'Account Settings'
 				},
 				component: AccountSettingsLayout,
-				beforeEnter: isAuthenticated,
+				beforeEnter: isAuthenticated, // PROTECTED
+			},
+			// TODO: apply a component-level middleware to check if a certain employee existing matching the :id route parameter. else use 404 page layout.
+			{
+				path: 'employee/:_id',
+				meta: {
+					title: 'Employee Profile'
+				},
+				component: EmployeeProfileLayout,
+				beforeEnter: isAuthenticated // PROTECTED
 			}
 		]
 	},
