@@ -70,7 +70,7 @@ export function updateData(logs) {
 }
 
 export const chartData = {
-	series: data,
+	series: [] || data,
 	chartOptions: {
 		chart: {
 			type: "bar",
@@ -162,6 +162,7 @@ export const chartData = {
 					cssClass: "apexcharts-xaxis-label"
 				}
 			},
+			
 		},
 		yaxis: {
 			title: {
