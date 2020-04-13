@@ -17,17 +17,21 @@
 		</div>
 
 		<div class="dv-group dual-column">
+
 			<div class="dv-group-item">
 				<h2 class="group-label">Overall Employee Sentiment (by gender)</h2>
 				<GenderSentiment class="sentiment-chart" />
 			</div>
+
 			<div class="dv-group-item">
 				<h2 class="group-label">
 					Overall Employee Sentiment (by department)
 				</h2>
 				<DepartmentSentiment class="sentiment-chart" />
 			</div>
+
 		</div>
+
 	</div>
 </template>
 
@@ -89,8 +93,9 @@ export default {
 // Gender & Department Group
 .dual-column {
 	// background-color: red;
-	display: flex;
-	justify-content: space-between;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	column-gap: 15px;
 }
 
 .general-statistics-container {
