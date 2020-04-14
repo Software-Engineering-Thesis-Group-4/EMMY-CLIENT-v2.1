@@ -28,6 +28,10 @@ export function loadTableData(employees) {
 	return true;
 }
 
+export function getData() {
+	return options.data;
+}
+
 export let options = {
 	search: null,
 	selected: [],
