@@ -14,9 +14,10 @@ import AccountSettingsLayout from '@/views/layout-account.vue';
 // import AccountManagementLayout from '@/views/layout-account-management.vue'
 import AdminLayout from '@/views/layout-admin.vue';
 import AdminLoginLayout from '@/views/layout-admin-login.vue';
-import PageNotFoundLayout  from "@/views/layout-404.vue";
-import AccountManagementLayout  from "@/views/layout-account-management.vue";
-
+import PageNotFoundLayout from "@/views/layout-404.vue";
+import AccountManagementLayout from "@/views/layout-account-management.vue";
+import ApplicationConfigurationLayout from "@/views/layout-admin-config.vue";
+import ApplicationLogsLayout from "@/views/layout-admin-logs.vue";
 
 // Components
 import LoginForm from '@/components/LoginForm.vue'
@@ -69,7 +70,7 @@ const routes = [
 	{
 		path: '/',
 		component: MainLayout,
-		redirect: "/dashboard", 
+		// redirect: "/dashboard", 
 		children: [
 			{
 				path: 'dashboard',
@@ -132,6 +133,16 @@ const routes = [
 				path: 'account-management',
 				alias: '/account-management',
 				component: AccountManagementLayout, 
+			},
+			{
+				path: 'application-configuration',
+				alias: '/application-configuration',
+				component: ApplicationConfigurationLayout, 
+			},
+			{
+				path: 'application-logs',
+				alias: '/application-logs',
+				component: ApplicationLogsLayout, 
 			}
 		]
 	},
