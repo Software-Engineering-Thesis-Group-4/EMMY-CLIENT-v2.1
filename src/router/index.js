@@ -25,8 +25,8 @@ import ResetPasswordForm from '@/components/ResetPasswordForm.vue'
 Vue.use(VueRouter);
 
 // NAVIGATION GUARD ----------------------------------------------------------------------------------------------------
-let isAuthenticated = null;
 let authActivated = false; // set this to true if you want the nav guards to take effect.
+let isAuthenticated = null;
 
 if(authActivated) {
 	isAuthenticated = async (to, from, next) => {
@@ -68,7 +68,7 @@ const routes = [
 	{
 		path: '/',
 		component: MainLayout,
-		// redirect: "/dashboard", 
+		redirect: "/dashboard", 
 		children: [
 			{
 				path: 'dashboard',
