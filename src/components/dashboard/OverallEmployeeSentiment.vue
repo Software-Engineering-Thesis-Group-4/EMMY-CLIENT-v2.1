@@ -44,10 +44,11 @@ export default {
 	background-color: #ffffff;
 	display: flex;
 	flex-direction: column;
+
 	border: 1px solid #e0e0e0;
-	// box-shadow: 0px 3px 10px 2px #0000000e;
 	border-radius: 8px;
-	padding: 20px 20px 0px;
+
 	width: 100%;
+	padding: 20px 20px 0px;
 }
 </style>
