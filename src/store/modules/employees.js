@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { loadTableData } from '../../employees/data_table.js';
+import { loadTableData } from '../../components/employees/data-table-options/data_table.js';
 
 const EmployeesModule = {
 	namespaced: true,
@@ -56,6 +56,7 @@ const EmployeesModule = {
 				// TODO: create and show an error banner when an error occurs
 			}
 		},
+		// TODO: create "Add Employee" functionality
 		/* async ADD_EMPLOYEE(context, employee) {
 			 try {
 				  let response = await Vue.axios.post(`/api/employees/enroll`)

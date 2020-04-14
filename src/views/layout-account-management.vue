@@ -66,41 +66,41 @@ import AddEmployeeForm from "@/components/AddEmployeeForm.vue";
 import { options, loadTableData } from "@/employees/user_table.js";
 
 export default {
-  components: {
-    AddEmployeeForm
-  },
-  data() {
-    return {
-      showAddEmployeeForm: false,
-      employeeDataTableOptions: options,
-      loadingEmployeeDataTable: false
-    };
-  },
-  computed: {
-    employeeCount: () => {
-      return options.data.length;
-    },
-    employees() {
-      let employees = options.data.map(employee => {
-        return employee.name;
-      });
+	components: {
+		AddEmployeeForm
+	},
+	data() {
+		return {
+			showAddEmployeeForm: false,
+			employeeDataTableOptions: options,
+			loadingEmployeeDataTable: false
+		};
+	},
+	computed: {
+		employeeCount: () => {
+			return options.data.length;
+		},
+		employees() {
+			let employees = options.data.map(employee => {
+				return employee.name;
+			});
 
-      return employees;
-    }
-  },
-  methods: {
-    closeAddEmployeeForm() {
-      this.showAddEmployeeForm = false;
-    },
-    deleteEmployee(employee) {
-      this.$store.dispatch("employees/DELETE_EMPLOYEE", employee.id);
-    }
-  },
-  created() {
-    this.$store.dispatch("employees/FETCH_EMPLOYEES").then(employees => {
-      loadTableData(employees);
-    });
-  }
+			return employees;
+		}
+	},
+	methods: {
+		closeAddEmployeeForm() {
+			this.showAddEmployeeForm = false;
+		},
+		deleteEmployee(employee) {
+			this.$store.dispatch("employees/DELETE_EMPLOYEE", employee.id);
+		}
+	},
+	created() {
+		this.$store.dispatch("employees/FETCH_EMPLOYEES").then(employees => {
+			loadTableData(employees);
+		});
+	}
 };
 </script>
 
@@ -154,14 +154,14 @@ export default {
   display: flex;
   justify-content: flex-end;
 
-  height: 40px;
+	height: 40px;
 
-  padding: 5px 15px;
-  margin-left: 20px;
+	padding: 5px 15px;
+	margin-left: 20px;
 
-  font-weight: 500;
-  color: white;
-  border-radius: 5px;
+	font-weight: 500;
+	color: white;
+	border-radius: 5px;
 }
 
 .action-button {
@@ -175,7 +175,7 @@ export default {
 }
 
 .action-delete:hover path {
-  filter: brightness(100%);
-  fill: rgb(255, 140, 140);
+	filter: brightness(100%);
+	fill: rgb(255, 140, 140);
 }
 </style>

@@ -210,6 +210,7 @@ export default {
 
 	#button-filters {
 		background-color: #7198f3;
+		background: linear-gradient(0deg, #5a79c2 0%, #7198f3 100%);
 
 		display: flex;
 		align-items: center;
@@ -218,11 +219,18 @@ export default {
 		height: 40px;
 
 		padding: 5px 9px 5px 15px;
-		margin-left: 20px;
+		margin-left: 10px;
 
 		font-weight: 500;
 		color: white;
+
+		border: 1.5px solid #5f7bbe;
 		border-radius: 5px;
+		transition: filter 0.1s ease;
+
+		&:hover {
+			filter: brightness(0.95);
+		}
 
 		.button-icon {
 			font-size: 16px;

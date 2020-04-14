@@ -16,8 +16,4 @@ export default {};
 	padding: 0px;
 	font-family: "Cera Pro", sans-serif;
 }
-
-.v-application--wrap {
-	background-color: #f8f8f8;
-}
 </style>
