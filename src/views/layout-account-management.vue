@@ -1,28 +1,17 @@
 <template>
-  <div>
+  <div class="main-container">
     <div>
       <h1 class="page-header">Account Management</h1>
-    </div>
-    
-    <div class="controls">
-   
-      <v-dialog v-model="showAddEmployeeForm" persistent max-width="600px">
-        <template v-slot:activator="{ on }">
-          <!-- Add Employee Button -->
-          <button id="button-add-employee" v-on="on">
-            <v-icon class="button-icon">mdi-plus</v-icon>Add New Employee
-          </button>
-        </template>
-
-        <AddEmployeeForm @close="closeAddEmployeeForm()" />
-      </v-dialog>
-      
-
-  
-
-      <!-- Employee Count -->
-      <div class="employee-count">
-        <span>Employee count: {{ this.employeeCount }}</span>
+      <div class="controls">
+        <v-dialog v-model="showAddEmployeeForm" persistent max-width="600px">
+          <template v-slot:activator="{ on }">
+            <!-- Add Employee Button -->
+            <button id="button-add-employee" v-on="on">
+              <v-icon class="button-icon">mdi-plus</v-icon>Add New Employee
+            </button>
+          </template>
+          <AddEmployeeForm @close="closeAddEmployeeForm()" />
+        </v-dialog>
       </div>
     </div>
 
@@ -119,8 +108,8 @@ export default {
 <style lang="scss" scoped>
 .controls {
   display: flex;
+  justify-content: flex-end;
   align-items: center;
-  // background-color: turquoise;
   height: 60px;
   margin-top: 13px;
   margin-bottom: 5px;
@@ -141,12 +130,27 @@ export default {
   }
 }
 
+.page-header {
+  color: #707070;
+}
+
+.main-container {
+	background: #26282B;
+	height: 100vh;
+}
+
+.elevation-1{
+  background-color: #202224;
+  color: #57A48A;
+}
+
+
+
 #button-add-employee {
-  background-color: #3EC497;
+  background-color: #3ec497;
 
   display: flex;
-  align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
 
   height: 40px;
 
@@ -158,24 +162,7 @@ export default {
   border-radius: 5px;
 }
 
-.employee-count {
-  // background-color: #7198f3;
-  flex-grow: 1;
-  align-self: flex-end;
-  text-align: end;
-
-  span {
-    font-size: 14px;
-    color: #aaaaaa;
-  }
-}
-
-.theme--light.v-data-table thead tr th {
-  color: #202224;
-}
-
 .action-button {
-  // background-color: red;
   border: none;
   padding: 0px 5px;
 
