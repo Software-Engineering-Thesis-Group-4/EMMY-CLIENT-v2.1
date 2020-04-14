@@ -26,10 +26,10 @@ export let options = {
     search: null,
     selected: [],
     headers: [
-        { text: "USER", align: "left", sortable: true, value: "name" },
-        { text: "EMAIL", value: "email", sortable: true },
-        { text: "ROLE", value: "role", sortable: true },
-        { text: "EDIT / DELETE", align: "center", value: "actions", sortable: false, }
+        { text: "User", align: "left", sortable: true, value: "name" },
+        { text: "Email", value: "email", sortable: true },
+        { text: "Role", value: "role", sortable: true },
+        { text: "Operations", align: "center", value: "actions", sortable: false, }
     ],
     data: [],
 }
