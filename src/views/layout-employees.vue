@@ -29,12 +29,15 @@
 					</button>
 				</template>
 
-				<AddEmployeeForm @closeDialog="toggleAddEmployeeDialog" />
+				<AddEmployeeForm
+					@closeDialog="toggleAddEmployeeDialog"
+					@addedNewEmployee="fetchEmployees"
+				/>
 			</v-dialog>
 			<!-- Add Employee Button -->
 
 			<!-- Filters Button -->
-			<button id="button-filters">
+			<button id="button-filters" @click="showFilterDropdown">
 				<v-icon class="button-icon">mdi-filter</v-icon>Filters
 				<v-icon class="button-icon-right">mdi-chevron-down</v-icon>
 			</button>
@@ -63,7 +66,7 @@
 
 			<template v-slot:item.actions="{ item }">
 				<!-- Edit Employee Details -->
-				<button class="action-button">
+				<button class="action-button" @click="editEmployee(item)">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="15.865"
@@ -103,10 +106,7 @@
 
 <script>
 import AddEmployeeForm from "@/components/employees/AddEmployeeForm.vue";
-import {
-	options,
-	loadTableData
-} from "@/components/employees/data-table-options/data_table.js";
+import { options, loadTableData } from "@/components/employees/data-table-options/data_table.js";
 
 export default {
 	data() {
@@ -132,17 +132,31 @@ export default {
 		}
 	},
 	methods: {
+		showFilterDropdown() {
+			// TODO: Implement filter functionality
+			alert('TODO: Implement filter functionality');
+		},
+		editEmployee(employee) {
+			// TODO: Implement filter functionality
+			employee;
+			alert('TODO: Implement edit employee functionality')
+		},
 		deleteEmployee(employee) {
+			// TODO: show a confirmation dialog to the user before commiting to make an employee as "terminated"
 			this.$store.dispatch("employees/DELETE_EMPLOYEE", employee.id);
 		},
 		toggleAddEmployeeDialog() {
 			this.showAddEmployeeDialog = false;
+		},
+		fetchEmployees() {
+			this.$store.dispatch("employees/FETCH_EMPLOYEES").then(employees => {
+				loadTableData(employees);
+				console.log("fetched all employees");
+			});
 		}
 	},
 	created() {
-		this.$store.dispatch("employees/FETCH_EMPLOYEES").then(employees => {
-			loadTableData(employees);
-		});
+		this.fetchEmployees();
 	}
 };
 </script>
@@ -194,7 +208,7 @@ export default {
 	font-weight: 500;
 	color: white;
 
-	border: 1.5px solid #5F7BBE;
+	border: 1.5px solid #5f7bbe;
 	border-radius: 5px;
 	transition: filter 0.1s ease;
 
@@ -219,7 +233,7 @@ export default {
 	font-weight: 500;
 	color: white;
 
-	border: 1.5px solid #5F7BBE;
+	border: 1.5px solid #5f7bbe;
 	border-radius: 5px;
 	transition: filter 0.1s ease;
 

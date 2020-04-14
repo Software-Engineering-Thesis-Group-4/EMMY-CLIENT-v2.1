@@ -45,7 +45,7 @@
 			</div>
 
 			<!-- Filters Button ------------------------------------------------------------------------------------- -->
-			<button id="button-filters">
+			<button id="button-filters" @click="showFilterDropdown">
 				<v-icon class="button-icon">mdi-filter</v-icon> Filters
 				<v-icon class="button-icon-right">mdi-chevron-down</v-icon>
 			</button>
@@ -82,8 +82,8 @@
 				</div>
 			</template>
 
-			<template v-slot:item.actions>
-				<button class="action-button">
+			<template v-slot:item.actions="{ item }">
+				<button class="action-button" @click="editLog(item)">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="15.865"
@@ -97,7 +97,7 @@
 						/>
 					</svg>
 				</button>
-				<button class="action-button action-delete">
+				<button class="action-button action-delete" @click="deleteLog(item)">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="12.25"
@@ -118,7 +118,7 @@
 
 <script>
 import moment from "moment";
-import { options, loadTableData } from "@/attendance-logs/data_table.js";
+import { options, loadEmployeeLogs } from "@/attendance-logs/data_table.js";
 
 export default {
 	data() {
@@ -175,11 +175,27 @@ export default {
 
 			return `/emotions/${emotion}.png`;
 		},
-		filterOnDateRange() {}
+		showFilterDropdown() {
+			// TODO: Implement filter functionality
+			alert('TODO: Implement filter functionality');
+		},
+		filterOnDateRange() {},
+		editLog(item) {
+			item;
+			// TODO: Implement edit log functionality
+			alert(`TODO: Implement edit log functionality`);
+		},
+		deleteLog(item) {
+			// TODO: make a confirmation dialog to confirm if the user wants to delete the sentiment log
+			console.log(item);
+
+			// item.id (is the objectId of the sentiment log)
+			this.$store.dispatch("employees/DELETE_EMPLOYEELOG", item.id);
+		}
 	},
 	created() {
 		this.$store.dispatch("employees/FETCH_ATTENDANCELOGS").then(logs => {
-			loadTableData(logs);
+			loadEmployeeLogs(logs);
 		});
 	}
 };
