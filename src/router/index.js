@@ -132,16 +132,25 @@ const routes = [
 			{
 				path: 'account-management',
 				alias: '/account-management',
+				meta: {
+					title: 'Account Management'
+				},
 				component: AccountManagementLayout, 
 			},
 			{
 				path: 'application-configuration',
 				alias: '/application-configuration',
+				meta: {
+					title: 'Application Configuration'
+				},
 				component: ApplicationConfigurationLayout, 
 			},
 			{
 				path: 'application-logs',
 				alias: '/application-logs',
+				meta: {
+					title: 'Application Logs'
+				},
 				component: ApplicationLogsLayout, 
 			}
 		]

@@ -12,14 +12,14 @@
 
 			<!--  Application Configuration Icon -->
 			<div class="nav-item">
-				<router-link to="/admin/login">
+				<router-link to="/admin/application-configuration">
 					<img src="@/assets/images/cog.svg">
 				</router-link>
 			</div>
 
 			<!-- Application Logs Icon -->
 			<div class="nav-item">
-				<router-link to="/account-management">
+				<router-link to="/admin/application-logs">
 					<img src="@/assets/images/icon-logs.svg">
 				</router-link>
 			</div>
