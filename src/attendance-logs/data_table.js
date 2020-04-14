@@ -2,7 +2,7 @@ import moment from 'moment';
 
 // this function is called in the attendance logs vue component (create lifecycle) to render all the items in the attendance logs 
 // OR any changes in the attendance logs...
-export function loadTableData(logs, /* dateRange */) {
+export function loadEmployeeLogs(logs, /* dateRange */) {
     let attendanceTableData = [];
     // let dateFilter = new Date();
 
