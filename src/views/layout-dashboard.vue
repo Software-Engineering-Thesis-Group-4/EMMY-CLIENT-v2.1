@@ -4,10 +4,18 @@
 			<h2 class="group-label">General Statistics</h2>
 			<!-- REFACTOR: Convert this to a component -->
 			<div class="general-statistics-container">
-				<div class="card"></div>
-				<div class="card"></div>
-				<div class="card"></div>
-				<div class="card"></div>
+				<div class="card">
+					<h1>Item 1</h1>
+				</div>
+				<div class="card">
+					<h1>Item 2</h1>
+				</div>
+				<div class="card">
+					<h1>Item 3</h1>
+				</div>
+				<div class="card">
+					<h1>Item 4</h1>
+				</div>
 			</div>
 		</div>
 
@@ -20,14 +28,14 @@
 
 			<div class="dv-group-item">
 				<h2 class="group-label">Overall Employee Sentiment (by gender)</h2>
-				<GenderSentiment class="sentiment-chart" />
+				<GenderSentiment />
 			</div>
 
 			<div class="dv-group-item">
 				<h2 class="group-label">
 					Overall Employee Sentiment (by department)
 				</h2>
-				<DepartmentSentiment class="sentiment-chart" />
+				<DepartmentSentiment />
 			</div>
 
 		</div>
@@ -55,69 +63,68 @@ export default {
 
 <style lang="scss" scoped>
 .main-container {
-	// background-color: #ffe60036; // FOR DEBUGGING
+	// DEBUGGING ---------------------------------------
+	// background-color: #ffe60036;
+	// -------------------------------------------------
 	min-width: 1024px;
 	padding-bottom: 50px;
 }
 
 .dv-group {
-	// background-color: #00eaff3b; // FOR DEBUGGING
+	// DEBUGGING ---------------------------------------
+	// background-color: #00eaff3b;
+	// border: 1px dashed #f82fff91;
+	// -------------------------------------------------
 	margin-top: 20px;
 
 	.group-label {
 		font-size: 20px;
 		margin-bottom: 10px;
-		color: rgb(56, 56, 56);
-	}
-
-	.dv-group-item {
-		// background-color: red; // FOR DEBUGGING
-		width: 100%;
-
-		&:first-child {
-			margin-right: 20px;
-		}
-
-		.sentiment-chart {
-			background-color: #ffffff;
-			display: flex;
-			flex-direction: column;
-			padding: 15px;
-			border: 1px solid #e0e0e0;
-			border-radius: 8px;
-			height: 400px;
-		}
+		color: #383838;
 	}
 }
 
 // Gender & Department Group
 .dual-column {
-	// background-color: red;
+	// DEBUGGING ---------------------------------------
+	// background-color: #df41ff36; // FOR DEBUGGING
+	// -------------------------------------------------
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	column-gap: 15px;
+
+	.dv-group-item {
+		// DEBUGGING ---------------------------------------
+		// background-color: red;
+		// border: 1px dashed #b4b4b4;
+		// -------------------------------------------------
+		width: 100%;
+	}
 }
 
 .general-statistics-container {
+	// DEBUGGING ---------------------------------------
 	// background-color: #ff00003a;
-	display: flex;
-	justify-content: space-between;
-	flex-direction: row;
+	// border: 1px dashed #727272;
+	// -------------------------------------------------
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	column-gap: 20px;
 	width: 100%;
-	padding: 10px 0px 10px 10px;
 
 	.card {
 		background: linear-gradient(-230deg, #f0f0f0, #ffffff);
 		box-shadow: 6px 6px 12px #eeeeee, -6px -6px 12px #ffffff;
-		// border: 1px solid #dddddd;
 		width: 100%;
 		height: 180px;
 		padding: 10px;
 		border-radius: 10px;
 
-		&:not(:last-child) {
-			margin-right: 20px;
-		}
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		color: #c531ff44;
 	}
 }
 </style>

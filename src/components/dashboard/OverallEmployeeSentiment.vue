@@ -48,5 +48,6 @@ export default {
 	// box-shadow: 0px 3px 10px 2px #0000000e;
 	border-radius: 8px;
 	padding: 20px 20px 0px;
+	width: 100%;
 }
 </style>
