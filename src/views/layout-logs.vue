@@ -118,7 +118,7 @@
 
 <script>
 import moment from "moment";
-import { options, loadEmployeeLogs } from "@/attendance-logs/data_table.js";
+import { options, loadEmployeeLogs } from "@/components/attendance-logs/data_table";
 
 export default {
 	data() {
