@@ -1,5 +1,5 @@
 <template>
-	<div class="container" :elevation="3">
+	<div class="container">
 		<apexchart
 			ref="chart"
 			id="OSP-stacked-bars"
@@ -12,9 +12,12 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 import apexchart from "vue-apexcharts";
-import { chartData, updateData } from "./chart-options/overall-employee-sentiment.js";
+import {
+	chartData,
+	updateData
+} from "./chart-options/overall-employee-sentiment.js";
 
 export default {
 	data() {
@@ -28,14 +31,13 @@ export default {
 	computed: {
 		...mapGetters({
 			logs: `employees/attendanceLogs`
-		}),
+		})
 	},
 	beforeMount() {
 		this.$store.dispatch("employees/FETCH_ATTENDANCELOGS").then(logs => {
 			this.$refs.chart.updateSeries(updateData(logs), true);
 		});
-	},
-
+	}
 };
 </script>
 

@@ -1,14 +1,12 @@
-export let male = [44, 55, 13, 33, 15, 26];
-export let female = [44, 55, 13, 33, 15, 26];
 
-export const chartOptions = {
+// Global chart options for gender charts
+window.Apex = {
 	chart: {
-		type: 'donut',
 		// background: '#ff00004d',
-		// height: 'auto'
+		width: '100%',
+		type: 'donut',
 	},
-	// Angry, Sad, Okay, Happy, Amazing, Unsubmitted
-	colors: ["#FF8484", "#FFB546", "#FFF23B", "#A8FF84", "#65FBDC", "#E2E2E2"],
+	colors: ["#FF8484", "#FFB546", "#FFF23B", "#A8FF84", "#65FBDC", "#B2BEC3"],
 	labels: ["Angry", "Sad", "Okay", "Happy", "Amazing", "Unsubmitted"],
 	dataLabels: {
 		enabled: false,
@@ -16,27 +14,13 @@ export const chartOptions = {
 	tooltip: {
 		enabled: true,
 	},
-	// title: {
-	// 	text: "Title",
-	// 	align: 'center',
-	// 	margin: 10,
-	// 	offsetX: 0,
-	// 	offsetY: 0,
-	// 	floating: false,
-	// 	style: {
-	// 		fontSize: '25px',
-	// 		fontWeight: 'bold',
-	// 		fontFamily: "Cera Pro",
-	// 		color: '#263238'
-	// 	},
-	// },
 	legend: {
 		show: true,
 		showForSingleSeries: false,
 		showForNullSeries: true,
 		showForZeroSeries: true,
 		position: 'bottom',
-		horizontalAlign: 'left',
+		horizontalAlign: 'center',
 		floating: false,
 		fontSize: '14px',
 		fontFamily: 'Cera Pro, Arial',
@@ -63,7 +47,6 @@ export const chartOptions = {
 	},
 	plotOptions: {
 		pie: {
-			customScale: 1,
 			expandOnClick: false,
 			// offsetY: 10,
 			donut: {
@@ -74,7 +57,7 @@ export const chartOptions = {
 						show: true,
 						fontSize: '15px',
 						fontFamily: 'Cera Pro, Arial',
-						color: 'black'
+						color: 'black',
 					},
 					total: {
 						show: true,
@@ -84,9 +67,46 @@ export const chartOptions = {
 						fontFamily: 'Cera Pro, Arial',
 						fontWeight: 600,
 						color: '#373d3f',
-					}
+					},
+					value: {
+						show: true,
+						fontSize: '18px',
+						fontFamily: 'Cera Pro, Arial, sans-serif',
+						fontWeight: 600,
+						color: undefined,
+						offsetY: 0,
+						formatter: function (val) {
+							return val
+						}
+					},
 				}
 			}
 		},
 	}
+}
+
+export const maleChart = {
+	data: [84, 97, 10, 17, 35, 69],
+	chart: {
+		id: 'male',
+		group: 'genderChart',
+		type: 'donut',
+	}
+}
+
+export const femaleChart = {
+	data: [68, 27, 90, 59, 31, 16],
+	chart: {
+		id: 'female',
+		group: 'genderChart',
+		type: 'donut',
+	}
+}
+
+export const chartOptions = {
+
+	dataLabels: {
+		enabled: false,
+	},
+
 }

@@ -5,16 +5,16 @@
 			<!-- REFACTOR: Convert this to a component -->
 			<div class="general-statistics-container">
 				<div class="card">
-					<h1>Item 1</h1>
+					<!-- <h1>Item 1</h1> -->
 				</div>
 				<div class="card">
-					<h1>Item 2</h1>
+					<!-- <h1>Item 2</h1> -->
 				</div>
 				<div class="card">
-					<h1>Item 3</h1>
+					<!-- <h1>Item 3</h1> -->
 				</div>
 				<div class="card">
-					<h1>Item 4</h1>
+					<!-- <h1>Item 4</h1> -->
 				</div>
 			</div>
 		</div>
@@ -67,7 +67,42 @@ export default {
 	// background-color: #ffe60036;
 	// -------------------------------------------------
 	min-width: 1024px;
+	max-width: 1522.39px;
+	width: 100%;
 	padding-bottom: 50px;
+
+	align-self: center;
+}
+
+.general-statistics-container {
+	// DEBUGGING ---------------------------------------
+	// background-color: #ff00003a;
+	// border: 1px dashed #727272;
+	// -------------------------------------------------
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	column-gap: 5px;
+	width: 100%;
+
+	.card {
+		// NEOMORPHISM
+		/* background: linear-gradient(-230deg, #f0f0f0, #ffffff);
+		box-shadow: 6px 6px 12px #eeeeee, -6px -6px 12px #ffffff; */
+
+		background-color: #ffffff;
+		border: 0.5px solid #dddddd;
+
+		width: 100%;
+		height: 100px;
+		padding: 10px;
+		border-radius: 10px;
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		color: #c531ff44;
+	}
 }
 
 .dv-group {
@@ -76,6 +111,7 @@ export default {
 	// border: 1px dashed #f82fff91;
 	// -------------------------------------------------
 	margin-top: 20px;
+	width: 100%;
 
 	.group-label {
 		font-size: 20px;
@@ -90,7 +126,7 @@ export default {
 	// background-color: #df41ff36; // FOR DEBUGGING
 	// -------------------------------------------------
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: 0.8fr 1fr;
 	column-gap: 15px;
 
 	.dv-group-item {
@@ -99,32 +135,6 @@ export default {
 		// border: 1px dashed #b4b4b4;
 		// -------------------------------------------------
 		width: 100%;
-	}
-}
-
-.general-statistics-container {
-	// DEBUGGING ---------------------------------------
-	// background-color: #ff00003a;
-	// border: 1px dashed #727272;
-	// -------------------------------------------------
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr;
-	column-gap: 20px;
-	width: 100%;
-
-	.card {
-		background: linear-gradient(-230deg, #f0f0f0, #ffffff);
-		box-shadow: 6px 6px 12px #eeeeee, -6px -6px 12px #ffffff;
-		width: 100%;
-		height: 180px;
-		padding: 10px;
-		border-radius: 10px;
-
-		display: flex;
-		justify-content: center;
-		align-items: center;
-
-		color: #c531ff44;
 	}
 }
 </style>
