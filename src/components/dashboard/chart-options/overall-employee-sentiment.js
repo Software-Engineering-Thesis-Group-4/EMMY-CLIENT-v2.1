@@ -1,49 +1,52 @@
+// let data = [
+// 	{ name: "Angry", data: [] },
+// 	{ name: "Unhappy", data: [] },
+// 	{ name: "Okay", data: [] },
+// 	{ name: "Happy", data: [] },
+// 	{ name: "Amazing", data: [] },
+// 	{ name: "Unsubmitted", data: [] }
+// ];
+
 let data = [
 	{
 		name: "Angry",
-		// data: [47, 44, 26, 21, 99, 85, 72, 96, 53, 20, 90, 81]
-		data: []
+		data: [47, 44, 26, 21, 99, 85, 72, 96, 53, 20, 90, 81]
 	},
 	{
 		name: "Unhappy",
-		// data: [88, 67, 24, 11, 54, 89, 79, 71, 32, 73, 22, 30]
-		data: []
+		data: [88, 67, 24, 11, 54, 89, 79, 71, 32, 73, 22, 30]
 	},
 	{
 		name: "Okay",
-		// data: [56, 92, 92, 97, 39, 65, 95, 39, 28, 95, 93, 96]
-		data: []
+		data: [56, 92, 92, 97, 39, 65, 95, 39, 28, 95, 93, 96]
 	},
 	{
 		name: "Happy",
-		// data: [84, 59, 91, 18, 26, 18, 2, 52, 36, 63, 2, 12]
-		data: []
+		data: [84, 59, 91, 18, 26, 18, 2, 52, 36, 63, 2, 12]
 	},
 	{
 		name: "Amazing",
-		// data: [96, 44, 98, 38, 40, 84, 90, 83, 19, 8, 45, 31]
-		data: []
+		data: [96, 44, 98, 38, 40, 84, 90, 83, 19, 8, 45, 31]
 	},
 	{
 		name: "Unsubmitted",
-		// data: [129, 150, 169, 315, 242, 159, 162, 332, 99, 89, 11, 77]
-		data: []
+		data: [129, 150, 169, 315, 242, 159, 162, 332, 99, 89, 11, 77]
 	}
 ];
 
 export function updateData(logs) {
-	if(!logs) {
+	if (!logs) {
 		return data;
 	}
 
 	// get all the emotions per month
 	let emotions = {
-		'unsubmitted': [[],[],[],[],[],[],[],[],[],[],[],[]],
-		'angry'      : [[],[],[],[],[],[],[],[],[],[],[],[]],
-		'unhappy'    : [[],[],[],[],[],[],[],[],[],[],[],[]],
-		'okay'       : [[],[],[],[],[],[],[],[],[],[],[],[]],
-		'happy'      : [[],[],[],[],[],[],[],[],[],[],[],[]],
-		'amazing'    : [[],[],[],[],[],[],[],[],[],[],[],[]],
+		'unsubmitted': [[], [], [], [], [], [], [], [], [], [], [], []],
+		'angry': [[], [], [], [], [], [], [], [], [], [], [], []],
+		'unhappy': [[], [], [], [], [], [], [], [], [], [], [], []],
+		'okay': [[], [], [], [], [], [], [], [], [], [], [], []],
+		'happy': [[], [], [], [], [], [], [], [], [], [], [], []],
+		'amazing': [[], [], [], [], [], [], [], [], [], [], [], []],
 	}
 
 	logs.forEach(item => {
@@ -79,9 +82,8 @@ export const chartData = {
 			toolbar: {
 				show: true,
 			},
-			offsetX: 0,
 		},
-		colors: ["#FF8484", "#FFB546", "#FFF23B", "#A8FF84", "#65FBDC", "#645656"],
+		colors: ["#FF8484", "#FFB546", "#FFF23B", "#A8FF84", "#65FBDC", "#B2BEC3"],
 		dataLabels: {
 			enabled: false
 		},
@@ -95,29 +97,11 @@ export const chartData = {
 			floating: false,
 			fontSize: '14px',
 			fontFamily: 'Cera Pro',
-			formatter: undefined,
 			inverseOrder: true,
 			width: undefined,
 			height: undefined,
-			tooltipHoverFormatter: undefined,
 			offsetX: -20,
-			offsetY: 30,
-			labels: {
-				colors: undefined,
-				useSeriesColors: false
-			},
-			markers: {
-				width: 12,
-				height: 12,
-				strokeWidth: 0,
-				strokeColor: '#fff',
-				fillColors: undefined,
-				radius: 0,
-				customHTML: undefined,
-				onClick: undefined,
-				offsetX: 0,
-				offsetY: 0
-			},
+			offsetY: 10,
 			itemMargin: {
 				horizontal: 5,
 				vertical: 2
@@ -138,14 +122,6 @@ export const chartData = {
 				"Nov",
 				"Dec"
 			],
-			axisTicks: {
-				show: false,
-				// borderType: 'solid',
-				// color: '#78909C',
-				// width: 6,
-				// offsetX: 0,
-				// offsetY: 0
-			},
 			labels: {
 				show: true,
 				rotate: -45,
@@ -162,11 +138,14 @@ export const chartData = {
 					cssClass: "apexcharts-xaxis-label"
 				}
 			},
-			
+
 		},
 		yaxis: {
+			labels: {
+				show: false,
+			},
 			title: {
-				text: "Daily Sentiment Logs",
+				text: "Sentiment Logs",
 				rotate: 90,
 				offsetX: 0,
 				offsetY: 0,
@@ -178,26 +157,6 @@ export const chartData = {
 					cssClass: "apexcharts-yaxis-title"
 				}
 			},
-			labels: {
-				show: false,
-				rotate: 0,
-				rotateAlways: false,
-				hideOverlappingLabels: true,
-				showDuplicates: false,
-				trim: true,
-				minHeight: undefined,
-				maxHeight: 120,
-				style: {
-					colors: "#656565",
-					fontSize: "14px",
-					fontFamily: "Cera Pro",
-					cssClass: "apexcharts-xaxis-label"
-				},
-			},
-
-		},
-		fill: {
-			opacity: 1
 		},
 		noData: {
 			text: "Loading data...",
@@ -211,19 +170,5 @@ export const chartData = {
 				fontFamily: "Cera Pro"
 			}
 		},
-		// title: {
-		// 	text: "Overall Employee Sentiment",
-		// 	align: "left",
-		// 	margin: 10,
-		// 	offsetX: 0,
-		// 	offsetY: 0,
-		// 	floating: false,
-		// 	style: {
-		// 		fontSize: "18px",
-		// 		fontWeight: "bold",
-		// 		fontFamily: "Cera Pro",
-		// 		color: "#263238"
-		// 	}
-		// }
 	}
 }

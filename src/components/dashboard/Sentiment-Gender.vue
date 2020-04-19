@@ -2,26 +2,26 @@
 	<div class="chart-container">
 
 		<!-- MALE CHART -->
-		<apexcharts
-			class="chart"
-			id="male"
-			ref="maleGenderChart"
-			type="donut"
-			width="380"
-			:options="maleChart.chartOptions"
-			:series="maleChart.series"
-		/>
+		<div class="chart">
+			<span class="chart-title">Male</span>
+			<apexcharts
+				id="male"
+				ref="maleGenderChart"
+				:options="maleChart"
+				:series="maleChart.data"
+			/>
+		</div>
 
 		<!-- FEMALE CHART -->
-		<!-- <apexcharts
-			class="chart"
-			id="female"
-			ref="femaleGenderChart"
-			type="donut"
-			width="380"
-			:options="femaleChart.chartOptions"
-			:series="femaleChart.series"
-		/> -->
+		<div class="chart">
+			<span class="chart-title">Female</span>
+			<apexcharts
+				id="female"
+				ref="femaleGenderChart"
+				:options="femaleChart"
+				:series="femaleChart.data"
+			/>
+		</div>
 
 	</div>
 </template>
@@ -45,12 +45,48 @@ export default {
 
 <style lang="scss" scoped>
 .chart-container {
-	// background-color: cyan;
+	// DEBUGGING ---------------------------------------
+	// background-color: #8400ff4d;
+	// border: 1px dashed #555555;
+	// -------------------------------------------------
+	background-color: #ffffff;
+	border: 1px solid #e0e0e0;
+	border-radius: 8px;
+
+	min-height: max-content;
 	width: 100%;
+	margin: 0px;
+
+	padding: 10px;
+
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	column-gap: 0px;
+
+	justify-items: center;
+	align-items: center;
 }
 
 .chart {
-	// background-color: red;
-	width: max-content;
+	// DEBUGGING ---------------------------------------
+	// background-color: #66ff004d;
+	// border: 1px dashed #555555;
+	// -------------------------------------------------
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	max-width: 450px;
+	padding: 10px;
+
+	.chart-title {
+		// DEBUGGING ---------------------------------------
+		// background-color: #66ff004d;
+		// border: 1px dashed #555555;
+		// -------------------------------------------------
+		font-size: 25px;
+		font-weight: bold;
+		text-align: center;
+		margin-bottom: 10px;
+	}
 }
 </style>

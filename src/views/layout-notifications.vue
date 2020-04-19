@@ -189,6 +189,7 @@ export default {
 
 	.notifications-daterange {
 		color: #bebebe;
+		font-weight: 500;
 		margin-bottom: 5px;
 		margin-left: 40px;
 	}
