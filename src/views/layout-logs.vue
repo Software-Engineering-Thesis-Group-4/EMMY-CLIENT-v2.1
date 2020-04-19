@@ -6,11 +6,9 @@
 				<v-autocomplete
 					:search-input.sync="dataTableOptions.search"
 					color="#779AEC"
-					:items="autocompleteItems"
 					clearable
-					hide-no-data
+					hide-no-data="true"
 					label="Search Employees"
-					placeholder="Start typing to Search"
 					prepend-icon="mdi-database-search"
 				></v-autocomplete>
 			</div>
@@ -45,10 +43,57 @@
 			</div>
 
 			<!-- Filters Button ------------------------------------------------------------------------------------- -->
-			<button id="button-filters">
-				<v-icon class="button-icon">mdi-filter</v-icon> Filters
-				<v-icon class="button-icon-right">mdi-chevron-down</v-icon>
-			</button>
+			<v-menu
+				offset-y
+				:close-on-content-click="false"
+			>
+				<template v-slot:activator="{ on }">
+					<button
+						id="button-filters"
+						v-on="on"
+					>
+						<v-icon class="button-icon">mdi-filter</v-icon> Filters
+						<v-icon class="button-icon-right">mdi-chevron-down</v-icon>
+					</button>
+				</template>
+				
+				<v-form
+					@submit.prevent
+					ref="filterDropdown"
+					class="filter-menu-container"
+				>
+					<v-combobox
+						color="#5f7bbe"
+						class="filter-combobox"
+						label="Department"
+						:items="departmentCategories"
+						outlined
+						dense
+						clearable
+						@change="filterData"
+					></v-combobox>
+					<v-combobox
+						color="#5f7bbe"
+						class="filter-combobox"
+						label="Gender"
+						:items="['Male', 'Female']"
+						outlined
+						dense
+						clearable
+						@change="filterData"
+					></v-combobox>
+
+					<!-- TODO: Time in and out filter -->
+
+					<button
+						class="button-clear-filters"
+						@click="clearFilter"
+					>
+						Reset
+					</button>
+				</v-form>
+			</v-menu>
+
 		</div>
 
 		<v-data-table
@@ -64,7 +109,7 @@
 			class="elevation-1"
 		>
 			<template v-slot:item.timeIn="{ item }">
-				<div class="time-in">
+				<div class="time">
 					<img
 						:src="getEmotionImagePath(item.emotionIn)"
 						v-if="admin"
@@ -72,18 +117,35 @@
 					/>{{ item.timeIn }}
 				</div>
 			</template>
+
 			<template v-slot:item.timeOut="{ item }">
-				<div class="time-in">
-					<img
-						:src="getEmotionImagePath(item.emotionOut, item.timeOut)"
-						v-if="admin"
-						class="emotion-log"
-					/>{{ item.timeOut }}
+				<div class="time">
+					<div v-if="item.timeOut">
+						<img
+							:src="getEmotionImagePath(item.emotionOut, item.timeOut)"
+							v-if="admin"
+							class="emotion-log"
+						/>{{ item.timeOut }}
+					</div>
+
+					<div
+						v-else
+						class="no-timeout"
+					>
+						--
+					</div>
 				</div>
 			</template>
 
-			<template v-slot:item.actions>
-				<button class="action-button">
+			<template v-slot:item.employee="{ item, value }">
+				<router-link :to="{ path: `/employee/${item.ref.employeeId}` }">{{ value }}</router-link>
+			</template>
+
+			<template v-slot:item.actions="{ item }">
+				<button
+					class="action-button"
+					@click="editLog(item)"
+				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="15.865"
@@ -97,7 +159,10 @@
 						/>
 					</svg>
 				</button>
-				<button class="action-button action-delete">
+				<button
+					class="action-button action-delete"
+					@click="deleteLog(item)"
+				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="12.25"
@@ -118,7 +183,10 @@
 
 <script>
 import moment from "moment";
-import { options, loadTableData } from "@/attendance-logs/data_table.js";
+import {
+	options,
+	loadEmployeeLogs
+} from "@/components/attendance-logs/data_table";
 
 export default {
 	data() {
@@ -127,7 +195,24 @@ export default {
 			dataTableOptions: options,
 			loadingEmployeeDataTable: false,
 			dates: [new Date().toISOString().substr(0, 10)],
-			selectedItems: options.selected
+			selectedItems: options.selected,
+			departmentCategories: [
+				"Admissions",
+				"Registrar",
+				"Finance",
+				"Human Resources ",
+				"Office of Student Affairs",
+				"Office of Student Experience and Advancement ",
+				"Office of the President",
+				"Office of the COO",
+				"IT",
+				"Corporate Communications",
+				"Purchasing",
+				"Admin and Facilities",
+				"Academics College",
+				"Academics SHS",
+				"Clinic"
+			]
 		};
 	},
 	computed: {
@@ -175,11 +260,26 @@ export default {
 
 			return `/emotions/${emotion}.png`;
 		},
-		filterOnDateRange() {}
+		filterOnDateRange() {
+			alert('TODO: Implement Date Range Filter')
+		},
+		filterData() {},
+		editLog(item) {
+			item;
+			// TODO: Implement edit log functionality
+			alert(`TODO: Implement edit log functionality`);
+		},
+		deleteLog(item) {
+			// TODO: make a confirmation dialog to confirm if the user wants to delete the sentiment log
+			console.log(item);
+
+			// item.id (is the objectId of the sentiment log)
+			this.$store.dispatch("employees/DELETE_EMPLOYEELOG", item.id);
+		}
 	},
 	created() {
 		this.$store.dispatch("employees/FETCH_ATTENDANCELOGS").then(logs => {
-			loadTableData(logs);
+			loadEmployeeLogs(logs);
 		});
 	}
 };
@@ -187,10 +287,12 @@ export default {
 
 <style lang="scss" scoped>
 .controls {
-	// background-color: red;
+	// FOR DEBUGGING ---------------------------------------------
+	// background-color: rgba(64, 224, 208, 0.616);
+	// border: 1px dashed lightslategray;
+	// -----------------------------------------------------------
 	display: flex;
 	align-items: center;
-
 	height: 60px;
 	margin-top: 13px;
 	margin-bottom: 5px;
@@ -249,11 +351,45 @@ export default {
 	}
 }
 
-.time-in {
+.filter-menu-container {
+	background-color: #ffffff;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	padding: 20px;
+	width: 350px;
+
+	.filter-combobox {
+		width: 100%;
+	}
+
+	.button-clear-filters {
+		background: linear-gradient(0deg, #5a79c2 0%, #7198f3 100%);
+		color: white;
+		font-weight: 500;
+		height: 40px;
+		padding: 5px 15px;
+		width: 100%;
+		border: 1.5px solid #5f7bbe;
+		border-radius: 5px;
+		text-align: center;
+
+		&:hover {
+			filter: brightness(0.95);
+		}
+	}
+}
+
+.time {
 	// background-color: red;
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
+}
+
+.no-timeout {
+	color: #d3d3d3;
+	font-weight: 500;
 }
 
 .emotion-log {

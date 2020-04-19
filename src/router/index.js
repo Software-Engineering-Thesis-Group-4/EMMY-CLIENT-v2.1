@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '../store';
 
-// Layouts
+// Layouts -------------------------------------------------------------------------------------------------------------
 import MainLayout from '@/views/layout-main.vue'
 import DashboardLayout from '@/views/layout-dashboard.vue'
 import EmployeeLayout from '@/views/layout-employees.vue'
@@ -14,14 +14,15 @@ import PageNotFoundLayout from "@/views/layout-404.vue";
 
 // Admin
 import AccountSettingsLayout from '@/views/layout-account.vue';
+// Admin layouts
 import AdminLayout from '@/views/layout-admin.vue';
 import AdminLoginLayout from '@/views/layout-admin-login.vue';
 import AccountManagementLayout from "@/views/layout-account-management.vue";
 import ApplicationConfigurationLayout from "@/views/layout-admin-config.vue";
 import ApplicationLogsLayout from "@/views/layout-admin-logs.vue";
-import EmployeeProfileLayout from "@/views/layout-employeeprofile.vue";
+import EmployeeProfileLayout from '@/views/layout-employeeprofile.vue';
 
-// Components
+// Components ----------------------------------------------------------------------------------------------------------
 import LoginForm from '@/components/LoginForm.vue'
 import ResetPasswordForm from '@/components/ResetPasswordForm.vue'
 
@@ -29,8 +30,8 @@ import ResetPasswordForm from '@/components/ResetPasswordForm.vue'
 Vue.use(VueRouter);
 
 // NAVIGATION GUARD ----------------------------------------------------------------------------------------------------
-let isAuthenticated = null;
 let authActivated = false; // set this to true if you want the nav guards to take effect.
+let isAuthenticated = null;
 
 if(authActivated) {
 	isAuthenticated = async (to, from, next) => {
@@ -72,7 +73,7 @@ const routes = [
 	{
 		path: '/',
 		component: MainLayout,
-		// redirect: "/dashboard", 
+		redirect: "/dashboard", 
 		children: [
 			{
 				path: 'dashboard',
@@ -138,7 +139,7 @@ const routes = [
 	{
 		path: '/admin',
 		component: AdminLayout,
-		// redirect: "/account-management",
+		redirect: "/account-management",
 		children: [
 			{
 				path: 'account-management',

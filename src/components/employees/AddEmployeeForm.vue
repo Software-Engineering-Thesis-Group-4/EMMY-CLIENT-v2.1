@@ -205,37 +205,46 @@ export default {
 	name: "AddEmployeeForm",
 	data: () => {
 		return {
-			// sample form data ---------------------------------------------------
-			// firstname: "Nathaniel",
-			// lastname: "Saludes",
-			// email: "saludesnathaniel@gmail.com",
-			// isMale: true,	
-			// fingerprint_id: 1,
-			// employee_id: "2015-02034",
-			// department: "HR",
+			// firstname: null,
+			// lastname: null,
+			// email: null,
+			// isMale: null,
+			// fingerprint_id: null,
+			// employee_id: null,
+			// department: null,
 			// employment_status: null,
-			// job_title: "HR Assitant",
-			// --------------------------------------------------------------------
+			// job_title: null,
 
-			firstname: null,
-			lastname: null,
-			email: null,
-			isMale: null,
-			fingerprint_id: null,
-			employee_id: null,
-			department: null,
-			employment_status: null,
-			job_title: null,
+			firstname: "John",
+			lastname: "Doe",
+			email: "johndoe@gmail.com",
+			isMale: true,
+			fingerprint_id: 55,
+			employee_id: "2020-02056",
+			department: "Purchasing",
+			employment_status: "Full-time",
+			job_title: "jobless",
 
 			// toggle CSV file upload form
 			multipleUpload: false,
 
 			// department categories
 			departmentCategories: [
-				"Human Resources",
+				"Admissions",
+				"Registrar",
 				"Finance",
-				"Faculty",
-				"IT Department"
+				"Human Resources ",
+				"Office of Student Affairs",
+				"Office of Student Experience and Advancement ",
+				"Office of the President",
+				"Office of the COO",
+				"IT",
+				"Corporate Communications",
+				"Purchasing",
+				"Admin and Facilities",
+				"Academics College",
+				"Academics SHS",
+				"Clinic"
 			],
 
 			// csv upload
@@ -247,10 +256,35 @@ export default {
 	},
 	methods: {
 		addEmployee() {
-			// alert('addEmployee()');
+			// FIX: Remove this upon pushing project into production mode...
+			console.log({
+				firstname: this.firstname,
+				lastname: this.lastname,
+				email: this.email,
+				isMale: this.isMale,
+				fingerprint_id: this.fingerprint_id,
+				employee_id: this.employee_id,
+				department: this.department,
+				employment_status: this.employment_status,
+				job_title: this.job_title
+			});
+
+			let formData = {
+				firstname: this.firstname,
+				lastname: this.lastname,
+				email: this.email,
+				isMale: this.isMale,
+				fingerprint_id: this.fingerprint_id,
+				employee_id: this.employee_id,
+				department: this.department,
+				employment_status: this.employment_status,
+				job_title: this.job_title
+			};
+
 			this.$store
-				.dispatch("employees/addEmployee", this.formData)
+				.dispatch("employees/ADD_EMPLOYEE", formData)
 				.then(() => {
+					this.$emit('addedNewEmployee');
 					this.closeDialog();
 				});
 		},
@@ -261,20 +295,21 @@ export default {
 				return false;
 			}
 
-			// TODO: Implement HTTP request for CSV upload through store actions...
+			// TODO: Implement HTTP request for CSV upload
+			this.$http.get('')
 
 			return alert("upload_csv() not implemented!");
 		},
 		resetFormData() {
-			this.firstname         = null;
-			this.lastname          = null;
-			this.email             = null;
-			this.isMale            = null;
-			this.fingerprint_id    = null;
-			this.employee_id       = null;
-			this.department        = null;
+			this.firstname = null;
+			this.lastname = null;
+			this.email = null;
+			this.isMale = null;
+			this.fingerprint_id = null;
+			this.employee_id = null;
+			this.department = null;
 			this.employment_status = null;
-			this.job_title         = null;
+			this.job_title = null;
 		},
 		resetCSVFileUploadForm() {
 			this.$refs.csvFileUpload.reset();
