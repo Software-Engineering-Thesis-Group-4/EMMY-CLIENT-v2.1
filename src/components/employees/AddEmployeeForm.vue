@@ -209,7 +209,7 @@ export default {
 			// firstname: "Nathaniel",
 			// lastname: "Saludes",
 			// email: "saludesnathaniel@gmail.com",
-			// isMale: true,
+			// isMale: true,	
 			// fingerprint_id: 1,
 			// employee_id: "2015-02034",
 			// department: "HR",
