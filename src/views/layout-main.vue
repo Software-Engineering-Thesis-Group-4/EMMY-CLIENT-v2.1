@@ -79,6 +79,7 @@ export default {
 	// background-color: red;
 	background-color: #f8f8f8;
 	min-height: 100vh;
+	min-width: 1024px;
 
 	display: flex;
 	flex-direction: column;
@@ -131,7 +132,10 @@ export default {
 }
 
 .view-container {
-	// background-color: red;
+	// FOR DEBUGGING ----------------------------
+	// background-color: lightskyblue;
+	// border: 1px dashed gray;
+	// ------------------------------------------
 	width: 80%;
 	min-height: 93.5vh;
 	min-width: 1024px;
@@ -139,7 +143,7 @@ export default {
 
 	border: 0.3px solid #dddddd;
 	border-style: none solid none solid;
-	padding: 5px;
+	padding: 20px;
 
 	display: flex;
 	flex-direction: column;
