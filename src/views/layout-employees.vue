@@ -6,11 +6,9 @@
 				<v-autocomplete
 					:search-input.sync="employeeDataTableOptions.search"
 					clearable
-					color="#779AEC"
-					:items="employees"
 					hide-no-data
+					color="#779AEC"
 					label="Search Employees"
-					placeholder="Start typing to Search"
 					prepend-icon="mdi-database-search"
 				></v-autocomplete>
 			</div>
@@ -37,10 +35,64 @@
 			<!-- Add Employee Button -->
 
 			<!-- Filters Button -->
-			<button id="button-filters" @click="showFilterDropdown">
-				<v-icon class="button-icon">mdi-filter</v-icon>Filters
-				<v-icon class="button-icon-right">mdi-chevron-down</v-icon>
-			</button>
+			<v-menu
+				offset-y
+				:close-on-content-click="false"
+			>
+				<template v-slot:activator="{ on }">
+					<button
+						id="button-filters"
+						v-on="on"
+					>
+						<v-icon class="button-icon">mdi-filter</v-icon>Filters
+						<v-icon class="button-icon-right">mdi-chevron-down</v-icon>
+					</button>
+				</template>
+
+				<v-form
+					@submit.prevent
+					ref="filterDropdown"
+					class="filter-menu-container"
+				>
+					<v-combobox
+						color="#5f7bbe"
+						class="filter-combobox"
+						label="Department"
+						:items="departmentCategories"
+						outlined
+						dense
+						clearable
+						@change="filterData"
+					></v-combobox>
+					<v-combobox
+						color="#5f7bbe"
+						class="filter-combobox"
+						label="Gender"
+						:items="['Male', 'Female']"
+						outlined
+						dense
+						clearable
+						@change="filterData"
+					></v-combobox>
+					<v-combobox
+						color="#5f7bbe"
+						class="filter-combobox"
+						label="Employment Status"
+						:items="['Full-time', 'Part-time']"
+						outlined
+						dense
+						clearable
+						@change="filterData"
+					></v-combobox>
+
+					<button
+						class="button-clear-filters"
+						@click="clearFilter"
+					>
+						Reset
+					</button>
+				</v-form>
+			</v-menu>
 
 			<!-- Employee Count -->
 			<div class="employee-count">
@@ -60,13 +112,16 @@
 			sort-by="department"
 			class="elevation-1"
 		>
-			<template v-slot:items.name="{ item }">
-				<router-link to>{{ item.name }}</router-link>
+			<template v-slot:item.name="{ item, value }">
+				<router-link :to="{ path: `/employee/${item.employeeId}`}">{{ value }}</router-link>
 			</template>
 
 			<template v-slot:item.actions="{ item }">
 				<!-- Edit Employee Details -->
-				<button class="action-button" @click="editEmployee(item)">
+				<button
+					class="action-button"
+					@click="editEmployee(item)"
+				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="15.865"
@@ -106,14 +161,34 @@
 
 <script>
 import AddEmployeeForm from "@/components/employees/AddEmployeeForm.vue";
-import { options, loadTableData } from "@/components/employees/data-table-options/data_table.js";
+import {
+	options,
+	loadTableData
+} from "@/components/employees/data-table-options/data_table.js";
 
 export default {
 	data() {
 		return {
 			employeeDataTableOptions: options,
 			loadingEmployeeDataTable: false,
-			showAddEmployeeDialog: false
+			showAddEmployeeDialog: false,
+			departmentCategories: [
+				"Admissions",
+				"Registrar",
+				"Finance",
+				"Human Resources ",
+				"Office of Student Affairs",
+				"Office of Student Experience and Advancement ",
+				"Office of the President",
+				"Office of the COO",
+				"IT",
+				"Corporate Communications",
+				"Purchasing",
+				"Admin and Facilities",
+				"Academics College",
+				"Academics SHS",
+				"Clinic"
+			]
 		};
 	},
 	components: {
@@ -132,14 +207,10 @@ export default {
 		}
 	},
 	methods: {
-		showFilterDropdown() {
-			// TODO: Implement filter functionality
-			alert('TODO: Implement filter functionality');
-		},
 		editEmployee(employee) {
-			// TODO: Implement filter functionality
+			// TODO: Implement Edit Employee functionality
 			employee;
-			alert('TODO: Implement edit employee functionality')
+			alert("TODO: Implement edit employee functionality");
 		},
 		deleteEmployee(employee) {
 			// TODO: show a confirmation dialog to the user before commiting to make an employee as "terminated"
@@ -153,6 +224,12 @@ export default {
 				loadTableData(employees);
 				console.log("fetched all employees");
 			});
+		},
+		filterData() {
+			// TODO: Implement Filter Functionality
+		},
+		clearFilter() {
+			this.$refs.filterDropdown.reset();
 		}
 	},
 	created() {
@@ -163,12 +240,21 @@ export default {
 
 <style lang="scss" scoped>
 .controls {
+	// FOR DEBUGGING ---------------------------------------------
+	// background-color: rgba(64, 224, 208, 0.616);
+	// border: 1px dashed lightslategray;
+	// -----------------------------------------------------------
 	display: flex;
 	align-items: center;
-	// background-color: turquoise;
 	height: 60px;
 	margin-top: 13px;
 	margin-bottom: 5px;
+
+	.search-field {
+		height: 58px;
+		width: 400px;
+		// background-color: red;
+	}
 
 	.button-icon {
 		font-size: 16px;
@@ -184,78 +270,97 @@ export default {
 		color: white;
 		opacity: 0.6;
 	}
+
+	.employee-count {
+		// background-color: #7198f3;
+		flex-grow: 1;
+		align-self: flex-end;
+		text-align: end;
+
+		span {
+			font-size: 14px;
+			color: #aaaaaa;
+		}
+	}
+
+	#button-add-employee {
+		background-color: #7198f3;
+		background: linear-gradient(0deg, #5a79c2 0%, #7198f3 100%);
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		height: 40px;
+
+		padding: 5px 15px;
+		margin-left: 20px;
+
+		font-weight: 500;
+		color: white;
+
+		border: 1.5px solid #5f7bbe;
+		border-radius: 5px;
+		transition: filter 0.1s ease;
+
+		&:hover {
+			filter: brightness(0.95);
+		}
+	}
+
+	#button-filters {
+		background-color: #7198f3;
+		background: linear-gradient(0deg, #5a79c2 0%, #7198f3 100%);
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		height: 40px;
+
+		padding: 5px 9px 5px 15px;
+		margin-left: 10px;
+
+		font-weight: 500;
+		color: white;
+
+		border: 1.5px solid #5f7bbe;
+		border-radius: 5px;
+		transition: filter 0.1s ease;
+
+		&:hover {
+			filter: brightness(0.95);
+		}
+	}
 }
 
-.search-field {
-	height: 58px;
-	width: 400px;
-	// background-color: red;
-}
-
-#button-add-employee {
-	background-color: #7198f3;
-	background: linear-gradient(0deg, #5a79c2 0%, #7198f3 100%);
-
+.filter-menu-container {
+	background-color: #ffffff;
 	display: flex;
-	align-items: center;
-	justify-content: center;
+	flex-direction: column;
+	align-items: flex-start;
+	padding: 20px;
+	width: 350px;
 
-	height: 40px;
-
-	padding: 5px 15px;
-	margin-left: 20px;
-
-	font-weight: 500;
-	color: white;
-
-	border: 1.5px solid #5f7bbe;
-	border-radius: 5px;
-	transition: filter 0.1s ease;
-
-	&:hover {
-		filter: brightness(0.95);
+	.filter-combobox {
+		width: 100%;
 	}
-}
 
-#button-filters {
-	background-color: #7198f3;
-	background: linear-gradient(0deg, #5a79c2 0%, #7198f3 100%);
+	.button-clear-filters {
+		background: linear-gradient(0deg, #5a79c2 0%, #7198f3 100%);
+		color: white;
+		font-weight: 500;
+		height: 40px;
+		padding: 5px 15px;
+		width: 100%;
+		border: 1.5px solid #5f7bbe;
+		border-radius: 5px;
+		text-align: center;
 
-	display: flex;
-	align-items: center;
-	justify-content: center;
-
-	height: 40px;
-
-	padding: 5px 9px 5px 15px;
-	margin-left: 10px;
-
-	font-weight: 500;
-	color: white;
-
-	border: 1.5px solid #5f7bbe;
-	border-radius: 5px;
-	transition: filter 0.1s ease;
-
-	&:hover {
-		filter: brightness(0.95);
+		&:hover {
+			filter: brightness(0.95);
+		}
 	}
-}
-
-.employee-count {
-	// background-color: #7198f3;
-	flex-grow: 1;
-	align-self: flex-end;
-	text-align: end;
-
-	span {
-		font-size: 14px;
-		color: #aaaaaa;
-	}
-}
-
-.theme--light.v-data-table thead tr th {
-	color: #7198f3;
 }
 
 .action-button {
