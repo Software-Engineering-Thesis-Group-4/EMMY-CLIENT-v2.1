@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '../store';
 
-// Layouts
+// Layouts -------------------------------------------------------------------------------------------------------------
 import MainLayout from '@/views/layout-main.vue'
 import DashboardLayout from '@/views/layout-dashboard.vue'
 import EmployeeLayout from '@/views/layout-employees.vue'
@@ -11,7 +11,7 @@ import LoginLayout from '@/views/layout-login.vue'
 import SentimentSelectionLayout from '@/views/layout-sentimentselection.vue'
 import NotificationLayout from '@/views/layout-notifications.vue';
 import AccountSettingsLayout from '@/views/layout-account.vue';
-
+// Admin layouts
 import AdminLayout from '@/views/layout-admin.vue';
 import AdminLoginLayout from '@/views/layout-admin-login.vue';
 import PageNotFoundLayout from "@/views/layout-404.vue";
@@ -20,7 +20,7 @@ import ApplicationConfigurationLayout from "@/views/layout-admin-config.vue";
 import ApplicationLogsLayout from "@/views/layout-admin-logs.vue";
 import EmployeeProfileLayout from '@/views/layout-employeeprofile.vue';
 
-// Components
+// Components ----------------------------------------------------------------------------------------------------------
 import LoginForm from '@/components/LoginForm.vue'
 import ResetPasswordForm from '@/components/ResetPasswordForm.vue'
 
@@ -137,7 +137,7 @@ const routes = [
 	{
 		path: '/admin',
 		component: AdminLayout,
-		// redirect: "/account-management",
+		redirect: "/account-management",
 		children: [
 			{
 				path: 'account-management',
