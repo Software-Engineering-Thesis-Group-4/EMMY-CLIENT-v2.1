@@ -62,8 +62,8 @@
 </template>
 
 <script>
-import AddEmployeeForm from "@/components/AddEmployeeForm.vue";
-import { options, loadTableData } from "@/employees/user_table.js";
+import AddEmployeeForm from "@/components/employees/AddEmployeeForm.vue";
+import { options, loadTableData } from "@/components/employees/data-table-options/user_table.js";
 
 export default {
 	components: {
