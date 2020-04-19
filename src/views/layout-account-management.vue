@@ -14,7 +14,9 @@
       </div>
     </div>
 
-    <v-data-table dark
+    <v-data-table
+      dark
+      color="#57A48A"
       v-model="employeeDataTableOptions.selected"
       :headers="employeeDataTableOptions.headers"
       :items="employeeDataTableOptions.data"
@@ -62,45 +64,37 @@
 </template>
 
 <script>
-import AddEmployeeForm from "@/components/AddEmployeeForm.vue";
-import { options, loadTableData } from "@/employees/user_table.js";
+import {
+  options,
+  loadTableData
+} from "@/components/employees/data-table-options/user_table.js";
 
 export default {
-	components: {
-		AddEmployeeForm
-	},
-	data() {
-		return {
-			showAddEmployeeForm: false,
-			employeeDataTableOptions: options,
-			loadingEmployeeDataTable: false
-		};
-	},
-	computed: {
-		employeeCount: () => {
-			return options.data.length;
-		},
-		employees() {
-			let employees = options.data.map(employee => {
-				return employee.name;
-			});
+  data() {
+    return {
+      employeeDataTableOptions: options,
+      loadingEmployeeDataTable: false
+    };
+  },
+  computed: {
+    employees() {
+      let employees = options.data.map(employee => {
+        return employee.name;
+      });
 
-			return employees;
-		}
-	},
-	methods: {
-		closeAddEmployeeForm() {
-			this.showAddEmployeeForm = false;
-		},
-		deleteEmployee(employee) {
-			this.$store.dispatch("employees/DELETE_EMPLOYEE", employee.id);
-		}
-	},
-	created() {
-		this.$store.dispatch("employees/FETCH_EMPLOYEES").then(employees => {
-			loadTableData(employees);
-		});
-	}
+      return employees;
+    }
+  },
+  methods: {
+    deleteEmployee(employee) {
+      this.$store.dispatch("employees/DELETE_EMPLOYEE", employee.id);
+    }
+  },
+  created() {
+    this.$store.dispatch("employees/FETCH_EMPLOYEES").then(employees => {
+      loadTableData(employees);
+    });
+  }
 };
 </script>
 
@@ -140,13 +134,15 @@ export default {
 
 .elevation-1 {
   background-color: #202224;
-  
 }
 
 .theme--dark.v-data-table thead tr th {
   color: #57a48a;
 }
 
+.theme--light.v-divider {
+  border-color: #52555a;
+}
 
 #button-add-employee {
   background-color: #3ec497;
@@ -154,14 +150,14 @@ export default {
   display: flex;
   justify-content: flex-end;
 
-	height: 40px;
+  height: 40px;
 
-	padding: 5px 15px;
-	margin-left: 20px;
+  padding: 5px 15px;
+  margin-left: 20px;
 
-	font-weight: 500;
-	color: white;
-	border-radius: 5px;
+  font-weight: 500;
+  color: white;
+  border-radius: 5px;
 }
 
 .action-button {
@@ -175,7 +171,7 @@ export default {
 }
 
 .action-delete:hover path {
-	filter: brightness(100%);
-	fill: rgb(255, 140, 140);
+  filter: brightness(100%);
+  fill: rgb(255, 140, 140);
 }
 </style>
