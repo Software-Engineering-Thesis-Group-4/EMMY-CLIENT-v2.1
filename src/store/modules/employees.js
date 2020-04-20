@@ -84,6 +84,9 @@ const EmployeesModule = {
 		},
 		attendanceLogs: state => {
 			return state.attendanceLogs
+		},
+		getEmployee: (state) => (id) => {
+			return state.employees.find(employee => employee.employeeId === id)
 		}
 	}
 }
