@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import store from '../store';
+import store from '../store'
 
 // Layouts -------------------------------------------------------------------------------------------------------------
 import MainLayout from '@/views/layout-main.vue'
@@ -30,20 +30,15 @@ import ResetPasswordForm from '@/components/ResetPasswordForm.vue'
 Vue.use(VueRouter);
 
 // NAVIGATION GUARD ----------------------------------------------------------------------------------------------------
-let authActivated = false; // set this to true if you want the nav guards to take effect.
-let isAuthenticated = null;
-
-if(authActivated) {
-	isAuthenticated = async (to, from, next) => {
-		let auth_token = localStorage.getItem('auth_token');
-		let isValid = await store.dispatch('user/VERIFY', auth_token);
-	
+let isAuthenticated = (to, from, next) => {
+	store.dispatch('users/VERIFY').then(isValid => {
 		if (isValid) {
 			next();
 		} else {
+			console.log('Verification Failed.')
 			next('/login');
 		}
-	}
+	});
 }
 
 
@@ -73,7 +68,7 @@ const routes = [
 	{
 		path: '/',
 		component: MainLayout,
-		redirect: "/dashboard", 
+		redirect: "/dashboard",
 		children: [
 			{
 				path: 'dashboard',
@@ -147,7 +142,7 @@ const routes = [
 				meta: {
 					title: 'Account Management'
 				},
-				component: AccountManagementLayout, 
+				component: AccountManagementLayout,
 			},
 			{
 				path: 'application-configuration',
@@ -155,7 +150,7 @@ const routes = [
 				meta: {
 					title: 'Application Configuration'
 				},
-				component: ApplicationConfigurationLayout, 
+				component: ApplicationConfigurationLayout,
 			},
 			{
 				path: 'application-logs',
@@ -163,7 +158,7 @@ const routes = [
 				meta: {
 					title: 'Application Logs'
 				},
-				component: ApplicationLogsLayout, 
+				component: ApplicationLogsLayout,
 			}
 		]
 	},
