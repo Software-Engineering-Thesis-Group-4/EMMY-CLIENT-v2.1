@@ -1,13 +1,28 @@
 <template>
 	<v-container class="root-container">
-		<v-card class="form-container" :elevation="2">
+		<v-card
+			class="form-container"
+			:elevation="2"
+		>
 			<div class="logo-container">
-				<img src="/logo/logo-light@2x.png" class="logo" alt srcset />
+				<img
+					src="/logo/logo-light@2x.png"
+					class="logo"
+					alt
+					srcset
+				/>
 			</div>
 
-			<form class="login-form" @submit.prevent="login()">
+			<form
+				class="login-form"
+				@submit.prevent="login()"
+			>
 				<div class="field">
-					<img src="@/assets/images/input-field-icon_user.svg" alt srcset />
+					<img
+						src="@/assets/images/input-field-icon_user.svg"
+						alt
+						srcset
+					/>
 					<input
 						type="text"
 						name="email"
@@ -17,7 +32,11 @@
 					/>
 				</div>
 				<div class="field">
-					<img src="@/assets/images/input-field-icon_padlock.svg" alt srcset />
+					<img
+						src="@/assets/images/input-field-icon_padlock.svg"
+						alt
+						srcset
+					/>
 					<input
 						type="password"
 						name="password"
@@ -28,21 +47,32 @@
 					/>
 				</div>
 
-				<div v-if="errorMessage" class="login-error-message">
+				<div
+					v-if="errorMessage"
+					class="login-error-message"
+				>
 					{{ errorMessage }}
 				</div>
 
-				<input type="submit" value="LOGIN" class="login-button" />
-				<router-link to="/forgotpassword" class="forgot-password"
-					>Forgot your password?</router-link
-				>
+				<input
+					type="submit"
+					value="LOGIN"
+					class="login-button"
+				/>
+				<router-link
+					to="/forgotpassword"
+					class="forgot-password"
+				>Forgot your password?</router-link>
 			</form>
 			<div class="no-account">
 				Don't have an account? Please contact your administrator
 			</div>
 		</v-card>
 
-		<a href="https://iacademy.edu.ph" class="iacademy-link">
+		<a
+			href="https://iacademy.edu.ph"
+			class="iacademy-link"
+		>
 			<img
 				class="iacademy"
 				src="@/assets/images/iACADEMY_Seal.svg"
@@ -66,15 +96,19 @@ export default {
 	},
 	computed: {
 		...mapGetters({
-			errorMessage: "user/errorMessage"
+			errorMessage: "users/errorMessage"
 		})
 	},
 	methods: {
 		login() {
-			this.$store.dispatch("user/LOGIN", {
+			this.$store.dispatch("users/LOGIN", {
 				email: this.email,
 				password: this.password
-			});
+			}).then(login_success => {
+				if(login_success) {
+					this.$router.push('/dashboard');
+				}
+			})
 		}
 	}
 };
