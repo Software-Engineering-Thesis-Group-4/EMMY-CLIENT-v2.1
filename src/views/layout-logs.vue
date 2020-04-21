@@ -56,7 +56,7 @@
 						<v-icon class="button-icon-right">mdi-chevron-down</v-icon>
 					</button>
 				</template>
-				
+
 				<v-form
 					@submit.prevent
 					ref="filterDropdown"
@@ -119,21 +119,22 @@
 			</template>
 
 			<template v-slot:item.timeOut="{ item }">
-				<div class="time">
-					<div v-if="item.timeOut">
-						<img
-							:src="getEmotionImagePath(item.emotionOut, item.timeOut)"
-							v-if="admin"
-							class="emotion-log"
-						/>{{ item.timeOut }}
-					</div>
+				<div
+					v-if="item.timeOut"
+					class="time"
+				>
+					<img
+						:src="getEmotionImagePath(item.emotionOut, item.timeOut)"
+						v-if="admin"
+						class="emotion-log"
+					/>{{ item.timeOut }}
+				</div>
 
-					<div
-						v-else
-						class="no-timeout"
-					>
-						--
-					</div>
+				<div
+					v-else
+					class="no-timeout"
+				>
+					--
 				</div>
 			</template>
 
@@ -261,7 +262,7 @@ export default {
 			return `/emotions/${emotion}.png`;
 		},
 		filterOnDateRange() {
-			alert('TODO: Implement Date Range Filter')
+			alert("TODO: Implement Date Range Filter");
 		},
 		filterData() {},
 		editLog(item) {
