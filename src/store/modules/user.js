@@ -27,6 +27,13 @@ const UserModule = {
 		}
 	},
 	actions: {
+		// async FETCH_USERS(context) {
+		// 	try {
+		// 		let response = await Vue.axios.get('/api/')
+		// 	} catch (error) {
+				
+		// 	}
+		// },
 		async LOGIN(context, { email, password }) {
 			try {
 
