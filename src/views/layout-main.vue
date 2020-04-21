@@ -1,6 +1,5 @@
 <template>
 	<div class="main-container">
-		<Sidebar />
 		<div class="header">
 			<h1 class="page-title">{{ getPageTitle }}</h1>
 
@@ -41,11 +40,16 @@
 				<!-- user icon -->
 				<div class="group-item">
 					<button id="user">
-						<img src="/sample-image.png" />
+						<div class="avatar">
+							<img src="/sample-image.png" />
+						</div>
+						<img class="caret-down" src="@/assets/images/caret-down.svg">
 					</button>
 				</div>
 			</div>
 		</div>
+
+		<Sidebar />
 
 		<div class="view-container">
 			<router-view />
@@ -93,27 +97,28 @@ export default {
 	background-color: #f8f8f8;
 
 	display: flex;
-	flex-direction: column;
-	justify-content: flex-end;
+	flex-direction: row;
+	align-items: center;
 
-	border: 0.3px solid #dddddd;
-	border-top: none;
+	border-bottom: 0.3px solid #dddddd;
 
 	align-self: center;
 
-	width: 80%;
+	width: 100%;
 	min-width: 1024px;
+	padding: 0px 11%;
 
 	height: 75px;
 	position: fixed;
 	z-index: 20;
 
 	.page-title {
+		// border: 1px dashed lightslategray;
+		flex-grow: 1;
 		font-weight: 700;
 		letter-spacing: -2px;
 		font-size: 35px;
 		color: #779aec;
-		margin-left: 10px;
 	}
 
 	.right {
@@ -126,8 +131,7 @@ export default {
 
 		width: 100px;
 		height: 50px;
-		position: absolute;
-		right: 0;
+		right: 200px;
 	}
 }
 
@@ -141,8 +145,8 @@ export default {
 	min-width: 1024px;
 	margin: 60px auto 0px 10%;
 
-	border: 0.3px solid #dddddd;
-	border-style: none solid none solid;
+	// border: 0.3px solid #dddddd;
+	// border-style: none solid none solid;
 	padding: 20px;
 
 	display: flex;
@@ -150,22 +154,42 @@ export default {
 }
 
 #user {
-	width: 32px;
-	height: 32px;
-	overflow: hidden;
-	border-radius: 5px;
+	// border: 1px dashed lightslategray;
+	// background-color: rgba(255, 82, 82, 0.445);
 	border: none;
 	display: flex;
+	align-items: center;
 
 	&:focus {
 		outline: none;
 		// box-shadow: 0 0 0.5px 2px #1371ff60;
 	}
 
-	img {
-		width: 100%;
-		object-fit: contain;
-		object-position: center;
+	&:hover {
+		.avatar, .caret-down {
+			filter: brightness(0.9);
+		}
+	}
+
+	.avatar {
+		// border: 1px dashed lightslategray;
+		display: flex;
+		align-items: center;
+		overflow: hidden;
+		width: 32px;
+		height: 32px;
+		border-radius: 5px;
+
+		img {
+			width: 100%;
+			object-fit: fill;
+			object-position: center;
+		}
+	}
+
+	.caret-down {
+		// border: 1px dashed lightslategray;
+		margin-left: 5px;
 	}
 }
 
@@ -188,7 +212,7 @@ export default {
 	}
 
 	&:hover {
-		#bell {
+		#bell, #badge {
 			filter: brightness(0.9);
 		}
 	}
