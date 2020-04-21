@@ -262,7 +262,7 @@ export default {
 			return `/emotions/${emotion}.png`;
 		},
 		filterOnDateRange() {
-			alert("TODO: Implement Date Range Filter");
+			console.log("TODO: Implement Date Range Filter");
 		},
 		filterData() {},
 		editLog(item) {
