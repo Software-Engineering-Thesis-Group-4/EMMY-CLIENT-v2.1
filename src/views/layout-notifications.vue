@@ -5,46 +5,210 @@
 			<ul class="notifications-itemlist">
 				<!-- template: extreme emotion : angry --------------------------------------------------------------------->
 				<!-- <li class="extreme-emotion-notification unread">
-          <div class="employee">
-            <img src="/sample-image.png" alt="employee" class="avatar" />
-            <img src="/emotions/1.png" alt="" class="sentiment" />
-          </div>
-          <span class="notification-message">
-            Oh no! <span class="employee-name">Lorem Ipsum</span> is feeling
-            <span class="emotion">"angry"</span> ["today" | "(February 27,
-            2020)"]. Reach out to your employees personally or by send them an
-            email to see how they're doing.
-          </span>
-        </li> -->
+					<div class="employee">
+						<img
+							src="/sample-image.png"
+							alt="employee"
+							class="avatar"
+						/>
+						<img
+							src="/emotions/1.png"
+							alt=""
+							class="sentiment"
+						/>
+					</div>
+					<span class="notification-message">
+						Oh no! <span class="employee-name">Lorem Ipsum</span> is feeling
+						<span class="emotion">"angry"</span> ["today" | "(February 27,
+						2020)"]. Reach out to your employees personally or by send them an
+						email to see how they're doing.
+					</span>
+				</li> -->
 
 				<!-- template: extreme emotion : amazing --------------------------------------------------------------------->
 				<!-- <li class="extreme-emotion-notification unread">
-          <div class="employee">
-            <img src="/sample-image.png" class="avatar" />
-            <img src="/emotions/5.png" class="sentiment" />
-          </div>
-          <span class="notification-message">
-            Wow! <span class="employee-name">Lorem Ipsum</span> is feeling
-            <span class="emotion">"amazing"</span> ["today" | "(February 27,
-            2020)"]. Reach out to your employees personally or by send them an
-            email to see how they're doing.
-          </span>
-        </li> -->
+					<div class="employee">
+						<img
+							src="/sample-image.png"
+							class="avatar"
+						/>
+						<img
+							src="/emotions/5.png"
+							class="sentiment"
+						/>
+					</div>
+					<span class="notification-message">
+						Wow! <span class="employee-name">Lorem Ipsum</span> is feeling
+						<span class="emotion">"amazing"</span> ["today" | "(February 27,
+						2020)"]. Reach out to your employees personally or by send them an
+						email to see how they're doing.
+					</span>
+				</li> -->
 
 				<!-- template: change password --------------------------------------------------------------------->
 				<!-- <li class="change-password-notification unread">
-          <div class="employee">
-            <img src="/default-avatar.png" alt="employee" class="avatar" />
-          </div>
-          <span class="notification-message">
-            Your password has been changed on
-            <span class="date-time"
-              >(Thursday - 11:36 AM, February 27, 2019)</span
-            >. If this looks suspicious please contact your administrator
-            immediately.
-          </span>
-        </li> -->
+					<div class="employee">
+						<img
+							src="/default-avatar.png"
+							alt="employee"
+							class="avatar"
+						/>
+					</div>
+					<span class="notification-message">
+						Your password has been changed on
+						<span class="date-time">(Thursday - 11:36 AM, February 27, 2019)</span>. If this looks suspicious please contact your administrator
+						immediately.
+					</span>
+				</li> -->
 
+				<li
+					v-for="item in notifications"
+					:key="item._id"
+				>
+					<!-- template: password changed ----------------------------------------------------------------->
+					<div
+						v-if="item.type === 'USER-CHANGED_PASSWORD'"
+						class="notification_item unread"
+					>
+						<div class="user">
+							<img
+								:src="'/default-avatar.png' || reciever.photo"
+								alt="employee"
+								class="avatar"
+							/>
+						</div>
+						<span class="notification-message">
+							Your password has been changed on
+							<span class="date-time">({{ item.date }})</span>. If this looks
+							suspicious please contact your administrator immediately.
+						</span>
+					</div>
+
+					<!-- template: extreme emotion : angry ---------------------------------------------------------->
+					<div
+						v-else-if="item.type === 'EMPLOYEE-EXTREME_EMOTION' && item.emotion === 1"
+						class="notification_item unread"
+					>
+						<div class="employee">
+							<img
+								src="/sample-image.png"
+								alt="employee"
+								class="avatar"
+							/>
+							<img
+								src="/emotions/1.png"
+								alt=""
+								class="sentiment"
+							/>
+						</div>
+						<span class="notification-message">
+							Oh no! <span class="employee-name">{{ item.employee }}</span> is feeling
+							<span class="emotion">"angry"</span> ({{ item.date }}). Reach out to your employees personally or by send them an
+							email to see how they're doing.
+						</span>
+					</div>
+
+					<!-- template: extreme emotion : amazing -------------------------------------------------------->
+					<div
+						v-else-if="item.type === 'EMPLOYEE-EXTREME_EMOTION' && item.emotion === 5"
+						class="notification_item unread"
+					>
+						<div class="employee">
+							<img
+								src="/sample-image.png"
+								class="avatar"
+							/>
+							<img
+								src="/emotions/5.png"
+								class="sentiment"
+							/>
+						</div>
+						<span class="notification-message">
+							Wow! <span class="employee-name">{{ item.employee }}</span> is feeling
+							<span class="emotion">"amazing"</span> ({{ item.date }}). Reach out to your employees personally or by send them an
+							email to see how they're doing.
+						</span>
+					</div>
+				</li>
+			</ul>
+
+			<h3 class="notifications-daterange">Yesterday</h3>
+			<ul class="notifications-itemlist">
+				<!-- TODO: Add another <li> loop for notifications with date == to yesterday -->
+				<li
+					v-for="item in notifications"
+					:key="item._id"
+				>
+					<!-- template: password changed ----------------------------------------------------------------->
+					<div
+						v-if="item.type === 'USER-CHANGED_PASSWORD'"
+						class="notification_item unread"
+					>
+						<div class="user">
+							<img
+								:src="'/default-avatar.png' || reciever.photo"
+								alt="employee"
+								class="avatar"
+							/>
+						</div>
+						<span class="notification-message">
+							Your password has been changed on
+							<span class="date-time">({{ item.date }})</span>. If this looks
+							suspicious please contact your administrator immediately.
+						</span>
+					</div>
+
+					<!-- template: extreme emotion : angry ---------------------------------------------------------->
+					<div
+						v-else-if="item.type === 'EMPLOYEE-EXTREME_EMOTION' && item.emotion === 1"
+						class="notification_item"
+					>
+						<div class="employee">
+							<img
+								src="/sample-image.png"
+								alt="employee"
+								class="avatar"
+							/>
+							<img
+								src="/emotions/1.png"
+								alt=""
+								class="sentiment"
+							/>
+						</div>
+						<span class="notification-message">
+							Oh no! <span class="employee-name">{{ item.employee }}</span> is feeling
+							<span class="emotion">"angry"</span> ({{ item.date }}). Reach out to your employees personally or by send them an
+							email to see how they're doing.
+						</span>
+					</div>
+
+					<!-- template: extreme emotion : amazing -------------------------------------------------------->
+					<div
+						v-else-if="item.type === 'EMPLOYEE-EXTREME_EMOTION' && item.emotion === 5"
+						class="notification_item"
+					>
+						<div class="employee">
+							<img
+								src="/sample-image.png"
+								class="avatar"
+							/>
+							<img
+								src="/emotions/5.png"
+								class="sentiment"
+							/>
+						</div>
+						<span class="notification-message">
+							Wow! <span class="employee-name">{{ item.employee }}</span> is feeling
+							<span class="emotion">"amazing"</span> ({{ item.date }}). Reach out to your employees personally or by send them an
+							email to see how they're doing.
+						</span>
+					</div>
+				</li>
+			</ul>
+
+			<h3 class="notifications-daterange">Last 7 Days</h3>
+			<ul class="notifications-itemlist">
+				<!-- TODO: Add another <li> loop for notifications having dates past yesterday but not past the last 7 days -->
 				<li
 					v-for="item in notifications"
 					:key="item._id"
@@ -70,9 +234,7 @@
 
 					<!-- template: extreme emotion : angry ---------------------------------------------------------->
 					<div
-						v-else-if="
-              item.type === 'EMPLOYEE-EXTREME_EMOTION' && item.emotion === 1
-            "
+						v-else-if="item.type === 'EMPLOYEE-EXTREME_EMOTION' && item.emotion === 1"
 						class="notification_item"
 					>
 						<div class="employee">
@@ -96,9 +258,7 @@
 
 					<!-- template: extreme emotion : amazing -------------------------------------------------------->
 					<div
-						v-else-if="
-              item.type === 'EMPLOYEE-EXTREME_EMOTION' && item.emotion === 5
-            "
+						v-else-if="item.type === 'EMPLOYEE-EXTREME_EMOTION' && item.emotion === 5"
 						class="notification_item"
 					>
 						<div class="employee">
@@ -118,16 +278,6 @@
 						</span>
 					</div>
 				</li>
-			</ul>
-
-			<h3 class="notifications-daterange">Yesterday</h3>
-			<ul class="notifications-itemlist">
-				<!-- TODO: Add another <li> loop for notifications with date == to yesterday -->
-			</ul>
-
-			<h3 class="notifications-daterange">Last 7 Days</h3>
-			<ul class="notifications-itemlist">
-				<!-- TODO: Add another <li> loop for notifications having dates past yesterday but not past the last 7 days -->
 			</ul>
 		</div>
 	</div>
@@ -192,6 +342,10 @@ export default {
 		font-weight: 500;
 		margin-bottom: 5px;
 		margin-left: 40px;
+
+		&:not(:first-child) {
+			margin-top: 20px;
+		}
 	}
 
 	.notifications-itemlist {
@@ -214,12 +368,12 @@ export default {
 			width: 100%;
 			padding: 9px 40px;
 
-			&,
-			.unread {
+			&.unread {
 				background-color: #ecf5ff;
 			}
 
-			.user, .employee {
+			.user,
+			.employee {
 				// background-color: turquoise;
 				position: relative;
 				margin-right: 20px;
