@@ -6,6 +6,7 @@ const UserModule = {
 		error: null,
 		username: null,
 		email: null,
+		isAdmin: false,
 	},
 	mutations: {
 		AUTH_ERROR(state, message) {
@@ -13,20 +14,24 @@ const UserModule = {
 			localStorage.clear();
 		},
 		AUTH_SUCCESS(state, payload) {
-			state.error = null;
+			state.error    = "";
 			state.username = payload.username;
-			state.email = payload.email;
+			state.email    = payload.email;
+			state.isAdmin  = payload.isAdmin
 
-			localStorage.setItem('auth_token', payload.token);
+			// store access token in localStorage
+			localStorage.setItem('access_token', payload.token);
 		},
 		CLEAR(state) {
 			state.error = null;
 			state.username = null;
 			state.email = null;
+			state.isAdmin = false;
 			localStorage.clear();
 		}
 	},
 	actions: {
+		// TODO: Implement fetching of users
 		// async FETCH_USERS(context) {
 		// 	try {
 		// 		let response = await Vue.axios.get('/api/')
@@ -39,29 +44,34 @@ const UserModule = {
 
 				let response = await Vue.axios.post('/auth/login', { email, password });
 				context.commit('AUTH_SUCCESS', response.data);
-				// console.log(response);
-				return response;
+
+				return true;
 
 			} catch (error) {
-				// console.dir(error.response);
+				console.log(error.response.data);
 				context.commit('AUTH_ERROR', error.response.data);
+				return false;
 			}
 		},
 		LOGOUT() {
 
 		},
-		async VERIFY(context, token) {
+		async VERIFY({ commit, state }) {
 			try {
-				let response = await Vue.axios.post('/auth/verify', { token });
+				let access_token = localStorage.getItem('access_token');
+				let email = state.email;
+
+				let response = await Vue.axios.post('/auth/verify', { access_token, email });
 
 				if (response.status === 200) {
 					return true;
-				} else {
-					return false;
 				}
 
+				return false;
+
 			} catch (error) {
-				context.commit('CLEAR')
+				console.log(error.response.data);
+				commit('CLEAR');
 				return false;
 			}
 		}
