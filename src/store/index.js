@@ -17,6 +17,6 @@ export default new Vuex.Store({
 	modules: {
 		emotions: EmotionModule,
 		employees: EmployeesModule,
-		user: UserModule
+		users: UserModule
 	}
 })
