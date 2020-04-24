@@ -96,12 +96,12 @@ export default {
 	},
 	computed: {
 		...mapGetters({
-			errorMessage: "users/errorMessage"
+			errorMessage: "user/errorMessage"
 		})
 	},
 	methods: {
 		login() {
-			this.$store.dispatch("users/LOGIN", {
+			this.$store.dispatch("user/LOGIN", {
 				email: this.email,
 				password: this.password
 			}).then(login_success => {
