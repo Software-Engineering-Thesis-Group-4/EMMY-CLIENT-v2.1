@@ -7,7 +7,7 @@
 					:search-input.sync="dataTableOptions.search"
 					color="#779AEC"
 					clearable
-					hide-no-data="true"
+					:hide-no-data="true"
 					label="Search Employees"
 					prepend-icon="mdi-database-search"
 				></v-autocomplete>
@@ -264,7 +264,12 @@ export default {
 		filterOnDateRange() {
 			console.log("TODO: Implement Date Range Filter");
 		},
-		filterData() {},
+		filterData() {
+
+		},
+		clearFilter() {
+			this.$refs.filterDropdown.reset();
+		},
 		editLog(item) {
 			item;
 			// TODO: Implement edit log functionality
