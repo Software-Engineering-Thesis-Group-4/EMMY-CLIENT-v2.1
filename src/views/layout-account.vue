@@ -10,7 +10,7 @@
 					</td>
 					<td>
 						<div>
-							<img :src="imagePath" alt="" />
+							<img src="imagePath" alt="" />
 						</div>
 					</td>
 				</tr>
@@ -53,12 +53,12 @@
 					<td>
 						<div class="accountRole">
 							<img
-								v-if="accountRole == 1"
+								v-if="isAdmin"
 								src="@/assets/images/crown.svg"
 								class="crown"
 							/>
-							<span v-if="accountRole == 1">Administrator</span>
-							<span v-else-if="accountRole == 0">Standard User</span>
+							<span v-if="isAdmin">Administrator</span>
+							<span v-else>Standard User</span>
 						</div>
 					</td>
 				</tr>
@@ -81,10 +81,11 @@
 export default {
 	data() {
 		return {
-			accountRole: 1,
-			firstname: "Gille",
-			lastname: "Tolentino",
-			email: "gilletolentino@iacademy.edu.ph"
+			isAdmin: this.$store.state.user.isAdmin,
+			firstname: this.$store.state.user.firstname,
+			lastname: this.$store.state.user.lastname,
+			email: this.$store.state.user.email,
+			imagePath: this.$store.state.user.photo,
 		};
 	},
 	computed: {
