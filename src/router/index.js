@@ -30,12 +30,12 @@ import ResetPasswordForm from '@/components/ResetPasswordForm.vue'
 Vue.use(VueRouter);
 
 // NAVIGATION GUARD ----------------------------------------------------------------------------------------------------
-let isAuthenticated = (to, from, next) => {
-	store.dispatch('users/VERIFY').then(isValid => {
+let isAuthenticated = null;
+isAuthenticated = (to, from, next) => {
+	store.dispatch('user/VERIFY').then(isValid => {
 		if (isValid) {
 			next();
 		} else {
-			console.log('Verification Failed.')
 			next('/login');
 		}
 	});
@@ -168,7 +168,7 @@ const routes = [
 	},
 	{
 		path: '*',
-		component: PageNotFoundLayout
+		component: PageNotFoundLayout,
 	}
 ]
 
