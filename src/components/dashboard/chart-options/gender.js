@@ -4,7 +4,6 @@ export const maleChart = {
 	chart: {
 		// background: '#ff00004d',
 		id: 'male',
-		group: 'genderChart',
 		type: 'donut',
 		width: '100%',
 	},
@@ -17,7 +16,7 @@ export const maleChart = {
 		enabled: true,
 	},
 	legend: {
-		show: true,
+		show: false,
 		showForSingleSeries: false,
 		showForNullSeries: true,
 		showForZeroSeries: true,
@@ -97,7 +96,6 @@ export const femaleChart = {
 	chart: {
 		// background: '#ff00004d',
 		id: 'female',
-		group: 'genderChart',
 		type: 'donut',
 		width: '100%',
 	},
@@ -110,7 +108,7 @@ export const femaleChart = {
 		enabled: true,
 	},
 	legend: {
-		show: true,
+		show: false,
 		showForSingleSeries: false,
 		showForNullSeries: true,
 		showForZeroSeries: true,
