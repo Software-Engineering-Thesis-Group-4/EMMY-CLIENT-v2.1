@@ -8,6 +8,23 @@ const EmployeesModule = {
 	state: {
 		employees: [],
 		attendanceLogs: [],
+		departments: [
+			"Admissions",
+			"Registrar",
+			"Finance",
+			"Human Resources ",
+			"Office of Student Affairs",
+			"Office of Student Experience and Advancement ",
+			"Office of the President",
+			"Office of the COO",
+			"IT",
+			"Corporate Communications",
+			"Purchasing",
+			"Admin and Facilities",
+			"Academics College",
+			"Academics SHS",
+			"Clinic",
+		]
 	},
 	// --------------------------------------------------------------------------------------------------
 	mutations: {
