@@ -81,17 +81,13 @@
 export default {
 	data() {
 		return {
-			isAdmin: this.$store.state.user.isAdmin,
+			email: this.$store.state.user.email,
+			username: this.$store.state.user.username,
 			firstname: this.$store.state.user.firstname,
 			lastname: this.$store.state.user.lastname,
-			email: this.$store.state.user.email,
+			isAdmin: this.$store.state.user.isAdmin,
 			imagePath: this.$store.state.user.photo,
 		};
-	},
-	computed: {
-		username() {
-			return `${this.firstname}${this.lastname}`;
-		}
 	}
 };
 </script>
