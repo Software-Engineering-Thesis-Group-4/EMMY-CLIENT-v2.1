@@ -5,7 +5,7 @@ module.exports = {
 	"transpileDependencies": [
 		"vuetify"
 	],
-	outputDir: path.resolve(__dirname, '../EMMY-SERVER-v2.0/client'),
+	outputDir: path.resolve(__dirname, '../EMMY-SERVER/client'),
 	// devServer: {
 	// 	proxy: {
 	// 		'/api': {
