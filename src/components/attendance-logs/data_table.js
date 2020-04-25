@@ -8,13 +8,14 @@ export function loadEmployeeLogs(logs, /* dateRange */) {
 
 	logs.forEach(log => {
 		attendanceTableData.unshift({
-			employee   : `${log.employeeRef.lastName}, ${log.employeeRef.firstName}`,
-			department : log.employeeRef.department,
-			date       : moment(log.dateCreated).format('LL'),
-			timeIn     : (log.in !== null ? moment(log.in).format('LT') : null),
-			timeOut    : (log.out !== null ? moment(log.out).format('LT') : null),
-			emotionIn  : log.emotionIn,
-			emotionOut : log.emotionOut,
+			_id       : log._id,
+			employee  : `${log.employeeRef.lastName}, ${log.employeeRef.firstName}`,
+			department: log.employeeRef.department,
+			date      : moment(log.dateCreated).format('LL'),
+			timeIn    : (log.in !== null ? moment(log.in).format('LT') : null),
+			timeOut   : (log.out !== null ? moment(log.out).format('LT') : null),
+			emotionIn : log.emotionIn,
+			emotionOut: log.emotionOut,
 			// additional data ------------------------------------------------------
 			ref: log.employeeRef,
 		})
