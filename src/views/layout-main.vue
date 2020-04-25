@@ -4,13 +4,13 @@
 			<h1 class="page-title">{{ getPageTitle }}</h1>
 
 			<div class="right">
-				<v-tooltip bottom>
+				<v-tooltip bottom transition="none">
 					<template v-slot:activator="{ on }">
-						<div v-on="on" class="group-item notification-button">
-							<router-link
-								to="/notifications"
-								
-							>
+						<div
+							v-on="on"
+							class="group-item notification-button"
+						>
+							<router-link to="/notifications">
 								<!-- badge -->
 								<svg
 									v-if="notificationsCount"
@@ -54,7 +54,11 @@
 						nudge-bottom="5"
 					>
 						<template v-slot:activator="{ on: menu }">
-							<v-tooltip bottom nudge-left="10">
+							<v-tooltip
+								bottom
+								transition="none"
+								nudge-left="10"
+							>
 								<template v-slot:activator="{ on: tooltip }">
 									<button
 										id="user"
