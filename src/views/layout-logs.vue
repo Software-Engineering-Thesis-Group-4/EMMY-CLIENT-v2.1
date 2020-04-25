@@ -105,7 +105,6 @@
 			loading-text="Loading... Please wait"
 			item-key="id"
 			multi-sort
-			show-select
 			class="elevation-1"
 		>
 			<template v-slot:item.timeIn="{ item }">
@@ -197,23 +196,7 @@ export default {
 			loadingEmployeeDataTable: false,
 			dates: [new Date().toISOString().substr(0, 10)],
 			selectedItems: options.selected,
-			departmentCategories: [
-				"Admissions",
-				"Registrar",
-				"Finance",
-				"Human Resources ",
-				"Office of Student Affairs",
-				"Office of Student Experience and Advancement ",
-				"Office of the President",
-				"Office of the COO",
-				"IT",
-				"Corporate Communications",
-				"Purchasing",
-				"Admin and Facilities",
-				"Academics College",
-				"Academics SHS",
-				"Clinic"
-			]
+			departmentCategories: this.$store.state.employees.departments,
 		};
 	},
 	computed: {
@@ -280,7 +263,7 @@ export default {
 			console.log(item);
 
 			// item.id (is the objectId of the sentiment log)
-			this.$store.dispatch("employees/DELETE_EMPLOYEELOG", item.id);
+			this.$store.dispatch("employees/DELETE_EMPLOYEELOG", item._id);
 		}
 	},
 	created() {
