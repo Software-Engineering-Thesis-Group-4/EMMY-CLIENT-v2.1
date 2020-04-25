@@ -1,7 +1,8 @@
 <template>
 	<div>
 		<div class="controls">
-			<!-- Search Field -->
+
+			<!-- Search -->
 			<div class="search-field">
 				<v-autocomplete
 					:search-input.sync="employeeDataTableOptions.search"
@@ -13,6 +14,7 @@
 				></v-autocomplete>
 			</div>
 
+			<!-- Add Employee -->
 			<v-dialog
 				max-width="600px"
 				v-model="showAddEmployeeDialog"
@@ -26,15 +28,14 @@
 						<v-icon class="button-icon">mdi-plus</v-icon>Add New Employee
 					</button>
 				</template>
-
+				
 				<AddEmployeeForm
 					@closeDialog="toggleAddEmployeeDialog"
 					@addedNewEmployee="fetchEmployees"
 				/>
-			</v-dialog>
-			<!-- Add Employee Button -->
+			</v-dialog>			
 
-			<!-- Filters Button -->
+			<!-- Filters-->
 			<v-menu
 				offset-y
 				:close-on-content-click="false"
@@ -108,7 +109,6 @@
 			:loading="loadingEmployeeDataTable"
 			loading-text="Loading... Please wait"
 			item-key="id"
-			show-select
 			sort-by="department"
 			class="elevation-1"
 		>
@@ -172,23 +172,7 @@ export default {
 			employeeDataTableOptions: options,
 			loadingEmployeeDataTable: false,
 			showAddEmployeeDialog: false,
-			departmentCategories: [
-				"Admissions",
-				"Registrar",
-				"Finance",
-				"Human Resources ",
-				"Office of Student Affairs",
-				"Office of Student Experience and Advancement ",
-				"Office of the President",
-				"Office of the COO",
-				"IT",
-				"Corporate Communications",
-				"Purchasing",
-				"Admin and Facilities",
-				"Academics College",
-				"Academics SHS",
-				"Clinic"
-			]
+			departmentCategories: this.$store.state.employees.departments,
 		};
 	},
 	components: {
@@ -222,7 +206,6 @@ export default {
 		fetchEmployees() {
 			this.$store.dispatch("employees/FETCH_EMPLOYEES").then(employees => {
 				loadTableData(employees);
-				console.log("fetched all employees");
 			});
 		},
 		filterData() {
