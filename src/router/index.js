@@ -11,9 +11,7 @@ import LoginLayout from '@/views/layout-login.vue'
 import SentimentSelectionLayout from '@/views/layout-sentimentselection.vue'
 import NotificationLayout from '@/views/layout-notifications.vue';
 import PageNotFoundLayout from "@/views/layout-404.vue";
-
-// Admin
-import AccountSettingsLayout from '@/views/layout-account.vue';
+import AccountSettingsLayout from '@/views/layout-settings.vue';
 // Admin layouts
 import AdminLayout from '@/views/layout-admin.vue';
 import AdminLoginLayout from '@/views/layout-admin-login.vue';
@@ -24,49 +22,61 @@ import EmployeeProfileLayout from '@/views/layout-employeeprofile.vue';
 
 // Components ----------------------------------------------------------------------------------------------------------
 import LoginForm from '@/components/LoginForm.vue'
-import ResetPasswordForm from '@/components/ResetPasswordForm.vue'
+import UserAccount from "@/components/user_account/UserAccount.vue";
+import UserSecurity from "@/components/user_security/UserSecurity.vue";
+import UserActivity from "@/components/user_activity/UserActivity.vue";
+// import ResetPasswordForm from '@/components/ResetPasswordForm.vue'
 
 
 Vue.use(VueRouter);
 
 // NAVIGATION GUARD ----------------------------------------------------------------------------------------------------
-let isAuthenticated = null;
-isAuthenticated = (to, from, next) => {
+const isAuthenticated = (to, from, next) => {
 	store.dispatch('user/VERIFY').then(isValid => {
 		if (isValid) {
 			next();
 		} else {
+			console.log('You are not currently logged in.');
 			next('/login');
 		}
 	});
+}
+
+const isNotLoggedIn = (to, form, next) => {
+	if (!localStorage.getItem('access_token')) {
+		next();
+	} else {
+		console.log('%c You are currently logged in! redirecting to dashboard', "color: yellow;");
+		next('/dashboard');
+	}
 }
 
 
 // ROUTES --------------------------------------------------------------------------------------------------------------
 const routes = [
 	{
-		path: '/login',
+		path: '/',
 		component: LoginLayout,
 		redirect: { name: 'loginForm' },
 		children: [
 			{
-				path: 'form',
+				path: 'login',
 				name: 'loginForm',
 				alias: '/login',
-				// beforeEnter: isAuthenticated, // PROTECTED
+				beforeEnter: isNotLoggedIn, // PROTECTED
 				component: LoginForm
 			},
-			{
-				path: 'forgot-password',
-				name: 'forgotPassword',
-				alias: '/forgotpassword',
-				// beforeEnter: isAuthenticated, // PROTECTED
-				component: ResetPasswordForm
-			}
+			// {
+			// 	path: 'forgot-password',
+			// 	name: 'forgotPassword',
+			// 	alias: '/forgotpassword',
+			// 	// beforeEnter: isAuthenticated, // PROTECTED
+			// 	component: ResetPasswordForm
+			// }
 		]
 	},
 	{
-		path: '/',
+		path: '/main',
 		component: MainLayout,
 		redirect: "/dashboard",
 		children: [
@@ -107,17 +117,48 @@ const routes = [
 				beforeEnter: isAuthenticated, // PROTECTED
 			},
 			{
-				path: 'account',
+				path: 'settings',
 				alias: '/settings',
 				meta: {
 					title: 'Account Settings'
 				},
 				component: AccountSettingsLayout,
+				children: [
+					{
+						path: 'account',
+						alias: '/account',
+						meta: {
+							title: 'Account Settings',
+							headerTitle: 'Personal Information' 
+						},
+						component: UserAccount,
+					},
+					{
+						path: 'security',
+						alias: '/security',
+						meta: {
+							title: 'Account Settings',
+							headerTitle: 'Change Password' 
+						},
+						component: UserSecurity,
+					},
+					{
+						path: 'activity',
+						alias: '/activity',
+						meta: {
+							title: 'Account Settings',
+							headerTitle: 'Activity Log' 
+						},
+						component: UserActivity,
+					},
+
+				],
 				beforeEnter: isAuthenticated, // PROTECTED
 			},
 			// TODO: apply a component-level middleware to check if a certain employee existing matching the :id route parameter. else use 404 page layout.
 			{
 				path: 'employee/:_id',
+				alias: '/employee/:_id',
 				meta: {
 					title: 'Employee Profile'
 				},
@@ -127,18 +168,17 @@ const routes = [
 		]
 	},
 	{
-		path: '/admin-login',
-		alias: '/admin/login',
+		path: '/admin',
 		component: AdminLoginLayout
 	},
 	{
-		path: '/admin',
+		path: '/admin/emmy',
 		component: AdminLayout,
 		redirect: "/account-management",
 		children: [
 			{
 				path: 'account-management',
-				alias: '/account-management',
+				alias: '/accounts',
 				meta: {
 					title: 'Account Management'
 				},
@@ -146,7 +186,7 @@ const routes = [
 			},
 			{
 				path: 'application-configuration',
-				alias: '/application-configuration',
+				alias: '/database',
 				meta: {
 					title: 'Application Configuration'
 				},
@@ -154,7 +194,7 @@ const routes = [
 			},
 			{
 				path: 'application-logs',
-				alias: '/application-logs',
+				alias: '/audit',
 				meta: {
 					title: 'Application Logs'
 				},
