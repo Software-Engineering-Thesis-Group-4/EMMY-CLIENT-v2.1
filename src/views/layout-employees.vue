@@ -18,7 +18,6 @@
 			<v-dialog
 				max-width="600px"
 				v-model="showAddEmployeeDialog"
-				persistent
 			>
 				<template v-slot:activator="{ on }">
 					<button
@@ -28,12 +27,12 @@
 						<v-icon class="button-icon">mdi-plus</v-icon>Add New Employee
 					</button>
 				</template>
-				
+
 				<AddEmployeeForm
 					@closeDialog="toggleAddEmployeeDialog"
 					@addedNewEmployee="fetchEmployees"
 				/>
-			</v-dialog>			
+			</v-dialog>
 
 			<!-- Filters-->
 			<v-menu
@@ -109,7 +108,7 @@
 			:loading="loadingEmployeeDataTable"
 			loading-text="Loading... Please wait"
 			item-key="id"
-			sort-by="department"
+			sort-by="name"
 			class="elevation-1"
 		>
 			<template v-slot:item.name="{ item, value }">
@@ -156,6 +155,20 @@
 				</button>
 			</template>
 		</v-data-table>
+
+		<v-snackbar
+			v-model="snackbar"
+			:timeout="snackBarTimeOut"
+		>
+			{{ text }}
+			<v-btn
+				color="#779AEC"
+				text
+				@click="snackbar = false"
+			>
+				Close
+			</v-btn>
+		</v-snackbar>
 	</div>
 </template>
 
@@ -173,6 +186,9 @@ export default {
 			loadingEmployeeDataTable: false,
 			showAddEmployeeDialog: false,
 			departmentCategories: this.$store.state.employees.departments,
+			snackbar: false,
+			text: "Employee Removed.",
+			snackBarTimeOut: 2000
 		};
 	},
 	components: {
@@ -198,7 +214,11 @@ export default {
 		},
 		deleteEmployee(employee) {
 			// TODO: show a confirmation dialog to the user before commiting to make an employee as "terminated"
-			this.$store.dispatch("employees/DELETE_EMPLOYEE", employee.id);
+			this.$store
+				.dispatch("employees/DELETE_EMPLOYEE", employee.id)
+				.then(() => {
+					this.snackbar = true;
+				});
 		},
 		toggleAddEmployeeDialog() {
 			this.showAddEmployeeDialog = false;
