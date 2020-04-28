@@ -88,7 +88,7 @@
 							>
 								<v-list-item-group color="primary">
 
-									<v-list-item to="/settings">
+									<v-list-item to="/account">
 										<v-list-item-icon>
 											<v-icon>mdi-account-circle</v-icon>
 										</v-list-item-icon>
