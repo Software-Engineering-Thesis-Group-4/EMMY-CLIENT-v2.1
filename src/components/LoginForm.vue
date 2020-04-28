@@ -133,8 +133,6 @@ export default {
 
 	min-width: 600px;
 	max-width: max-content;
-	// box-shadow: 5px 5px 30px 2px #bafdf2;
-	// box-shadow: 10px 10px 10px 5px #00000021;
 
 	.logo-container {
 		margin-right: 40px;
@@ -152,6 +150,8 @@ export default {
 		align-items: center;
 		margin: 80px 0px;
 
+		max-width: 400px;
+
 		.field {
 			background-color: #e2e2e2;
 			padding: 0px 22px;
@@ -162,7 +162,7 @@ export default {
 				background: none;
 				border: none;
 				padding: 15px;
-				width: 230px;
+				width: 250px;
 				font-size: 15px;
 				outline: none;
 
