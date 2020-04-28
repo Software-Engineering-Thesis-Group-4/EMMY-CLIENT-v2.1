@@ -121,17 +121,7 @@ export default {
   }
 }
 
-.button-frequency {
-  background-color: #202224;
-  height: 40px;
-  padding: 10px 24px 10px 24px;
-  margin-left: 10px;
-  font-weight: 500;
 
-  &:hover {
-    filter: brightness(0.95);
-  }
-}
 
 .button-icon-right {
   font-size: 18px;
@@ -157,15 +147,28 @@ export default {
   //background-color: blue;
 }
 
+.button-frequency {
+  background-color: #202224;
+  height: 40px;
+  padding: 10px 24px 10px 24px;
+  margin-left: 10px;
+  font-weight: 500;
+
+  &:hover {
+    filter: brightness(0.95);
+  }
+}
+
 .frequency-field {
   display: flex;
   color: #494c4f;
   margin: 10px 0px 20px 0px;
+  width: 100px;
 }
 
 .frequency-combobox {
     margin: 0px 20px 0px 0px;
-    width: 20%;
+    width: 100px;
 }
 
 .frequency-label {
