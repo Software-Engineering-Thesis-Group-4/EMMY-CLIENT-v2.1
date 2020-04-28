@@ -51,7 +51,7 @@
 								</svg>
 							</div>
 						</template>
-						<span>Employee</span>
+						<span>Employees</span>
 					</v-tooltip>
 				</router-link>
 			</div>
