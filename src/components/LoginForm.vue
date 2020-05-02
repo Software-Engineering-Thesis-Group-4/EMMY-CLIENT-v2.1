@@ -27,7 +27,7 @@
 						type="text"
 						name="email"
 						placeholder="Email"
-						v-model="email"
+						v-model="form_email"
 						autocomplete="off"
 					/>
 				</div>
@@ -42,17 +42,21 @@
 						name="password"
 						id="password_field"
 						placeholder="Password"
-						v-model="password"
+						v-model="form_password"
 						autocomplete="off"
 					/>
 				</div>
 
-				<div
-					v-if="errorMessage"
-					class="login-error-message"
+				<v-alert
+					type="error"
+					dense
+					dismissible=""
+					min-width="100%"
+					v-model="showErrorMessage"
+					:value="!!errorMessage"
 				>
 					{{ errorMessage }}
-				</div>
+				</v-alert>
 
 				<input
 					type="submit"
@@ -85,30 +89,36 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
 export default {
 	data: () => {
 		return {
-			email: null,
-			password: null
+			// form data ---------------------------------
+			form_email: null,
+			form_password: null,
+
+			// error alert options -----------------------
+			errorMessage: "",
+			showErrorMessage: false
 		};
 	},
-	computed: {
-		...mapGetters({
-			errorMessage: "user/errorMessage"
-		})
-	},
+	computed: {},
 	methods: {
 		login() {
-			this.$store.dispatch("user/LOGIN", {
-				email: this.email,
-				password: this.password
-			}).then(login_success => {
-				if(login_success) {
-					this.$router.push('/dashboard');
-				}
-			})
+			this.$store
+				.dispatch("user/LOGIN", {
+					email: this.form_email,
+					password: this.form_password
+				})
+				.then(({ login_success, message }) => {
+					if (login_success) {
+						this.errorMessage = "";
+						this.showErrorMessage = false;
+						this.$router.push("/dashboard");
+					} else {
+						this.errorMessage = message;
+						this.showErrorMessage = true;
+					}
+				});
 		}
 	}
 };
@@ -167,7 +177,7 @@ export default {
 				outline: none;
 
 				&::placeholder {
-					color: #bbbbbb;
+					color: #5f5f5f;
 					letter-spacing: 0px;
 				}
 			}
