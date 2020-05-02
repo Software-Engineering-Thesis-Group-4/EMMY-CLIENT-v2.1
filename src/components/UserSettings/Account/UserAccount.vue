@@ -83,7 +83,7 @@
 
 			<div class="photo-container">
 				<v-img
-					:src="`/${imageName || 'sample-image.png'}`"
+					:src="user_photo"
 					class="user-image"
 				>
 				</v-img>
@@ -164,9 +164,12 @@ export default {
 	computed: {
 		accountRole() {
 			return this.$store.getters["user/role"];
+		},
+		user_photo() {
+			return null || "default.png"
 		}
 	},
-	methods: {
+	methods: {		
 		updatePhoto() {
 			this.fileName = this.$refs.fileUploadInput.files[0].name;
 		},
@@ -245,6 +248,12 @@ export default {
 			width: 200px;
 			height: 200px;
 			// border: 1px dashed black;
+
+			.user-image {
+				background-color: white;
+				width: 100%;
+				height: 100%;
+			}
 
 			.edit-photo {
 				width: 70px;

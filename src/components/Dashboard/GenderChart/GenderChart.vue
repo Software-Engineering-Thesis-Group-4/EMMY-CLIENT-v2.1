@@ -28,7 +28,8 @@
 
 <script>
 import apexcharts from "vue-apexcharts";
-import { maleChart, femaleChart } from "./chart-options/gender.js";
+import { maleChart } from "./male_options";
+import { femaleChart } from "./female_options";
 
 export default {
 	data() {

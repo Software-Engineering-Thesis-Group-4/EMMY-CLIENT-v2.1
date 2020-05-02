@@ -44,9 +44,9 @@
 </template>
 
 <script>
-import OverallEmployeeSentiment from "@/components/dashboard/OverallEmployeeSentiment.vue";
-import GenderSentiment from "@/components/dashboard/Sentiment-Gender.vue";
-import DepartmentSentiment from "@/components/dashboard/Sentiment-Department.vue";
+import OverallEmployeeSentiment from "@/components/Dashboard/OverallChart/OverallChart.vue";
+import GenderSentiment from "@/components/Dashboard/GenderChart/GenderChart.vue";
+import DepartmentSentiment from "@/components/Dashboard/DepartmentChart/DepartmentChart.vue";
 
 export default {
 	data() {

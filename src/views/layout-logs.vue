@@ -186,7 +186,7 @@ import moment from "moment";
 import {
 	options,
 	loadEmployeeLogs
-} from "@/components/attendance-logs/data_table";
+} from "@/components/DailyAttendanceLog/DataTable/options.js";
 
 export default {
 	data() {

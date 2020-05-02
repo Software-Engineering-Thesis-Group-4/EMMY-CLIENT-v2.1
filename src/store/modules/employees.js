@@ -1,6 +1,6 @@
 import Vue from 'vue';
-import { loadTableData } from '../../components/employees/data-table-options/data_table';
-import { loadEmployeeLogs } from "../../components/attendance-logs/data_table";
+import { loadTableData } from '../../components/Employees/DataTable/options.js';
+import { loadEmployeeLogs } from "../../components/DailyAttendanceLog/DataTable/options";
 
 const EmployeesModule = {
 	namespaced: true,
