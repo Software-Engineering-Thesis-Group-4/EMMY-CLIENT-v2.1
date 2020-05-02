@@ -4,7 +4,6 @@ import moment from 'moment';
 const UserModule = {
 	namespaced: true,
 	state: {
-		error: null,
 		username: null,
 		firstname: null,
 		lastname: null,
@@ -13,12 +12,10 @@ const UserModule = {
 		photo: null,
 	},
 	mutations: {
-		AUTH_ERROR(state, message) {
-			state.error = message;
+		AUTH_ERROR() {
 			localStorage.clear();
 		},
 		AUTH_SUCCESS(state, user) {
-			state.error = "";
 			state.username = user.username;
 			state.email = user.email;
 			state.isAdmin = user.isAdmin;
@@ -27,7 +24,6 @@ const UserModule = {
 			state.photo = user.photo;
 		},
 		CLEAR(state) {
-			state.error = null;
 			state.username = null;
 			state.firstname = null;
 			state.lastname = null;
@@ -36,7 +32,7 @@ const UserModule = {
 			state.photo = null;
 
 			localStorage.clear();
-		}
+		},
 	},
 	actions: {
 		// TODO: Implement fetching of users
@@ -57,12 +53,12 @@ const UserModule = {
 				localStorage.setItem('access_token', response.data.token);
 
 				console.log(`%c Login Success.`, `color: lightgreen;`);
-				return true;
+				return { login_success: true, message: null };
 
 			} catch (error) {
 				console.log(`%c Login Failed. (${moment().format('LTS')})`, `color: red;`);
-				context.commit('AUTH_ERROR', error.response.data);
-				return false;
+				context.commit('AUTH_ERROR');
+				return { login_success: false, message: error.response.data };
 			}
 		},
 		async LOGOUT({ commit, state }) {
@@ -87,7 +83,10 @@ const UserModule = {
 
 				if (response.status === 200) {
 					if (response.data.token) {
+						console.log(`%c Access token expired.(${moment().format('LTS')})`, 'color: yellow;');
 						localStorage.setItem('access_token', response.data.token);
+						console.log(`%c  Access Token Renewed.(${moment().format('LTS')})`, 'color: lightgreen;');
+						console.log(`%c Token: ${localStorage.getItem('access_token')}`, 'color: cyan;')
 						return true;
 					}
 					return true;
