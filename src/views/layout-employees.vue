@@ -112,7 +112,20 @@
 			class="elevation-1"
 		>
 			<template v-slot:item.name="{ item, value }">
-				<router-link :to="{ path: `/employee/${item.employeeId}`}">{{ value }}</router-link>
+				<div class="employee">
+					<router-link
+						:to="{ path: `/employee/${item.employeeId}`}"
+						class="employee-link"
+					>
+						<div class="employee-photo">
+							<v-img
+								:src="item.photo || 'default.jpg'"
+								class="employee-image"
+							></v-img>
+						</div>
+						{{ value }}
+					</router-link>
+				</div>
 			</template>
 
 			<template v-slot:item.actions="{ item }">
@@ -173,11 +186,8 @@
 </template>
 
 <script>
-import AddEmployeeForm from "@/components/employees/AddEmployeeForm.vue";
-import {
-	options,
-	loadTableData
-} from "@/components/employees/data-table-options/data_table.js";
+import AddEmployeeForm from "@/components/Employees/AddEmployeeForm.vue";
+import { options, loadTableData } from "@/components/Employees/DataTable/options.js";
 
 export default {
 	data() {
@@ -362,6 +372,44 @@ export default {
 
 		&:hover {
 			filter: brightness(0.95);
+		}
+	}
+}
+
+.employee {
+	// border: 1px dashed lightslategray;
+	display: flex;
+	align-items: center;
+	height: max-content;
+	min-height: 30px;
+
+	.employee-link {
+		display: flex;
+		align-items: center;
+		height: 20px;
+		text-decoration: none;
+		font-weight: 400;
+		font-size: 15px;
+
+		&:hover {
+			text-decoration: underline;
+		}
+
+		.employee-photo {
+			background-color: #e7e7e7;
+			display: flex;
+			height: 30px;
+			width: 30px;
+			border: 1px solid #bebebe;
+			border-radius: 5px;
+			overflow: hidden;
+			margin-right: 10px;
+
+			.employee-image {
+				object-fit: contain;
+				object-position: center;
+				height: 100%;
+			}
 		}
 	}
 }
