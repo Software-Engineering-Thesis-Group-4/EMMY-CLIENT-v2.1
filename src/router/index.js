@@ -12,21 +12,26 @@ import SentimentSelectionLayout from '@/views/layout-sentimentselection.vue'
 import NotificationLayout from '@/views/layout-notifications.vue';
 import PageNotFoundLayout from "@/views/layout-404.vue";
 import AccountSettingsLayout from '@/views/layout-settings.vue';
+import EmployeeProfileLayout from '@/views/layout-employeeprofile.vue';
+
 // Admin layouts
+/* 
 import AdminLayout from '@/views/layout-admin.vue';
 import AdminLoginLayout from '@/views/layout-admin-login.vue';
 import AccountManagementLayout from "@/views/layout-account-management.vue";
 import ApplicationConfigurationLayout from "@/views/layout-admin-config.vue";
-import ApplicationLogsLayout from "@/views/layout-admin-logs.vue";
-import EmployeeProfileLayout from '@/views/layout-employeeprofile.vue';
+import ApplicationLogsLayout from "@/views/layout-admin-logs.vue"; 
+*/
+
 
 // Components ----------------------------------------------------------------------------------------------------------
 import LoginForm from '@/components/LoginForm.vue'
-import UserAccount from "@/components/user_account/UserAccount.vue";
-import UserSecurity from "@/components/user_security/UserSecurity.vue";
-import UserActivity from "@/components/user_activity/UserActivity.vue";
+import UserAccount from "@/components/UserSettings/Account/UserAccount.vue";
+import UserSecurity from "@/components/UserSettings/Security/UserSecurity.vue";
+import UserActivity from "@/components/UserSettings/Activity/UserActivity.vue";
 // import ResetPasswordForm from '@/components/ResetPasswordForm.vue'
 
+import PlaygroundLayout from "@/views/playground.vue";
 
 Vue.use(VueRouter);
 
@@ -54,6 +59,10 @@ const isNotLoggedIn = (to, form, next) => {
 
 // ROUTES --------------------------------------------------------------------------------------------------------------
 const routes = [
+	{
+		path: '/playground',
+		component: PlaygroundLayout,
+	},
 	{
 		path: '/',
 		component: LoginLayout,
@@ -129,27 +138,30 @@ const routes = [
 						alias: '/account',
 						meta: {
 							title: 'Account Settings',
-							headerTitle: 'Personal Information' 
+							headerTitle: 'Personal Information'
 						},
 						component: UserAccount,
+						beforeEnter: isAuthenticated, // PROTECTED
 					},
 					{
 						path: 'security',
 						alias: '/security',
 						meta: {
 							title: 'Account Settings',
-							headerTitle: 'Change Password' 
+							headerTitle: 'Change Password'
 						},
 						component: UserSecurity,
+						beforeEnter: isAuthenticated, // PROTECTED
 					},
 					{
 						path: 'activity',
 						alias: '/activity',
 						meta: {
 							title: 'Account Settings',
-							headerTitle: 'Activity Log' 
+							headerTitle: 'Activity Log'
 						},
 						component: UserActivity,
+						beforeEnter: isAuthenticated, // PROTECTED
 					},
 
 				],
@@ -167,6 +179,7 @@ const routes = [
 			}
 		]
 	},
+	/* 
 	{
 		path: '/admin',
 		component: AdminLoginLayout
@@ -201,7 +214,8 @@ const routes = [
 				component: ApplicationLogsLayout,
 			}
 		]
-	},
+	}, 
+	*/
 	{
 		path: '/dailysentiment',
 		component: SentimentSelectionLayout
