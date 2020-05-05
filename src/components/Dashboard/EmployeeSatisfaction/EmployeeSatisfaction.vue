@@ -27,7 +27,7 @@ export default {
 			],
 			chartOptions: {
 				chart: {
-					type: "line",
+					type: "area",
 					background: "white",
 					toolbar: {
 						show: true,
@@ -70,14 +70,13 @@ export default {
 				},
 				stroke: {
 					curve: "smooth",
-					lineCap: "round",
-					width: 5,
-					colors: "#7198F3"
+					width: 3,
 				},
+				colors: ["#82EFCA"],
 				xaxis: {
 					type: "datetime",
 					labels: {
-						show: false,
+						show: true,
 						style: {
 							colors: [],
 							fontSize: "12px",
@@ -90,7 +89,7 @@ export default {
 						show: false
 					},
 					axisTicks: {
-						show: false,
+						show: true,
 						borderType: "solid",
 						height: 6,
 						offsetX: 0,
