@@ -17,8 +17,12 @@
 		</div>
 
 		<div class="chart_group-2">
-			<div class="cg2_subgroup"></div>
-			<div class="cg2_subgroup"></div>
+			<div class="cg2_subgroup">
+				<PositiveSentimentByGender />
+			</div>
+			<div class="cg2_subgroup">
+				<NegativeSentimentByGender />
+			</div>
 			<div class="cg2_subgroup"></div>
 		</div>
 	</div>
@@ -27,6 +31,8 @@
 <script>
 import OverallChart from "@/components/Dashboard/OverallChart/OverallChart.vue";
 import EmployeeSatisfaction from "@/components/Dashboard/EmployeeSatisfaction/EmployeeSatisfaction.vue";
+import PositiveSentimentByGender from "@/components/Dashboard/PositiveSentimentByGender/PositiveSentimentByGender.vue";
+import NegativeSentimentByGender from "@/components/Dashboard/NegativeSentimentByGender/NegativeSentimentByGender.vue";
 
 export default {
 	data() {
@@ -34,7 +40,9 @@ export default {
 	},
 	components: {
 		OverallChart,
-		EmployeeSatisfaction
+		EmployeeSatisfaction,
+		PositiveSentimentByGender,
+		NegativeSentimentByGender
 	}
 };
 </script>
@@ -91,7 +99,6 @@ export default {
 .chart_group-2 {
 	display: grid;
 	width: 100%;
-	height: 240px;
 	grid-template-columns: 1fr 1fr 1fr;
 	column-gap: 14px;
 	margin-top: 14px;
@@ -103,6 +110,7 @@ export default {
 		border-radius: 5px;
 		width: 100%;
 		height: 100%;
+		padding: 10px;
 	}
 }
 </style>

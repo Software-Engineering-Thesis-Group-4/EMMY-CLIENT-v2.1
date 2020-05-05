@@ -2,10 +2,10 @@
 	<div class="layout-container">
 		<div class="card">
 			<apexchart
+				type="area"
 				height="100%"
-				:options="chartOptions"
+				:options="options"
 				:series="series"
-				class="chart"
 			></apexchart>
 		</div>
 	</div>
@@ -20,21 +20,18 @@ export default {
 		return {
 			series: [
 				{
-					data: [
-						{ x: "05/06/2014", y: 54 },
-						{ x: "05/08/2014", y: 17 },
-						{ x: "05/28/2014", y: 26 },
-						{ x: "05/28/2014", y: 26 },
-						{ x: "05/28/2014", y: 26 }
-					]
+					name: "male",
+					data: [31, 40, 28, 51, 42, 109, 100]
+				},
+				{
+					name: "female",
+					data: [11, 32, 45, 32, 34, 52, 41]
 				}
 			],
-			chartOptions: {
+			options: {
 				chart: {
-					type: "line",
-					background: "white",
 					toolbar: {
-						show: false,
+						show: true,
 						offsetX: 0,
 						offsetY: 0,
 						tools: {
@@ -50,7 +47,7 @@ export default {
 					}
 				},
 				title: {
-					text: "Employee Satisfaction",
+					text: "Positive Sentiment By Gender",
 					align: "left",
 					margin: 10,
 					offsetX: 0,
@@ -59,91 +56,56 @@ export default {
 					style: {
 						fontSize: "14px",
 						fontWeight: "400",
-						fontFamily: "Cera Pro, sans serif",
+						fontFamily: "Cera Pro, sans-serif",
 						color: "#263238"
 					}
-				},
-				grid: {
-					show: false
 				},
 				dataLabels: {
 					enabled: false
 				},
+				colors: ["#82AAEF", "#DDA2FF"],
 				stroke: {
 					curve: "smooth",
-					lineCap: "butt",
-					width: 3,
-					colors: "#80D1B5"
+					width: 3
 				},
 				xaxis: {
-					type: "datetime",
+					type: "numeric",
 					labels: {
-						show: false
+						show: true,
+						style: {
+							colors: [],
+							fontSize: "12px",
+							fontFamily: "Cera Pro, sans-serif",
+							fontWeight: 400,
+							cssClass: "apexcharts-xaxis-label"
+						}
 					},
 					axisBorder: {
 						show: false
 					},
 					axisTicks: {
-						show: false,
+						show: true,
 						borderType: "solid",
 						height: 6,
 						offsetX: 0,
 						offsetY: 0
 					},
 					tooltip: {
-						enabled: false,
-						formatter: undefined,
-						offsetY: 0,
-						style: {
-							fontSize: 0,
-							fontFamily: 0
-						}
+						enabled: false
 					}
 				},
 				yaxis: {
-					show: false,
-				},
-				tooltip: {
-					enabled: true,
-					x: {
-						formatter: value => {
-							return moment(value).format("ll");
-						}
+					show: true,
+					labels: {
+						style: {
+							colors: [],
+							fontSize: "12px",
+							fontFamily: "Cera Pro, Arial, sans-serif",
+							fontWeight: 400,
+							cssClass: "apexcharts-yaxis-label"
+						},
+						offsetX: -10
 					},
-					fixed: {
-						enabled: false,
-						position: "topRight",
-						offsetX: 0,
-						offsetY: 0
-					},
-					style: {
-						fontSize: "12px",
-						fontFamily: "Cera Pro"
-					},
-					marker: {
-						show: false
-					}
-				},
-				markers: {
-					size: 0,
-					colors: "#80D1B5",
-					strokeColors: "#80D1B5",
-					strokeWidth: 2,
-					strokeOpacity: 0.9,
-					strokeDashArray: 0,
-					fillOpacity: 1,
-					discrete: [],
-					shape: "circle",
-					radius: 2,
-					offsetX: 0,
-					offsetY: 0,
-					onClick: undefined,
-					onDblClick: undefined,
-					showNullDataPoints: true,
-					hover: {
-						size: 5,
-						sizeOffset: 3
-					}
 				}
 			}
 		};
@@ -151,72 +113,7 @@ export default {
 	components: {
 		apexchart
 	},
-	created() {
-		let past = moment()
-			.subtract(15, "days")
-			.format();
-
-		this.$store.dispatch("employees/FETCH_ATTENDANCELOGS").then(logs => {
-			logs.sort((a, b) => new Date(a.in) - new Date(b.in));
-
-			// get all logs that was created 1 week from now
-			let logsOfTheWeek = logs.filter(log => {
-				let logDate = moment(log.dateCreated);
-				if (
-					logDate.isSameOrAfter(past) &&
-					logDate.isSameOrBefore(moment().format())
-				) {
-					return log;
-				}
-			});
-
-			let newSeries = logsOfTheWeek.map(
-				({ emotionIn, emotionOut, dateCreated }) => {
-					let satisfaction = 0;
-
-					switch (emotionIn) {
-						case 3:
-							satisfaction += 1;
-							break;
-						case 4:
-							satisfaction += 2;
-							break;
-						case 5:
-							satisfaction += 3;
-							break;
-					}
-
-					switch (emotionOut) {
-						case 3:
-							satisfaction += 1;
-							break;
-						case 4:
-							satisfaction += 2;
-							break;
-						case 5:
-							satisfaction += 3;
-							break;
-					}
-
-					return {
-						x: dateCreated,
-						y: satisfaction
-					};
-				}
-			);
-
-			// console.log(newSeries.map(({ x }) => moment(x).fromNow()));
-
-			console.log(newSeries);
-
-			this.series = [
-				{
-					name: "satisfaction score",
-					data: newSeries
-				}
-			];
-		});
-	}
+	created() {}
 };
 </script>
 
@@ -232,8 +129,8 @@ export default {
 }
 
 .card {
-	height: 168px;
-	min-width: 200px;
+	height: 300px;
+	min-width: 500px;
 	padding: 10px;
 	background-color: white;
 	border-radius: 5px;
