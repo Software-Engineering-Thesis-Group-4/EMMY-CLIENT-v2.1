@@ -83,10 +83,26 @@ export const chartData = {
 				show: true,
 			},
 			// background: 'cyan'
+			redrawOnParentResize: false
 		},
 		colors: ["#FF8484", "#FFB546", "#FFF23B", "#A8FF84", "#65FBDC", "#B2BEC3"],
 		dataLabels: {
 			enabled: false
+		},
+		title: {
+			text: "Overall Sentiment by Month",
+			margin: 10,
+			offsetX: 0,
+			offsetY: 0,
+			style: {
+				fontSize: '14px',
+				fontWeight: 'Normal',
+				fontFamily: "Cera Pro",
+				color: '#263238'
+			},
+		},
+		grid: {
+			show: false,
 		},
 		legend: {
 			show: true,
@@ -100,12 +116,15 @@ export const chartData = {
 			fontFamily: 'Cera Pro',
 			inverseOrder: true,
 			width: undefined,
-			height: undefined,
-			offsetX: -20,
-			offsetY: 10,
+			height: 0,
+			offsetY: 35,
 			itemMargin: {
-				horizontal: 5,
-				vertical: 2
+				// horizontal: 10,
+				vertical: 2,
+			},
+			labels: {
+				colors: "#9F9C9C",
+				useSeriesColors: false
 			},
 		},
 		xaxis: {
@@ -134,17 +153,18 @@ export const chartData = {
 				maxHeight: 120,
 				style: {
 					colors: "#656565",
-					fontSize: "15px",
+					fontSize: "12px",
 					fontFamily: "Cera Pro",
 					cssClass: "apexcharts-xaxis-label"
 				},
 				formatter: (value) => {
-					return value.substring(0,3)
+					return value.substring(0, 3)
 				}
 			},
 
 		},
 		yaxis: {
+			show: false,
 			labels: {
 				show: false,
 			},
@@ -174,5 +194,32 @@ export const chartData = {
 				fontFamily: "Cera Pro"
 			}
 		},
+		plotOptions: {
+			bar: {
+				horizontal: false,
+				startingShape: 'flat',
+				endingShape: 'flat',
+				columnWidth: '70%',
+				barHeight: '70%',
+				distributed: false,
+				rangeBarOverlap: true,
+				colors: {
+					ranges: [{
+						from: 0,
+						to: 0,
+						color: undefined
+					}],
+					backgroundBarColors: [],
+					backgroundBarOpacity: 1,
+					backgroundBarRadius: 0,
+				},
+				dataLabels: {
+					position: 'top',
+					maxItems: 100,
+					hideOverflowingLabels: true,
+					orientation: "horizontal"
+				}
+			}
+		}
 	}
 }

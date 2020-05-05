@@ -3,7 +3,7 @@
 		ref="chart"
 		type="bar"
 		width="100%"
-		height="380px"
+		height="310px"
 		:options="chartData.chartOptions"
 		:series="chartData.series"
 		class="chart"
@@ -31,20 +31,17 @@ export default {
 		})
 	},
 	beforeMount() {
-		this.$http
-			.get(`/api/employeelogs/year/${this.fetchYear}`)
-			.then(response => {
-				this.$refs.chart.updateSeries(updateData(response.data), true);
-			})
-			.catch(error => {
-				console.error(error);
-			});
+		this.$store.dispatch("employees/FETCH_ATTENDANCELOGS").then(logs => {
+			this.$refs.chart.updateSeries(updateData(logs), true);
+		});
 	}
 };
 </script>
 
 <style lang="scss" scoped>
 .chart {
-	min-width: 700px;
+	min-width: 500px;
+	// height: 300px;
+	// background-color: wheat;
 }
 </style>

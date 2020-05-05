@@ -1,63 +1,41 @@
 <template>
 	<div class="main-container">
-		<div class="dv-group">
-			<h2 class="group-label">General Statistics</h2>
-			<!-- REFACTOR: Convert this to a component -->
-			<div class="general-statistics-container">
-				<div class="card">
-					<!-- <h1>Item 1</h1> -->
+
+		<div class="chart_group-1">
+			<div class="cg1_subgroup">
+				<div class="subgroup_container">
+					<EmployeeSatisfaction />
 				</div>
-				<div class="card">
-					<!-- <h1>Item 2</h1> -->
+				<div class="subgroup_container">
+					<span>Sentiment of the week</span>
 				</div>
-				<div class="card">
-					<!-- <h1>Item 3</h1> -->
-				</div>
-				<div class="card">
-					<!-- <h1>Item 4</h1> -->
-				</div>
+			</div>
+			<div class="overallchart_container">
+				<!-- TODO: insert button for selecting year -->
+				<OverallChart />
 			</div>
 		</div>
 
-		<div class="dv-group">
-			<h2 class="group-label">Overall Employee Sentiment (per month)</h2>
-			<OverallEmployeeSentiment />
+		<div class="chart_group-2">
+			<div class="cg2_subgroup"></div>
+			<div class="cg2_subgroup"></div>
+			<div class="cg2_subgroup"></div>
 		</div>
-
-		<div class="dv-group dual-column">
-
-			<div class="dv-group-item">
-				<h2 class="group-label">Overall Employee Sentiment (by gender)</h2>
-				<GenderSentiment />
-			</div>
-
-			<div class="dv-group-item">
-				<h2 class="group-label">
-					Overall Employee Sentiment (by department)
-				</h2>
-				<DepartmentSentiment />
-			</div>
-
-		</div>
-
 	</div>
 </template>
 
 <script>
-import OverallEmployeeSentiment from "@/components/Dashboard/OverallChart/OverallChart.vue";
-import GenderSentiment from "@/components/Dashboard/GenderChart/GenderChart.vue";
-import DepartmentSentiment from "@/components/Dashboard/DepartmentChart/DepartmentChart.vue";
+import OverallChart from "@/components/Dashboard/OverallChart/OverallChart.vue";
+import EmployeeSatisfaction from "@/components/Dashboard/EmployeeSatisfaction/EmployeeSatisfaction.vue";
 
 export default {
 	data() {
 		return {};
 	},
 	components: {
-		OverallEmployeeSentiment,
-		GenderSentiment,
-		DepartmentSentiment
-	},
-	created() {}
+		OverallChart,
+		EmployeeSatisfaction
+	}
 };
 </script>
 
@@ -69,72 +47,62 @@ export default {
 	min-width: 1024px;
 	max-width: 1522.39px;
 	width: 100%;
-	padding-bottom: 50px;
-
-	align-self: center;
+	padding-top: 7px;
 }
 
-.general-statistics-container {
-	// DEBUGGING ---------------------------------------
-	// background-color: #ff00003a;
-	// border: 1px dashed #727272;
-	// -------------------------------------------------
+.chart_group-1 {
 	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	column-gap: 5px;
 	width: 100%;
+	min-height: 300px;
 
-	.card {
-		// NEOMORPHISM
-		/* background: linear-gradient(-230deg, #f0f0f0, #ffffff);
-		box-shadow: 6px 6px 12px #eeeeee, -6px -6px 12px #ffffff; */
+	grid-template-columns: 400px 1fr;
+	column-gap: 14px;
+	font-size: 14px;
 
-		background-color: #ffffff;
-		border: 0.5px solid #dddddd;
-
+	.cg1_subgroup {
+		display: grid;
 		width: 100%;
-		height: 100px;
-		padding: 10px;
-		border-radius: 10px;
+		min-height: 100%;
+		height: max-content;
+		grid-template-rows: 1fr 1fr;
+		row-gap: 14px;
 
+		.subgroup_container {
+			display: flex;
+			flex-direction: column;
+			background-color: white;
+			border: 0.5px solid #dedede;
+			border-radius: 5px;
+			padding: 10px;
+		}
+	}
+
+	.overallchart_container {
 		display: flex;
-		justify-content: center;
-		align-items: center;
-
-		color: #c531ff44;
+		flex-direction: column;
+		height: 100%;
+		background-color: white;
+		border: 0.5px solid #dedede;
+		border-radius: 5px;
+		padding: 10px;
 	}
 }
 
-.dv-group {
-	// DEBUGGING ---------------------------------------
-	// background-color: #00eaff3b;
-	// border: 1px dashed #f82fff91;
-	// -------------------------------------------------
-	margin-top: 20px;
-	width: 100%;
-
-	.group-label {
-		font-size: 20px;
-		margin-bottom: 10px;
-		color: #383838;
-	}
-}
-
-// Gender & Department Group
-.dual-column {
-	// DEBUGGING ---------------------------------------
-	// background-color: #df41ff36; // FOR DEBUGGING
-	// -------------------------------------------------
+.chart_group-2 {
 	display: grid;
-	grid-template-columns: 0.8fr 1fr;
-	column-gap: 15px;
+	width: 100%;
+	height: 240px;
+	grid-template-columns: 1fr 1fr 1fr;
+	column-gap: 14px;
+	margin-top: 14px;
 
-	.dv-group-item {
-		// DEBUGGING ---------------------------------------
-		// background-color: red;
-		// border: 1px dashed #b4b4b4;
-		// -------------------------------------------------
+	.cg2_subgroup {
+		display: flex;
+		background-color: white;
+		border: 0.5px solid #dedede;
+		border-radius: 5px;
 		width: 100%;
+		height: 100%;
 	}
 }
 </style>

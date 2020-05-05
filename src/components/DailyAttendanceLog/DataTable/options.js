@@ -36,19 +36,19 @@ export let options = {
 			text: "TIME-IN",
 			value: "timeIn",
 			align: "start",
-			sortable: true,
+			sortable: false,
 		},
 		{
 			text: "TIME-OUT",
 			value: "timeOut",
 			align: "start",
-			sortable: true,
+			sortable: false,
 		},
 		{
 			text: "DATE",
 			value: "date",
 			align: "start",
-			sortable: true
+			sortable: false
 		},
 		{
 			text: "EMPLOYEE",
