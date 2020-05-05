@@ -29,7 +29,7 @@ import LoginForm from '@/components/LoginForm.vue'
 import UserAccount from "@/components/UserSettings/Account/UserAccount.vue";
 import UserSecurity from "@/components/UserSettings/Security/UserSecurity.vue";
 import UserActivity from "@/components/UserSettings/Activity/UserActivity.vue";
-// import ResetPasswordForm from '@/components/ResetPasswordForm.vue'
+import PasswordResetRequestForm from '@/components/ResetPassword/PasswordResetRequestForm.vue'
 
 import PlaygroundLayout from "@/views/playground.vue";
 
@@ -75,13 +75,12 @@ const routes = [
 				beforeEnter: isNotLoggedIn, // PROTECTED
 				component: LoginForm
 			},
-			// {
-			// 	path: 'forgot-password',
-			// 	name: 'forgotPassword',
-			// 	alias: '/forgotpassword',
-			// 	// beforeEnter: isAuthenticated, // PROTECTED
-			// 	component: ResetPasswordForm
-			// }
+			{
+				path: 'forgot-password',
+				name: 'forgotPassword',
+				alias: '/forgotpassword',
+				component: PasswordResetRequestForm
+			}
 		]
 	},
 	{
