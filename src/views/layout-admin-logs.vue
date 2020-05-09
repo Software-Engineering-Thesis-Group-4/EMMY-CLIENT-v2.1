@@ -3,11 +3,13 @@
     <v-divider color="#52555A"></v-divider>
     <div class="table-container">
       <template>
-        <v-data-table dark
-                      :headers="headers" 
-                      :items="employees" 
-                      :items-per-page="10" 
-                      class="logs-table"></v-data-table>
+        <v-data-table
+          dark
+          :headers="headers"
+          :items="employees"
+          :items-per-page="10"
+          class="logs-table"
+        ></v-data-table>
       </template>
     </div>
   </div>
@@ -15,21 +17,21 @@
 
 <script>
 export default {
-    data () {
-      return {
-        headers: [
-          {
-            text: 'Date',
-            align: 'start',
-            sortable: false,
-            value: 'date',
-          },
-          { text: 'Time', value: 'time' },
-          { text: 'Description', value: 'description' },
-          { text: 'Employee', value: 'employee' }
-        ],
-        employees: [
-         {
+  data() {
+    return {
+      headers: [
+        {
+          text: "Date",
+          align: "start",
+          sortable: false,
+          value: "date"
+        },
+        { text: "Time", value: "time" },
+        { text: "Description", value: "description" },
+        { text: "Employee", value: "employee" }
+      ],
+      employees: [
+        {
           date: "Jan 1, 2020",
           time: "hh:mm:ss",
           description:
@@ -99,12 +101,11 @@ export default {
             "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
           employee: "Dolores, Ipsum Lorem"
         }
-      ],
-      }
-    },
+      ]
+    };
   }
+};
 </script>
 
 <style lang="scss" scoped>
-  
 </style>

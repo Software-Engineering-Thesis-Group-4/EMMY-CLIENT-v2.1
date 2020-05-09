@@ -1,50 +1,7 @@
 <template>
-	<div>
-		<div class="content-container">
-			<h3 class="notifications-daterange">Today</h3>
+	<div class="layout-container">
+		<div class="notification-container">
 			<ul class="notifications-itemlist">
-				<!-- template: extreme emotion : angry --------------------------------------------------------------------->
-				<!-- <li class="extreme-emotion-notification unread">
-          <div class="employee">
-            <img src="/sample-image.png" alt="employee" class="avatar" />
-            <img src="/emotions/1.png" alt="" class="sentiment" />
-          </div>
-          <span class="notification-message">
-            Oh no! <span class="employee-name">Lorem Ipsum</span> is feeling
-            <span class="emotion">"angry"</span> ["today" | "(February 27,
-            2020)"]. Reach out to your employees personally or by send them an
-            email to see how they're doing.
-          </span>
-        </li> -->
-
-				<!-- template: extreme emotion : amazing --------------------------------------------------------------------->
-				<!-- <li class="extreme-emotion-notification unread">
-          <div class="employee">
-            <img src="/sample-image.png" class="avatar" />
-            <img src="/emotions/5.png" class="sentiment" />
-          </div>
-          <span class="notification-message">
-            Wow! <span class="employee-name">Lorem Ipsum</span> is feeling
-            <span class="emotion">"amazing"</span> ["today" | "(February 27,
-            2020)"]. Reach out to your employees personally or by send them an
-            email to see how they're doing.
-          </span>
-        </li> -->
-
-				<!-- template: change password --------------------------------------------------------------------->
-				<!-- <li class="change-password-notification unread">
-          <div class="employee">
-            <img src="/default-avatar.png" alt="employee" class="avatar" />
-          </div>
-          <span class="notification-message">
-            Your password has been changed on
-            <span class="date-time"
-              >(Thursday - 11:36 AM, February 27, 2019)</span
-            >. If this looks suspicious please contact your administrator
-            immediately.
-          </span>
-        </li> -->
-
 				<li
 					v-for="item in notifications"
 					:key="item._id"
@@ -52,11 +9,11 @@
 					<!-- template: password changed ----------------------------------------------------------------->
 					<div
 						v-if="item.type === 'USER-CHANGED_PASSWORD'"
-						class="notification_item"
+						class="notification_item unread"
 					>
 						<div class="user">
-							<img
-								:src="'/default-avatar.png' || reciever.photo"
+							<v-img
+								:src="null || 'default.png'"
 								alt="employee"
 								class="avatar"
 							/>
@@ -70,10 +27,8 @@
 
 					<!-- template: extreme emotion : angry ---------------------------------------------------------->
 					<div
-						v-else-if="
-              item.type === 'EMPLOYEE-EXTREME_EMOTION' && item.emotion === 1
-            "
-						class="notification_item"
+						v-else-if="item.type === 'EMPLOYEE-EXTREME_EMOTION' && item.emotion === 1"
+						class="notification_item unread"
 					>
 						<div class="employee">
 							<img
@@ -96,10 +51,8 @@
 
 					<!-- template: extreme emotion : amazing -------------------------------------------------------->
 					<div
-						v-else-if="
-              item.type === 'EMPLOYEE-EXTREME_EMOTION' && item.emotion === 5
-            "
-						class="notification_item"
+						v-else-if="item.type === 'EMPLOYEE-EXTREME_EMOTION' && item.emotion === 5"
+						class="notification_item unread"
 					>
 						<div class="employee">
 							<img
@@ -119,16 +72,6 @@
 					</div>
 				</li>
 			</ul>
-
-			<h3 class="notifications-daterange">Yesterday</h3>
-			<ul class="notifications-itemlist">
-				<!-- TODO: Add another <li> loop for notifications with date == to yesterday -->
-			</ul>
-
-			<h3 class="notifications-daterange">Last 7 Days</h3>
-			<ul class="notifications-itemlist">
-				<!-- TODO: Add another <li> loop for notifications having dates past yesterday but not past the last 7 days -->
-			</ul>
 		</div>
 	</div>
 </template>
@@ -145,7 +88,11 @@ export default {
 					_id: 1, // should be the actual document _id of user
 					type: "USER-CHANGED_PASSWORD",
 					date: moment().calendar(),
-					reciever: "{user.firstname} {user.lastname}", // should be the actual user document
+					reciever: {
+						firstname: "John",
+						lastname: "Doe",
+						photo: "default.png"
+					}, // should be the actual user document
 					author: null,
 					employee: null,
 					emotion: null
@@ -154,10 +101,18 @@ export default {
 					_id: 2,
 					type: "EMPLOYEE-EXTREME_EMOTION",
 					date: moment().calendar(),
-					reciever: "{user.firstname} {user.lastname}",
+					reciever: {
+						firstname: "John",
+						lastname: "Doe",
+						photo: "default.png"
+					}, // should be the actual user document
 					author: null,
-					employee: "{emp.firstname} {emp.lastname}",
-					emotion: 1
+					employee: {
+						firstname: "John",
+						lastname: "Doenut"
+					},
+					emotion: 1,
+					photo: "default.jpg"
 				},
 				{
 					_id: 3,
@@ -165,8 +120,9 @@ export default {
 					date: moment().calendar(),
 					reciever: "{user.firstname} {user.lastname}",
 					author: null,
-					employee: "{emp.firstname} {emp.lastname}",
-					emotion: 5
+					employee: "John Doenut",
+					emotion: 5,
+					photo: "default.jpg"
 				}
 			]
 		};
@@ -180,73 +136,77 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.content-container {
+.layout-container {
+	// border: 1px dashed black;
+	// background-color: #00ffff31;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	margin-top: 10px;
+}
+
+.notification-container {
 	background-color: #fff;
 	border: 0.5px solid #e6e6e6;
-	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	width: 800px;
 	padding: 20px 0px;
-	margin-top: 10px;
+}
 
-	.notifications-daterange {
-		color: #bebebe;
-		font-weight: 500;
-		margin-bottom: 5px;
-		margin-left: 40px;
+.notifications-itemlist {
+	// background-color: red;
+	// BUG: ---------------------------------------------------------------------------------------------------------------------------------
+	display: none;
+	list-style-type: none;
+	flex-direction: column;
+	align-items: flex-start;
+	padding: 0px;
+
+	li {
+		width: 100%;
 	}
 
-	.notifications-itemlist {
-		// background-color: red;
-		list-style-type: none;
+	.notification_item {
+		// background-color: violet;
 		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		padding: 0px;
+		align-items: center;
+		justify-content: flex-start;
+		width: 100%;
+		padding: 9px 40px;
 
-		li {
-			width: 100%;
+		&.unread {
+			// background-color: #ecf5ff;
 		}
 
-		.notification_item {
-			// background-color: violet;
+		.user,
+		.employee {
+			background-color: turquoise;
+			position: relative;
+			margin-right: 20px;
 			display: flex;
-			align-items: center;
-			justify-content: flex-start;
-			width: 100%;
-			padding: 9px 40px;
 
-			&,
-			.unread {
-				background-color: #ecf5ff;
+			.avatar {
+				border-radius: 999px;
 			}
 
-			.user, .employee {
-				// background-color: turquoise;
-				position: relative;
-				margin-right: 20px;
-				display: flex;
-
-				.avatar {
-					height: 40px;
-					border-radius: 999px;
-				}
-
-				.sentiment {
-					height: 20px;
-					position: absolute;
-					bottom: -6px;
-					right: -6px;
-				}
+			.sentiment {
+				height: 20px;
+				position: absolute;
+				bottom: 0px;
+				right: -6px;
 			}
+		}
 
-			.notification-message {
-				font-size: 14px;
-				color: #747474;
+		.notification-message {
+			font-size: 14px;
+			color: #747474;
 
-				.employee-name,
-				.emotion,
-				.date-time {
-					font-weight: bold;
-				}
+			.employee-name,
+			.emotion,
+			.date-time {
+				font-weight: bold;
 			}
 		}
 	}

@@ -1,7 +1,8 @@
 <template>
 	<div>
 		<div class="controls">
-			<!-- Search Field -->
+
+			<!-- Search -->
 			<div class="search-field">
 				<v-autocomplete
 					:search-input.sync="employeeDataTableOptions.search"
@@ -13,10 +14,10 @@
 				></v-autocomplete>
 			</div>
 
+			<!-- Add Employee -->
 			<v-dialog
 				max-width="600px"
 				v-model="showAddEmployeeDialog"
-				persistent
 			>
 				<template v-slot:activator="{ on }">
 					<button
@@ -32,9 +33,8 @@
 					@addedNewEmployee="fetchEmployees"
 				/>
 			</v-dialog>
-			<!-- Add Employee Button -->
 
-			<!-- Filters Button -->
+			<!-- Filters-->
 			<v-menu
 				offset-y
 				:close-on-content-click="false"
@@ -108,12 +108,24 @@
 			:loading="loadingEmployeeDataTable"
 			loading-text="Loading... Please wait"
 			item-key="id"
-			show-select
-			sort-by="department"
+			sort-by="name"
 			class="elevation-1"
 		>
 			<template v-slot:item.name="{ item, value }">
-				<router-link :to="{ path: `/employee/${item.employeeId}`}">{{ value }}</router-link>
+				<div class="employee">
+					<router-link
+						:to="{ path: `/employee/${item.employeeId}`}"
+						class="employee-link"
+					>
+						<div class="employee-photo">
+							<v-img
+								:src="item.photo || 'default.jpg'"
+								class="employee-image"
+							></v-img>
+						</div>
+						{{ value }}
+					</router-link>
+				</div>
 			</template>
 
 			<template v-slot:item.actions="{ item }">
@@ -156,15 +168,26 @@
 				</button>
 			</template>
 		</v-data-table>
+
+		<v-snackbar
+			v-model="snackbar"
+			:timeout="snackBarTimeOut"
+		>
+			{{ text }}
+			<v-btn
+				color="#779AEC"
+				text
+				@click="snackbar = false"
+			>
+				Close
+			</v-btn>
+		</v-snackbar>
 	</div>
 </template>
 
 <script>
-import AddEmployeeForm from "@/components/employees/AddEmployeeForm.vue";
-import {
-	options,
-	loadTableData
-} from "@/components/employees/data-table-options/data_table.js";
+import AddEmployeeForm from "@/components/Employees/AddEmployeeForm.vue";
+import { options, loadTableData } from "@/components/Employees/DataTable/options.js";
 
 export default {
 	data() {
@@ -172,23 +195,10 @@ export default {
 			employeeDataTableOptions: options,
 			loadingEmployeeDataTable: false,
 			showAddEmployeeDialog: false,
-			departmentCategories: [
-				"Admissions",
-				"Registrar",
-				"Finance",
-				"Human Resources ",
-				"Office of Student Affairs",
-				"Office of Student Experience and Advancement ",
-				"Office of the President",
-				"Office of the COO",
-				"IT",
-				"Corporate Communications",
-				"Purchasing",
-				"Admin and Facilities",
-				"Academics College",
-				"Academics SHS",
-				"Clinic"
-			]
+			departmentCategories: this.$store.state.employees.departments,
+			snackbar: false,
+			text: "Employee Removed.",
+			snackBarTimeOut: 2000
 		};
 	},
 	components: {
@@ -214,7 +224,11 @@ export default {
 		},
 		deleteEmployee(employee) {
 			// TODO: show a confirmation dialog to the user before commiting to make an employee as "terminated"
-			this.$store.dispatch("employees/DELETE_EMPLOYEE", employee.id);
+			this.$store
+				.dispatch("employees/DELETE_EMPLOYEE", employee.id)
+				.then(() => {
+					this.snackbar = true;
+				});
 		},
 		toggleAddEmployeeDialog() {
 			this.showAddEmployeeDialog = false;
@@ -222,7 +236,6 @@ export default {
 		fetchEmployees() {
 			this.$store.dispatch("employees/FETCH_EMPLOYEES").then(employees => {
 				loadTableData(employees);
-				console.log("fetched all employees");
 			});
 		},
 		filterData() {
@@ -359,6 +372,44 @@ export default {
 
 		&:hover {
 			filter: brightness(0.95);
+		}
+	}
+}
+
+.employee {
+	// border: 1px dashed lightslategray;
+	display: flex;
+	align-items: center;
+	height: max-content;
+	min-height: 30px;
+
+	.employee-link {
+		display: flex;
+		align-items: center;
+		height: 20px;
+		text-decoration: none;
+		font-weight: 400;
+		font-size: 15px;
+
+		&:hover {
+			text-decoration: underline;
+		}
+
+		.employee-photo {
+			background-color: #e7e7e7;
+			display: flex;
+			height: 30px;
+			width: 30px;
+			border: 1px solid #bebebe;
+			border-radius: 5px;
+			overflow: hidden;
+			margin-right: 10px;
+
+			.employee-image {
+				object-fit: contain;
+				object-position: center;
+				height: 100%;
+			}
 		}
 	}
 }

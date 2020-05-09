@@ -1,48 +1,82 @@
 <template>
 	<v-container class="root-container">
-		<v-card class="form-container" :elevation="2">
+		<v-card
+			class="form-container"
+			:elevation="2"
+		>
 			<div class="logo-container">
-				<img src="/logo/logo-light@2x.png" class="logo" alt srcset />
+				<img
+					src="/logo/logo-light@2x.png"
+					class="logo"
+					alt
+					srcset
+				/>
 			</div>
 
-			<form class="login-form" @submit.prevent="login()">
+			<form
+				class="login-form"
+				@submit.prevent="login()"
+			>
 				<div class="field">
-					<img src="@/assets/images/input-field-icon_user.svg" alt srcset />
+					<img
+						src="@/assets/images/input-field-icon_user.svg"
+						alt
+						srcset
+					/>
 					<input
 						type="text"
 						name="email"
 						placeholder="Email"
-						v-model="email"
+						v-model="form_email"
 						autocomplete="off"
 					/>
 				</div>
 				<div class="field">
-					<img src="@/assets/images/input-field-icon_padlock.svg" alt srcset />
+					<img
+						src="@/assets/images/input-field-icon_padlock.svg"
+						alt
+						srcset
+					/>
 					<input
 						type="password"
 						name="password"
 						id="password_field"
 						placeholder="Password"
-						v-model="password"
+						v-model="form_password"
 						autocomplete="off"
 					/>
 				</div>
 
-				<div v-if="errorMessage" class="login-error-message">
-					{{ errorMessage }}
-				</div>
-
-				<input type="submit" value="LOGIN" class="login-button" />
-				<router-link to="/forgotpassword" class="forgot-password"
-					>Forgot your password?</router-link
+				<v-alert
+					type="error"
+					dense
+					dismissible=""
+					min-width="100%"
+					v-model="showErrorMessage"
+					:value="!!errorMessage"
 				>
+					{{ errorMessage }}
+				</v-alert>
+
+				<input
+					type="submit"
+					value="LOGIN"
+					class="login-button"
+				/>
+				<router-link
+					:to="{ name: 'password_reset' }"
+					class="forgot-password"
+				>Forgot your password?</router-link>
 			</form>
 			<div class="no-account">
 				Don't have an account? Please contact your administrator
 			</div>
 		</v-card>
 
-		<a href="https://iacademy.edu.ph" class="iacademy-link">
+		<a
+			href="https://iacademy.edu.ph"
+			class="iacademy-link"
+		>
 			<img
 				class="iacademy"
 				src="@/assets/images/iACADEMY_Seal.svg"
@@ -55,26 +89,36 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
 export default {
 	data: () => {
 		return {
-			email: null,
-			password: null
+			// form data ---------------------------------
+			form_email: null,
+			form_password: null,
+
+			// error alert options -----------------------
+			errorMessage: "",
+			showErrorMessage: false
 		};
 	},
-	computed: {
-		...mapGetters({
-			errorMessage: "user/errorMessage"
-		})
-	},
+	computed: {},
 	methods: {
 		login() {
-			this.$store.dispatch("user/LOGIN", {
-				email: this.email,
-				password: this.password
-			});
+			this.$store
+				.dispatch("user/LOGIN", {
+					email: this.form_email,
+					password: this.form_password
+				})
+				.then(({ login_success, message }) => {
+					if (login_success) {
+						this.errorMessage = "";
+						this.showErrorMessage = false;
+						this.$router.push("/dashboard");
+					} else {
+						this.errorMessage = message;
+						this.showErrorMessage = true;
+					}
+				});
 		}
 	}
 };
@@ -99,8 +143,6 @@ export default {
 
 	min-width: 600px;
 	max-width: max-content;
-	// box-shadow: 5px 5px 30px 2px #bafdf2;
-	// box-shadow: 10px 10px 10px 5px #00000021;
 
 	.logo-container {
 		margin-right: 40px;
@@ -118,6 +160,8 @@ export default {
 		align-items: center;
 		margin: 80px 0px;
 
+		max-width: 400px;
+
 		.field {
 			background-color: #e2e2e2;
 			padding: 0px 22px;
@@ -128,12 +172,12 @@ export default {
 				background: none;
 				border: none;
 				padding: 15px;
-				width: 230px;
+				width: 250px;
 				font-size: 15px;
 				outline: none;
 
 				&::placeholder {
-					color: #bbbbbb;
+					color: #5f5f5f;
 					letter-spacing: 0px;
 				}
 			}
@@ -151,11 +195,12 @@ export default {
 		}
 
 		.login-button {
+			background: linear-gradient(#82efca, #7be0bd);
 			background-color: #82efca;
 			width: 100%;
 			border-radius: 5px;
-			border: none;
-			padding: 15px;
+			border: 1px solid #7be0bd;
+			padding: 10px;
 			color: white;
 			font-weight: bold;
 			letter-spacing: 1px;
@@ -163,7 +208,7 @@ export default {
 
 			&:hover {
 				cursor: pointer;
-				background-color: #8bffd8;
+				filter: brightness(0.95);
 			}
 		}
 

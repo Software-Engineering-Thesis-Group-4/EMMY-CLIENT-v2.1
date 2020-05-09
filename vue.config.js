@@ -5,12 +5,15 @@ module.exports = {
 	"transpileDependencies": [
 		"vuetify"
 	],
-	outputDir: path.resolve(__dirname, '../EMMY-SERVER-v2.0/client'),
-	devServer: {
-		proxy: {
-			'/api': {
-				target: `http://${ip.address()}:3000`
-			}
-		}
-	}
+	outputDir: path.resolve(__dirname, '../EMMY-SERVER/client'),
+	// devServer: {
+	// 	proxy: {
+	// 		'/api': {
+	// 			target: `http://${ip.address()}:3000`,
+	// 		},
+	// 		/* '/foo': {
+	// 			target: '<url>'
+	// 		} */
+	// 	}
+	// }
 }

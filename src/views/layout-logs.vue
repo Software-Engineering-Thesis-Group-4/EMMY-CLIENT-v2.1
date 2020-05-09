@@ -7,7 +7,7 @@
 					:search-input.sync="dataTableOptions.search"
 					color="#779AEC"
 					clearable
-					hide-no-data="true"
+					:hide-no-data="true"
 					label="Search Employees"
 					prepend-icon="mdi-database-search"
 				></v-autocomplete>
@@ -56,7 +56,7 @@
 						<v-icon class="button-icon-right">mdi-chevron-down</v-icon>
 					</button>
 				</template>
-				
+
 				<v-form
 					@submit.prevent
 					ref="filterDropdown"
@@ -105,7 +105,6 @@
 			loading-text="Loading... Please wait"
 			item-key="id"
 			multi-sort
-			show-select
 			class="elevation-1"
 		>
 			<template v-slot:item.timeIn="{ item }">
@@ -119,21 +118,22 @@
 			</template>
 
 			<template v-slot:item.timeOut="{ item }">
-				<div class="time">
-					<div v-if="item.timeOut">
-						<img
-							:src="getEmotionImagePath(item.emotionOut, item.timeOut)"
-							v-if="admin"
-							class="emotion-log"
-						/>{{ item.timeOut }}
-					</div>
+				<div
+					v-if="item.timeOut"
+					class="time"
+				>
+					<img
+						:src="getEmotionImagePath(item.emotionOut, item.timeOut)"
+						v-if="admin"
+						class="emotion-log"
+					/>{{ item.timeOut }}
+				</div>
 
-					<div
-						v-else
-						class="no-timeout"
-					>
-						--
-					</div>
+				<div
+					v-else
+					class="no-timeout"
+				>
+					--
 				</div>
 			</template>
 
@@ -186,7 +186,7 @@ import moment from "moment";
 import {
 	options,
 	loadEmployeeLogs
-} from "@/components/attendance-logs/data_table";
+} from "@/components/DailyAttendanceLog/DataTable/options.js";
 
 export default {
 	data() {
@@ -196,23 +196,7 @@ export default {
 			loadingEmployeeDataTable: false,
 			dates: [new Date().toISOString().substr(0, 10)],
 			selectedItems: options.selected,
-			departmentCategories: [
-				"Admissions",
-				"Registrar",
-				"Finance",
-				"Human Resources ",
-				"Office of Student Affairs",
-				"Office of Student Experience and Advancement ",
-				"Office of the President",
-				"Office of the COO",
-				"IT",
-				"Corporate Communications",
-				"Purchasing",
-				"Admin and Facilities",
-				"Academics College",
-				"Academics SHS",
-				"Clinic"
-			]
+			departmentCategories: this.$store.state.employees.departments,
 		};
 	},
 	computed: {
@@ -261,9 +245,14 @@ export default {
 			return `/emotions/${emotion}.png`;
 		},
 		filterOnDateRange() {
-			alert('TODO: Implement Date Range Filter')
+			console.log("TODO: Implement Date Range Filter");
 		},
-		filterData() {},
+		filterData() {
+
+		},
+		clearFilter() {
+			this.$refs.filterDropdown.reset();
+		},
 		editLog(item) {
 			item;
 			// TODO: Implement edit log functionality
@@ -274,7 +263,7 @@ export default {
 			console.log(item);
 
 			// item.id (is the objectId of the sentiment log)
-			this.$store.dispatch("employees/DELETE_EMPLOYEELOG", item.id);
+			this.$store.dispatch("employees/DELETE_EMPLOYEELOG", item._id);
 		}
 	},
 	created() {

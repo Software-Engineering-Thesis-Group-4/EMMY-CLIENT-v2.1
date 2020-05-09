@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import store from '../store';
+import store from '../store'
 
 // Layouts -------------------------------------------------------------------------------------------------------------
 import MainLayout from '@/views/layout-main.vue'
@@ -11,69 +11,88 @@ import LoginLayout from '@/views/layout-login.vue'
 import SentimentSelectionLayout from '@/views/layout-sentimentselection.vue'
 import NotificationLayout from '@/views/layout-notifications.vue';
 import PageNotFoundLayout from "@/views/layout-404.vue";
-
-// Admin
-import AccountSettingsLayout from '@/views/layout-account.vue';
-// Admin layouts
-import AdminLayout from '@/views/layout-admin.vue';
-import AdminLoginLayout from '@/views/layout-admin-login.vue';
-import AccountManagementLayout from "@/views/layout-account-management.vue";
-import ApplicationConfigurationLayout from "@/views/layout-admin-config.vue";
-import ApplicationLogsLayout from "@/views/layout-admin-logs.vue";
+import AccountSettingsLayout from '@/views/layout-settings.vue';
 import EmployeeProfileLayout from '@/views/layout-employeeprofile.vue';
+
+// Admin layouts
+import AuditLogsLayout from "@/views/layout-admin-logs.vue";
+import AccountManagementLayout from "@/views/layout-admin-users.vue";
+import BackupSettingsLayout from "@/views/layout-admin-backup.vue";
+
+
 
 // Components ----------------------------------------------------------------------------------------------------------
 import LoginForm from '@/components/LoginForm.vue'
-import ResetPasswordForm from '@/components/ResetPasswordForm.vue'
+import UserAccount from "@/components/UserSettings/Account/UserAccount.vue";
+import UserSecurity from "@/components/UserSettings/Security/UserSecurity.vue";
+import UserActivity from "@/components/UserSettings/Activity/UserActivity.vue";
+import PasswordResetRequestForm from '@/components/ResetPassword/PasswordResetRequestForm.vue'
+import CodeVerificationForm from '@/components/ResetPassword/CodeVerificationForm.vue'
 
+import PlaygroundLayout from "@/views/playground.vue";
 
 Vue.use(VueRouter);
 
 // NAVIGATION GUARD ----------------------------------------------------------------------------------------------------
-let authActivated = false; // set this to true if you want the nav guards to take effect.
-let isAuthenticated = null;
-
-if(authActivated) {
-	isAuthenticated = async (to, from, next) => {
-		let auth_token = localStorage.getItem('auth_token');
-		let isValid = await store.dispatch('user/VERIFY', auth_token);
-	
+const isAuthenticated = (to, from, next) => {
+	store.dispatch('user/VERIFY').then(isValid => {
 		if (isValid) {
 			next();
 		} else {
+			console.log('You are not currently logged in.');
 			next('/login');
 		}
+	});
+}
+
+const isNotLoggedIn = (to, form, next) => {
+	if (!localStorage.getItem('access_token')) {
+		next();
+	} else {
+		console.log('%c You are currently logged in! redirecting to dashboard', "color: yellow;");
+		next('/dashboard');
 	}
+}
+
+const isAdmin = (to, from, next) => {
+
 }
 
 
 // ROUTES --------------------------------------------------------------------------------------------------------------
 const routes = [
 	{
-		path: '/login',
+		path: '/playground',
+		component: PlaygroundLayout,
+	},
+	{
+		path: '/',
 		component: LoginLayout,
 		redirect: { name: 'loginForm' },
 		children: [
 			{
-				path: 'form',
+				path: 'login',
 				name: 'loginForm',
 				alias: '/login',
-				// beforeEnter: isAuthenticated, // PROTECTED
+				beforeEnter: isNotLoggedIn, // PROTECTED
 				component: LoginForm
 			},
 			{
-				path: 'forgot-password',
-				name: 'forgotPassword',
-				alias: '/forgotpassword',
-				// beforeEnter: isAuthenticated, // PROTECTED
-				component: ResetPasswordForm
+				path: 'reset/password',
+				name: 'password_reset',
+				component: PasswordResetRequestForm
+			},
+			{
+				path: 'reset/confirm',
+				name: 'code_verification',
+				component: CodeVerificationForm
 			}
 		]
 	},
 	{
-		path: '/',
+		path: '/main',
 		component: MainLayout,
-		redirect: "/dashboard", 
+		redirect: "/dashboard",
 		children: [
 			{
 				path: 'dashboard',
@@ -112,59 +131,83 @@ const routes = [
 				beforeEnter: isAuthenticated, // PROTECTED
 			},
 			{
-				path: 'account',
+				path: 'settings',
 				alias: '/settings',
 				meta: {
 					title: 'Account Settings'
 				},
 				component: AccountSettingsLayout,
+				children: [
+					{
+						path: 'account',
+						alias: '/account',
+						meta: {
+							title: 'Account Settings',
+							headerTitle: 'Personal Information'
+						},
+						component: UserAccount,
+						beforeEnter: isAuthenticated, // PROTECTED
+					},
+					{
+						path: 'security',
+						alias: '/security',
+						meta: {
+							title: 'Account Settings',
+							headerTitle: 'Change Password'
+						},
+						component: UserSecurity,
+						beforeEnter: isAuthenticated, // PROTECTED
+					},
+					{
+						path: 'activity',
+						alias: '/activity',
+						meta: {
+							title: 'Account Settings',
+							headerTitle: 'Activity Log'
+						},
+						component: UserActivity,
+						beforeEnter: isAuthenticated, // PROTECTED
+					},
+
+				],
 				beforeEnter: isAuthenticated, // PROTECTED
 			},
-			// TODO: apply a component-level middleware to check if a certain employee existing matching the :id route parameter. else use 404 page layout.
 			{
 				path: 'employee/:_id',
+				alias: '/employee/:_id',
 				meta: {
 					title: 'Employee Profile'
 				},
 				component: EmployeeProfileLayout,
 				beforeEnter: isAuthenticated // PROTECTED
-			}
-		]
-	},
-	{
-		path: '/admin-login',
-		alias: '/admin/login',
-		component: AdminLoginLayout
-	},
-	{
-		path: '/admin',
-		component: AdminLayout,
-		redirect: "/account-management",
-		children: [
-			{
-				path: 'account-management',
-				alias: '/account-management',
-				meta: {
-					title: 'Account Management'
-				},
-				component: AccountManagementLayout, 
 			},
 			{
-				path: 'application-configuration',
-				alias: '/application-configuration',
+				path: 'users',
+				alias: '/users',
 				meta: {
-					title: 'Application Configuration'
+					title: 'User Accounts'
 				},
-				component: ApplicationConfigurationLayout, 
+				component: AccountManagementLayout,
+				beforeEnter: isAuthenticated // PROTECTED
 			},
 			{
-				path: 'application-logs',
-				alias: '/application-logs',
+				path: 'audit',
+				alias: '/auditlogs',
 				meta: {
 					title: 'Application Logs'
 				},
-				component: ApplicationLogsLayout, 
-			}
+				component: AuditLogsLayout,
+				beforeEnter: isAuthenticated // PROTECTED
+			},
+			{
+				path: 'backup',
+				alias: '/backup',
+				meta: {
+					title: 'Backup Settings'
+				},
+				component: BackupSettingsLayout,
+				beforeEnter: isAuthenticated // PROTECTED
+			},
 		]
 	},
 	{
@@ -173,7 +216,7 @@ const routes = [
 	},
 	{
 		path: '*',
-		component: PageNotFoundLayout
+		component: PageNotFoundLayout,
 	}
 ]
 

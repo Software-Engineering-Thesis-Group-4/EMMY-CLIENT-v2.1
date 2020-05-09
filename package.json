@@ -3,8 +3,8 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"serve": "vue-cli-service serve",
-		"build": "vue-cli-service build --watch",
+		"serve": "set NODE_ENV=development && vue-cli-service serve",
+		"build": "set NODE_ENV=production && vue-cli-service build --watch",
 		"lint": "vue-cli-service lint"
 	},
 	"dependencies": {
@@ -20,8 +20,10 @@
 		"vue-router": "^3.1.5",
 		"vue-socket.io": "^3.0.7",
 		"vue-socketio": "^2.1.1-c",
+		"vue2-editor": "^2.10.2",
 		"vuetify": "^2.2.11",
-		"vuex": "^3.1.2"
+		"vuex": "^3.1.2",
+		"vuex-persist": "^2.2.0"
 	},
 	"devDependencies": {
 		"@vue/cli-plugin-babel": "~4.2.0",
@@ -52,7 +54,8 @@
 			"parser": "babel-eslint"
 		},
 		"rules": {
-			"no-console": "off"
+			"no-console": "off",
+			"no-unused-vars": "warn"
 		}
 	},
 	"browserslist": [
