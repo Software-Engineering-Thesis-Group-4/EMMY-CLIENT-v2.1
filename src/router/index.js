@@ -15,13 +15,10 @@ import AccountSettingsLayout from '@/views/layout-settings.vue';
 import EmployeeProfileLayout from '@/views/layout-employeeprofile.vue';
 
 // Admin layouts
-/* 
-import AdminLayout from '@/views/layout-admin.vue';
-import AdminLoginLayout from '@/views/layout-admin-login.vue';
-import AccountManagementLayout from "@/views/layout-account-management.vue";
-import ApplicationConfigurationLayout from "@/views/layout-admin-config.vue";
-import ApplicationLogsLayout from "@/views/layout-admin-logs.vue"; 
-*/
+import AuditLogsLayout from "@/views/layout-admin-logs.vue";
+import AccountManagementLayout from "@/views/layout-admin-users.vue";
+import BackupSettingsLayout from "@/views/layout-admin-backup.vue";
+
 
 
 // Components ----------------------------------------------------------------------------------------------------------
@@ -30,6 +27,7 @@ import UserAccount from "@/components/UserSettings/Account/UserAccount.vue";
 import UserSecurity from "@/components/UserSettings/Security/UserSecurity.vue";
 import UserActivity from "@/components/UserSettings/Activity/UserActivity.vue";
 import PasswordResetRequestForm from '@/components/ResetPassword/PasswordResetRequestForm.vue'
+import CodeVerificationForm from '@/components/ResetPassword/CodeVerificationForm.vue'
 
 import PlaygroundLayout from "@/views/playground.vue";
 
@@ -56,6 +54,10 @@ const isNotLoggedIn = (to, form, next) => {
 	}
 }
 
+const isAdmin = (to, from, next) => {
+
+}
+
 
 // ROUTES --------------------------------------------------------------------------------------------------------------
 const routes = [
@@ -76,10 +78,14 @@ const routes = [
 				component: LoginForm
 			},
 			{
-				path: 'forgot-password',
-				name: 'forgotPassword',
-				alias: '/forgotpassword',
+				path: 'reset/password',
+				name: 'password_reset',
 				component: PasswordResetRequestForm
+			},
+			{
+				path: 'reset/confirm',
+				name: 'code_verification',
+				component: CodeVerificationForm
 			}
 		]
 	},
@@ -166,7 +172,6 @@ const routes = [
 				],
 				beforeEnter: isAuthenticated, // PROTECTED
 			},
-			// TODO: apply a component-level middleware to check if a certain employee existing matching the :id route parameter. else use 404 page layout.
 			{
 				path: 'employee/:_id',
 				alias: '/employee/:_id',
@@ -175,46 +180,36 @@ const routes = [
 				},
 				component: EmployeeProfileLayout,
 				beforeEnter: isAuthenticated // PROTECTED
-			}
-		]
-	},
-	/* 
-	{
-		path: '/admin',
-		component: AdminLoginLayout
-	},
-	{
-		path: '/admin/emmy',
-		component: AdminLayout,
-		redirect: "/account-management",
-		children: [
+			},
 			{
-				path: 'account-management',
-				alias: '/accounts',
+				path: 'users',
+				alias: '/users',
 				meta: {
-					title: 'Account Management'
+					title: 'User Accounts'
 				},
 				component: AccountManagementLayout,
+				beforeEnter: isAuthenticated // PROTECTED
 			},
 			{
-				path: 'application-configuration',
-				alias: '/database',
-				meta: {
-					title: 'Application Configuration'
-				},
-				component: ApplicationConfigurationLayout,
-			},
-			{
-				path: 'application-logs',
-				alias: '/audit',
+				path: 'audit',
+				alias: '/auditlogs',
 				meta: {
 					title: 'Application Logs'
 				},
-				component: ApplicationLogsLayout,
-			}
+				component: AuditLogsLayout,
+				beforeEnter: isAuthenticated // PROTECTED
+			},
+			{
+				path: 'backup',
+				alias: '/backup',
+				meta: {
+					title: 'Backup Settings'
+				},
+				component: BackupSettingsLayout,
+				beforeEnter: isAuthenticated // PROTECTED
+			},
 		]
-	}, 
-	*/
+	},
 	{
 		path: '/dailysentiment',
 		component: SentimentSelectionLayout
