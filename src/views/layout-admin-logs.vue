@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <v-divider color="#52555A"></v-divider>
-  </div>
+	<div>
+	</div>
 </template>
 
 <script>
