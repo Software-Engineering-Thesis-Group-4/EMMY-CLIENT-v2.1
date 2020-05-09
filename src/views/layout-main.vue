@@ -3,20 +3,22 @@
 		<Sidebar />
 		<TopHeader />
 		<div class="view-container">
-			<router-view />
+			<router-view />			
 		</div>
-
+		<EmailForm />
 	</div>
 </template>
 
 <script>
 import Sidebar from "@/components/Sidebar.vue";
 import TopHeader from "@/components/TopHeader.vue";
+import EmailForm from "@/components/EmailForm/EmailForm.vue";
 
 export default {
 	components: {
 		Sidebar,
-		TopHeader
+		TopHeader,
+		EmailForm
 	},
 	data() {
 		return {
@@ -40,6 +42,7 @@ export default {
 	background-color: #f8f8f8;
 	min-height: 100vh;
 	min-width: 1024px;
+	position: relative;
 
 	display: flex;
 	flex-direction: column;
