@@ -64,7 +64,7 @@
 					class="login-button"
 				/>
 				<router-link
-					to="/forgotpassword"
+					:to="{ name: 'password_reset' }"
 					class="forgot-password"
 				>Forgot your password?</router-link>
 			</form>
@@ -195,11 +195,12 @@ export default {
 		}
 
 		.login-button {
+			background: linear-gradient(#82efca, #7be0bd);
 			background-color: #82efca;
 			width: 100%;
 			border-radius: 5px;
-			border: none;
-			padding: 15px;
+			border: 1px solid #7be0bd;
+			padding: 10px;
 			color: white;
 			font-weight: bold;
 			letter-spacing: 1px;
@@ -207,7 +208,7 @@ export default {
 
 			&:hover {
 				cursor: pointer;
-				background-color: #8bffd8;
+				filter: brightness(0.95);
 			}
 		}
 
