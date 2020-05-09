@@ -222,14 +222,12 @@ export default {
 	}
 
 	.avatar {
-		border: 0.5px solid #d6d6d6;
 		background-color: white;
 		display: flex;
 		align-items: center;
 		overflow: hidden;
 		width: 32px;
 		height: 32px;
-		border-radius: 5px;
 
 		.user-image {
 			width: 100%;
