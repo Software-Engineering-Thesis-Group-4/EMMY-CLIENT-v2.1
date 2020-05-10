@@ -4,6 +4,9 @@
 		offset-y
 		left
 		nudge-top="10px"
+		z-index="999"
+		v-model="showForm"
+		:close-on-click="false"
 		:close-on-content-click="false"
 	>
 		<template v-slot:activator="{ on }">
@@ -19,64 +22,86 @@
 			</button>
 		</template>
 
-		<!-- Email Form -->
-		<v-form
-			@submit.prevent="sendEmail"
-			class="email_form"
-		>
-			<!-- Header -->
-			<div class="email_form__header">
-				<span class="header__title">
-					<svg class="icon">
-						<path
-							d="M15.135.072.407,8.569a.763.763,0,0,0,.07,1.373l3.378,1.417,9.129-8.046a.191.191,0,0,1,.273.264L5.6,12.9v2.558a.762.762,0,0,0,1.351.5l2.018-2.456,3.959,1.659a.765.765,0,0,0,1.049-.578L16.267.86A.763.763,0,0,0,15.135.072Z"
-							fill="#A7CCFF"
-						/>
-					</svg>
-					Send an email
-				</span>
-				<span class="header__date">Date: {{ email__date }}</span>
+		<div class="form_container">
+
+			<div class="form_controls">
+				<button class="form_button" @click="(showForm = false)">
+					<v-icon
+						dense
+						dark
+					>mdi-minus</v-icon>
+				</button>
+				<button class="form_button" @click="closeForm">
+					<v-icon
+						dense
+						dark
+					>mdi-close</v-icon>
+				</button>
 			</div>
 
-			<!-- Select Employee -->
-			<v-autocomplete
-				small-chips
-				dense
-				label="Select Employees"
-				multiple
-				outlined
-				single-line
-				class="email_form__employees"
+			<!-- Email Form -->
+			<v-form
+				ref="emailForm"
+				@submit.prevent="sendEmail"
+				class="email_form"
 			>
-				<template v-slot:selection="">
-					<v-chip></v-chip>
-				</template>
-			</v-autocomplete>
+				<!-- Header -->
+				<div class="email_form__header">
+					<span class="header__title">
+						<svg class="icon">
+							<path
+								d="M15.135.072.407,8.569a.763.763,0,0,0,.07,1.373l3.378,1.417,9.129-8.046a.191.191,0,0,1,.273.264L5.6,12.9v2.558a.762.762,0,0,0,1.351.5l2.018-2.456,3.959,1.659a.765.765,0,0,0,1.049-.578L16.267.86A.763.763,0,0,0,15.135.072Z"
+								fill="#A7CCFF"
+							/>
+						</svg>
+						Send an email
+					</span>
+					<span class="header__date">Date: {{ email__date }}</span>
+				</div>
 
-			<!-- Email Subject -->
-			<v-text-field
-				label="Subject"
-				outlined
-				dense
-				single-line
-				class="email_form__subject"
-			></v-text-field>
+				<!-- Select Employee -->
+				<v-autocomplete
+					small-chips
+					dense
+					label="Select Employees"
+					multiple
+					outlined
+					single-line
+					color="#7198f3"
+					class="email_form__employees"
+				>
+					<template v-slot:selection="">
+						<v-chip></v-chip>
+					</template>
+				</v-autocomplete>
 
-			<div class="email_form__message">
-				<VueEditor
-					v-model="content"
-					:editor-toolbar="toolbarOptions"
-					placeholder="Enter a message...."
-					class="editor1"
-					id="editor1"
-				/>
-			</div>
+				<!-- Email Subject -->
+				<v-text-field
+					label="Subject"
+					outlined
+					dense
+					single-line
+					color="#7198f3"
+					class="email_form__subject"
+				></v-text-field>
 
-			<button
-				type="submit"
-				class="email_form__submit_button"
-			>Send</button>
-		</v-form>
+				<div class="email_form__message">
+					<VueEditor
+						v-model="content"
+						:editor-toolbar="toolbarOptions"
+						placeholder="Enter a message...."
+						class="editor1"
+						id="editor1"
+					/>
+				</div>
+
+				<button
+					type="submit"
+					class="email_form__submit_button"
+				>Send</button>
+			</v-form>
+		</div>
+
 	</v-menu>
 </template>
 
@@ -87,6 +112,7 @@ import moment from "moment";
 export default {
 	data() {
 		return {
+			showForm: false,
 			content: null,
 			toolbarOptions: [
 				[
@@ -116,6 +142,11 @@ export default {
 		}
 	},
 	methods: {
+		closeForm() {
+			this.content = null;
+			this.$refs.emailForm.reset();
+			this.showForm = false;
+		},
 		sendEmail() {
 			console.log(this.content);
 		}
@@ -153,9 +184,40 @@ export default {
 	border-radius: 5px;
 }
 
+.form_container {
+	background: linear-gradient(#7198f3, #5a79c2);
+	// padding-top: 30px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.form_controls {
+	// background-color: rgba(0, 255, 255, 0.26);
+	// border: 1px dashed #0000002c;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	padding: 3px 5px 3px;
+}
+
+.form_button {
+	// background-color: rgba(0, 255, 255, 0.26);
+
+	&:first-child {
+		margin-right: 5px;
+	}
+
+	&:hover {
+		::v-deep i {
+			color: rgba(0, 0, 0, 0.438);
+		}
+	}
+}
+
 .email_form {
 	background-color: white;
-	padding: 15px 15px;
+	padding: 10px 15px 15px;
 	display: flex;
 	flex-direction: column;
 	min-width: 510px;
