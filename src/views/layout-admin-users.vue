@@ -5,10 +5,10 @@
 			<!-- Search -->
 			<div class="controls__search">
 				<v-autocomplete
-					clearable
 					hide-no-data
 					color="#779AEC"
-					label="Search User..."
+					single-line
+					placeholder="Search Users..."
 					prepend-icon="mdi-database-search"
 				></v-autocomplete>
 			</div>
