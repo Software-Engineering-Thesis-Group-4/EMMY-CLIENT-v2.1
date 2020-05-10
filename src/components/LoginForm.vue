@@ -179,11 +179,12 @@ export default {
 				&::placeholder {
 					color: #5f5f5f;
 					letter-spacing: 0px;
+					font-family: "Cera Pro";
 				}
 			}
 
 			#password_field {
-				letter-spacing: 2px;
+				font-family: sans-serif;
 			}
 		}
 
