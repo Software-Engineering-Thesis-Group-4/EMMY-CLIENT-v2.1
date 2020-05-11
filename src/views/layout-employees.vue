@@ -128,6 +128,10 @@
 				</div>
 			</template>
 
+			<template v-slot:item.employmentStatus="{ item, value }">
+				<span  class="employment_status_label" :class="{ 'fulltime-text': !!value }">{{ !!value ? "Regular" : "Part-time" }}</span>
+			</template>
+
 			<template v-slot:item.actions="{ item }">
 				<!-- Edit Employee Details -->
 				<button
@@ -418,6 +422,14 @@ export default {
 			}
 		}
 	}
+}
+
+.employment_status_label {
+	color: #0000007c;
+}
+
+.fulltime-text {
+	color: #2b5cff;
 }
 
 .action-button {
