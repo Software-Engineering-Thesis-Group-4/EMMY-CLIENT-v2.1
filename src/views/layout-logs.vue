@@ -196,7 +196,7 @@ export default {
 			loadingEmployeeDataTable: false,
 			dates: [new Date().toISOString().substr(0, 10)],
 			selectedItems: options.selected,
-			departmentCategories: this.$store.state.employees.departments,
+			departmentCategories: this.$store.state.employees.departments
 		};
 	},
 	computed: {
@@ -247,9 +247,7 @@ export default {
 		filterOnDateRange() {
 			console.log("TODO: Implement Date Range Filter");
 		},
-		filterData() {
-
-		},
+		filterData() {},
 		clearFilter() {
 			this.$refs.filterDropdown.reset();
 		},
@@ -277,19 +275,22 @@ export default {
 <style lang="scss" scoped>
 .controls {
 	// FOR DEBUGGING ---------------------------------------------
-	// background-color: rgba(64, 224, 208, 0.616);
-	// border: 1px dashed lightslategray;
+	// background-color: #00ffff42;
+	// border: 1px dashed #0000003a;
 	// -----------------------------------------------------------
 	display: flex;
 	align-items: center;
-	height: 60px;
-	margin-top: 13px;
-	margin-bottom: 5px;
+	width: 100%;
+	flex-wrap: wrap;
 
 	.search-field {
-		// background-color: turquoise;
+		// background-color: #ff00002d;
+		// border: 1px dashed lightslategray;
+		display: flex;
+		align-items: center;
 		height: 58px;
 		width: 400px;
+		margin-top: 10px;
 	}
 
 	.datepicker-field {
