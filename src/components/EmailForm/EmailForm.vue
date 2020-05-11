@@ -9,29 +9,44 @@
 		:close-on-click="false"
 		:close-on-content-click="false"
 	>
-		<template v-slot:activator="{ on }">
-			<button
-				class="EmailMessagingButton"
-				v-on="on"
+		<template v-slot:activator="{ on: menu }">
+			<v-tooltip
+				left
+				transition="none"
 			>
-				<v-img
-					src="@/assets/plane.svg"
-					position="center"
-					class="EmailMessagingButton_icon"
-				/>
-			</button>
+				<template v-slot:activator="{ on: tooltip }">
+					<button
+						class="EmailMessagingButton"
+						v-on="{ ...tooltip, ...menu }"
+					>
+						<v-img
+							src="@/assets/plane.svg"
+							position="center"
+							class="EmailMessagingButton_icon"
+						/>
+					</button>
+				</template>
+				<span>Send an email</span>
+			</v-tooltip>
+
 		</template>
 
 		<div class="form_container">
 
 			<div class="form_controls">
-				<button class="form_button" @click="(showForm = false)">
+				<button
+					class="form_button"
+					@click="(showForm = false)"
+				>
 					<v-icon
 						dense
 						dark
 					>mdi-minus</v-icon>
 				</button>
-				<button class="form_button" @click="closeForm">
+				<button
+					class="form_button"
+					@click="closeForm"
+				>
 					<v-icon
 						dense
 						dark
