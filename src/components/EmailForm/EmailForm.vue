@@ -8,6 +8,7 @@
 		v-model="showForm"
 		:close-on-click="false"
 		:close-on-content-click="false"
+		v-if="isAdmin"
 	>
 		<template v-slot:activator="{ on: menu }">
 			<v-tooltip
@@ -127,6 +128,7 @@ import moment from "moment";
 export default {
 	data() {
 		return {
+			isAdmin: this.$store.state.user.isAdmin,
 			showForm: false,
 			content: null,
 			toolbarOptions: [

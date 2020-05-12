@@ -7,14 +7,14 @@
 				color="#567dd8"
 				class="tabs"
 			>
-				<v-tab>Employee Sentiment</v-tab>
+				<v-tab v-if="isAdmin">Employee Sentiment</v-tab>
 				<v-tab>Account</v-tab>
 			</v-tabs>
 
 			<v-tabs-items v-model="tab">
 
 				<!-- Employee Sentiment Notifications (Intense Sentiment notifications) -->
-				<v-tab-item>
+				<v-tab-item v-if="isAdmin">
 					<div class="notification_list">
 
 						<div
@@ -137,6 +137,7 @@ export default {
 				.subtract(3, "hours")
 				.fromNow(),
 			tab: null,
+			isAdmin: this.$store.state.user.isAdmin,
 			notifications: [
 				{
 					_id: 1, // should be the actual document _id of user
@@ -184,7 +185,8 @@ export default {
 	computed: {},
 	methods: {},
 	created() {
-		// TODO: Implement data fetching. Fetch data from the database when the user visits the page
+		// TODO: Implement data fetching. Fetch notifications from the database component creation.
+		// TODO: if user is NOT an admin, ONLY fetch account notifications.
 	}
 };
 </script>
