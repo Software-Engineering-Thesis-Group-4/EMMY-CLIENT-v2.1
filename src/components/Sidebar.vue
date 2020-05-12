@@ -183,7 +183,7 @@
 
 							</div>
 						</template>
-						<span>Audit Logs</span>
+						<span>Backup Settings</span>
 					</v-tooltip>
 				</router-link>
 			</div>
