@@ -7,7 +7,6 @@ export function loadTableData(employees) {
 	}
 
 	employees.forEach(employee => {
-		let employmentStatus = (employee.employmentStatus ? 'Full-time Employee' : 'Part-time Employee');
 		if (!employee.terminated) {
 			employeeTableData.push({
 				id               : employee._id,
@@ -18,7 +17,7 @@ export function loadTableData(employees) {
 				email            : employee.email,
 				department       : employee.department,
 				jobTitle         : employee.jobTitle,
-				employmentStatus : employmentStatus,
+				employmentStatus : employee.employmentStatus,
 			});
 		}
 	});

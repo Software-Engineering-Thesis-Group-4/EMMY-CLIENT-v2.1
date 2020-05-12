@@ -128,6 +128,10 @@
 				</div>
 			</template>
 
+			<template v-slot:item.employmentStatus="{ item, value }">
+				<span  class="employment_status_label" :class="{ 'fulltime-text': !!value }">{{ !!value ? "Regular" : "Part-time" }}</span>
+			</template>
+
 			<template v-slot:item.actions="{ item }">
 				<!-- Edit Employee Details -->
 				<button
@@ -187,7 +191,10 @@
 
 <script>
 import AddEmployeeForm from "@/components/Employees/AddEmployeeForm.vue";
-import { options, loadTableData } from "@/components/Employees/DataTable/options.js";
+import {
+	options,
+	loadTableData
+} from "@/components/Employees/DataTable/options.js";
 
 export default {
 	data() {
@@ -254,19 +261,22 @@ export default {
 <style lang="scss" scoped>
 .controls {
 	// FOR DEBUGGING ---------------------------------------------
-	// background-color: rgba(64, 224, 208, 0.616);
-	// border: 1px dashed lightslategray;
+	// background-color: #00ffff42;
+	// border: 1px dashed #0000003a;
 	// -----------------------------------------------------------
 	display: flex;
 	align-items: center;
-	height: 60px;
-	margin-top: 13px;
-	margin-bottom: 5px;
+	width: 100%;
+	flex-wrap: wrap;
 
 	.search-field {
+		// background-color: #ff00002d;
+		// border: 1px dashed lightslategray;
+		display: flex;
+		align-items: center;
 		height: 58px;
 		width: 400px;
-		// background-color: red;
+		margin-top: 10px;
 	}
 
 	.button-icon {
@@ -412,6 +422,14 @@ export default {
 			}
 		}
 	}
+}
+
+.employment_status_label {
+	color: #0000007c;
+}
+
+.fulltime-text {
+	color: #2b5cff;
 }
 
 .action-button {

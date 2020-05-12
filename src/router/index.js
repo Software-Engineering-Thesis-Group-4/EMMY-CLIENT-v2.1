@@ -28,6 +28,7 @@ import UserSecurity from "@/components/UserSettings/Security/UserSecurity.vue";
 import UserActivity from "@/components/UserSettings/Activity/UserActivity.vue";
 import PasswordResetRequestForm from '@/components/ResetPassword/PasswordResetRequestForm.vue'
 import CodeVerificationForm from '@/components/ResetPassword/CodeVerificationForm.vue'
+import PasswordRenewalForm from '@/components/ResetPassword/PasswordRenewalForm.vue'
 
 import PlaygroundLayout from "@/views/playground.vue";
 
@@ -55,7 +56,7 @@ const isNotLoggedIn = (to, form, next) => {
 }
 
 const isAdmin = (to, from, next) => {
-
+	// TODO: Create middleware to check if current user is as administrator
 }
 
 
@@ -86,7 +87,12 @@ const routes = [
 				path: 'reset/confirm',
 				name: 'code_verification',
 				component: CodeVerificationForm
-			}
+			},
+			{
+				path: 'reset/renew',
+				name: 'password_renewal',
+				component: PasswordRenewalForm
+			},
 		]
 	},
 	{

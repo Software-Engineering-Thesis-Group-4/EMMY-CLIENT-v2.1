@@ -204,10 +204,6 @@ export default {
 				}
 			);
 
-			// console.log(newSeries.map(({ x }) => moment(x).fromNow()));
-
-			console.log(newSeries);
-
 			this.series = [
 				{
 					name: "satisfaction score",

@@ -1,88 +1,142 @@
 <template>
 	<div class="layout-container">
-		<div class="notification-container">
-			<ul class="notifications-itemlist">
-				<li
-					v-for="item in notifications"
-					:key="item._id"
-				>
-					<!-- template: password changed ----------------------------------------------------------------->
-					<div
-						v-if="item.type === 'USER-CHANGED_PASSWORD'"
-						class="notification_item unread"
-					>
-						<div class="user">
-							<v-img
-								:src="null || 'default.png'"
-								alt="employee"
-								class="avatar"
-							/>
-						</div>
-						<span class="notification-message">
-							Your password has been changed on
-							<span class="date-time">({{ item.date }})</span>. If this looks
-							suspicious please contact your administrator immediately.
-						</span>
-					</div>
+		<div class="content-container">
+			<v-tabs
+				v-model="tab"
+				background-color="transparent"
+				color="#567dd8"
+				class="tabs"
+			>
+				<v-tab>Employee Sentiment</v-tab>
+				<v-tab>Account</v-tab>
+			</v-tabs>
 
-					<!-- template: extreme emotion : angry ---------------------------------------------------------->
-					<div
-						v-else-if="item.type === 'EMPLOYEE-EXTREME_EMOTION' && item.emotion === 1"
-						class="notification_item unread"
-					>
-						<div class="employee">
-							<img
-								src="/sample-image.png"
-								alt="employee"
-								class="avatar"
-							/>
-							<img
-								src="/emotions/1.png"
-								alt=""
-								class="sentiment"
-							/>
-						</div>
-						<span class="notification-message">
-							Oh no! <span class="employee-name">{{ item.employee }}</span> is feeling
-							<span class="emotion">"angry"</span> ({{ item.date }}). Reach out to your employees personally or by send them an
-							email to see how they're doing.
-						</span>
-					</div>
+			<v-tabs-items v-model="tab">
 
-					<!-- template: extreme emotion : amazing -------------------------------------------------------->
-					<div
-						v-else-if="item.type === 'EMPLOYEE-EXTREME_EMOTION' && item.emotion === 5"
-						class="notification_item unread"
-					>
-						<div class="employee">
-							<img
-								src="/sample-image.png"
-								class="avatar"
-							/>
-							<img
-								src="/emotions/5.png"
-								class="sentiment"
-							/>
+				<!-- Employee Sentiment Notifications (Intense Sentiment notifications) -->
+				<v-tab-item>
+					<div class="notification_list">
+
+						<div
+							class="notification_item"
+							:class="{ 'unread': true }"
+						>
+							<div class="notification_item__employee">
+								<v-img
+									src="/default.jpg"
+									class="employee__photo"
+								>
+								</v-img>
+							</div>
+							<div class="notification_item__content">
+								<span class="content__message">
+									Lorem ipsum dolor sit amet consectetur adipisicing elit.
+									Praesentium, dolores sit. Ipsa, cumque temporibus!
+									Qui eum, dolorum facilis itaque aliquam fuga ea, excepturi, quia aliquid explicabo voluptates eos ab quam.
+								</span>
+								<span class="content__time">
+									{{ content_time }}
+								</span>
+							</div>
 						</div>
-						<span class="notification-message">
-							Wow! <span class="employee-name">{{ item.employee }}</span> is feeling
-							<span class="emotion">"amazing"</span> ({{ item.date }}). Reach out to your employees personally or by send them an
-							email to see how they're doing.
-						</span>
+
+						<div
+							class="notification_item"
+							:class="{ 'unread': false }"
+							v-for="n in 10"
+							:key="n"
+						>
+							<div class="notification_item__employee">
+								<v-img
+									src="/default.jpg"
+									class="employee__photo"
+								></v-img>
+							</div>
+							<div class="notification_item__content">
+								<span class="content__message">
+									Lorem ipsum dolor sit amet consectetur adipisicing elit.
+									Praesentium, dolores sit. Ipsa, cumque temporibus!
+									Qui eum, dolorum facilis itaque aliquam fuga ea, excepturi, quia aliquid explicabo voluptates eos ab quam.
+								</span>
+								<span class="content__time">
+									{{ content_time }}
+								</span>
+							</div>
+						</div>
+
 					</div>
-				</li>
-			</ul>
+				</v-tab-item>
+
+				<!-- Account Notifications (user related notification) -->
+				<v-tab-item>
+					<div class="notification_list">
+
+						<div
+							class="notification_item"
+							:class="{ 'unread': true }"
+							v-for="n in 3"
+							:key="n"
+						>
+							<div class="notification_item__employee">
+								<v-img
+									src="/default.jpg"
+									class="employee__photo"
+								>
+								</v-img>
+							</div>
+							<div class="notification_item__content">
+								<span class="content__message">
+									Lorem ipsum dolor sit amet consectetur adipisicing elit.
+									Praesentium, dolores sit. Ipsa, cumque temporibus!
+									Qui eum, dolorum facilis itaque aliquam fuga ea, excepturi, quia aliquid explicabo voluptates eos ab quam.
+								</span>
+								<span class="content__time">
+									{{ content_time }}
+								</span>
+							</div>
+						</div>
+
+						<div
+							class="notification_item"
+							:class="{ 'unread': false }"
+							v-for="n in 0"
+							:key="n"
+						>
+							<div class="notification_item__employee">
+								<v-img
+									src="/default.jpg"
+									class="employee__photo"
+								></v-img>
+							</div>
+							<div class="notification_item__content">
+								<span class="content__message">
+									Lorem ipsum dolor sit amet consectetur adipisicing elit.
+									Praesentium, dolores sit. Ipsa, cumque temporibus!
+									Qui eum, dolorum facilis itaque aliquam fuga ea, excepturi, quia aliquid explicabo voluptates eos ab quam.
+								</span>
+								<span class="content__time">
+									{{ content_time }}
+								</span>
+							</div>
+						</div>
+
+					</div>
+				</v-tab-item>
+			</v-tabs-items>
+
 		</div>
 	</div>
 </template>
 
 <script>
-// FIX: for test purposes
 import moment from "moment";
 export default {
 	data() {
 		return {
-			// FIX: This is just a sample format
+			content_time: moment()
+				.subtract(3, "hours")
+				.fromNow(),
+			tab: null,
 			notifications: [
 				{
 					_id: 1, // should be the actual document _id of user
@@ -137,7 +191,7 @@ export default {
 
 <style lang="scss" scoped>
 .layout-container {
-	// border: 1px dashed black;
+	// border: 1px dashed #0000003a;
 	// background-color: #00ffff31;
 	display: flex;
 	flex-direction: column;
@@ -146,69 +200,101 @@ export default {
 	margin-top: 10px;
 }
 
-.notification-container {
-	background-color: #fff;
-	border: 0.5px solid #e6e6e6;
-	display: flex;
-	flex-direction: column;
-	width: 800px;
-	padding: 20px 0px;
+.content-container {
+	// background-color: #ff00ff1c;
+	// border: 1px dashed #0000002c;
+	width: 60%;
+	min-width: 700px;
+	min-height: 500px;
+
+	::v-deep .v-tabs-items {
+		background-color: transparent;
+	}
 }
 
-.notifications-itemlist {
-	// background-color: red;
-	// BUG: ---------------------------------------------------------------------------------------------------------------------------------
-	display: none;
-	list-style-type: none;
-	flex-direction: column;
-	align-items: flex-start;
-	padding: 0px;
+.tabs {
+	::v-deep .v-tab {
+		font-size: 15px;
+		letter-spacing: 0px;
+		font-family: "Cera Pro", sans-serif;
+		text-transform: none;
+	}
+}
 
-	li {
-		width: 100%;
+.notification_list {
+	// background-color: #ff00ff1c;
+	// border: 1px dashed #0000002c;
+	min-height: 80vh;
+	max-height: 80vh;
+	display: flex;
+	flex-direction: column;
+	overflow-y: scroll;
+	padding-right: 10px;
+	margin-top: 10px;
+	padding-top: 5px;
+
+	&::-webkit-scrollbar {
+		background: transparent;
+		width: 8px;
 	}
 
-	.notification_item {
-		// background-color: violet;
-		display: flex;
-		align-items: center;
-		justify-content: flex-start;
-		width: 100%;
-		padding: 9px 40px;
+	&::-webkit-scrollbar-thumb {
+		background: #00000025;
+		border-radius: 999px;
 
-		&.unread {
-			// background-color: #ecf5ff;
+		&:hover {
+			background: #0000002c;
 		}
+	}
+}
 
-		.user,
-		.employee {
-			background-color: turquoise;
-			position: relative;
-			margin-right: 20px;
-			display: flex;
+.notification_item {
+	border: 1px solid #0000001f;
+	background-color: white;
+	min-height: max-content;
+	font-size: 14px;
+	padding: 10px;
+	margin-top: -1px;
+	display: flex;
+	flex-direction: row;
 
-			.avatar {
-				border-radius: 999px;
-			}
+	&:hover {
+		filter: brightness(0.97);
+		cursor: pointer;
+	}
+}
 
-			.sentiment {
-				height: 20px;
-				position: absolute;
-				bottom: 0px;
-				right: -6px;
-			}
-		}
+.unread {
+	background-color: #edf2fa;
+	border: 1px solid #00000010;
 
-		.notification-message {
-			font-size: 14px;
-			color: #747474;
+	&:hover {
+		filter: brightness(0.97);
+		cursor: pointer;
+	}
+}
 
-			.employee-name,
-			.emotion,
-			.date-time {
-				font-weight: bold;
-			}
-		}
+.notification_item__employee {
+	// border: 1px dotted #0000001f;
+	width: 50px;
+	height: 50px;
+	display: flex;
+
+	.employee__photo {
+		border-radius: 999px;
+	}
+}
+
+.notification_item__content {
+	// border: 1px dotted #0000001f;
+	width: 100%;
+	min-height: 50px;
+	margin-left: 10px;
+	display: flex;
+	flex-direction: column;
+
+	.content__time {
+		color: #0000004d;
 	}
 }
 </style>

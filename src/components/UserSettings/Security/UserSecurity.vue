@@ -44,7 +44,10 @@
 				>
 					Update Password
 				</button>
-				<router-link to="/forgot-password" class="forgot-password-link">
+				<router-link
+					:to="{ name: 'password_reset' }"
+					class="forgot-password-link"
+				>
 					<span>I forgot my password</span>
 				</router-link>
 			</div>
@@ -72,6 +75,11 @@ export default {};
 		}
 
 		.input-field {
+			::v-deep {
+				input {
+					font-family: sans-serif;
+				}
+			}
 		}
 
 		.save-button {
