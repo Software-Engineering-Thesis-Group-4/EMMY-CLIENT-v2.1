@@ -1,11 +1,17 @@
 <template>
 	<v-app>
+		<NoConnectionBanner />
 		<router-view />
 	</v-app>
 </template>
 
 <script>
-export default {};
+import NoConnectionBanner from "@/components/NoConnectionBanner.vue";
+export default {
+	components: {
+		NoConnectionBanner
+	}
+};
 </script>
 
 <style lang="scss">
