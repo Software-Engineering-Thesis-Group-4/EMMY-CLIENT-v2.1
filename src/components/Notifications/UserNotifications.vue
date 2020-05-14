@@ -2,7 +2,7 @@
 	<div class="notification_list">
 
 		<div
-			class="notification_item"
+			class="notification_item notification_item--rounded notification_item--spaced"
 			:class="{ 'unread': true }"
 			v-for="n in 3"
 			:key="n"
@@ -27,7 +27,7 @@
 		</div>
 
 		<div
-			class="notification_item"
+			class="notification_item notification_item--rounded notification_item--spaced"
 			:class="{ 'unread': false }"
 			v-for="n in 0"
 			:key="n"
@@ -112,6 +112,14 @@ export default {
 		filter: brightness(0.97);
 		cursor: pointer;
 	}
+}
+
+.notification_item--rounded {
+	border-radius: 3px;
+}
+
+.notification_item--spaced {
+	margin-top: 10px;
 }
 
 .unread {
