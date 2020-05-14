@@ -55,7 +55,6 @@
 <script>
 import EmployeeNotifications from "@/components/Notifications/EmployeeNotifications.vue";
 import UserNotifications from "@/components/Notifications/UserNotifications.vue";
-import moment from "moment";
 
 export default {
 	components: {
@@ -151,5 +150,9 @@ export default {
 	padding-right: 10px;
 	margin-top: 10px;
 	padding-top: 5px;
+
+	::v-deep .v-skeleton-loader {
+		margin-top: 10px;
+	}
 }
 </style>
