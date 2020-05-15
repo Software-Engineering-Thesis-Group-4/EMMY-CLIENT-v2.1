@@ -96,9 +96,10 @@ const routes = [
 		]
 	},
 	{
-		path: '/main',
+		path: '/emmy',
 		component: MainLayout,
 		redirect: "/dashboard",
+		beforeEnter: isAuthenticated,
 		children: [
 			{
 				path: 'dashboard',
