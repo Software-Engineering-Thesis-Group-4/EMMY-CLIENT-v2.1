@@ -105,7 +105,7 @@ export default {
 
 	&:hover {
 		filter: brightness(0.97);
-		cursor: pointer;
+		// cursor: pointer;
 	}
 }
 
@@ -123,7 +123,7 @@ export default {
 
 	&:hover {
 		filter: brightness(0.97);
-		cursor: pointer;
+		// cursor: pointer;
 	}
 }
 
