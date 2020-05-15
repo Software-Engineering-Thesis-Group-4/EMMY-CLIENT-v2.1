@@ -8,7 +8,7 @@
 				class="tabs"
 				@change="fetchData"
 			>
-				<v-tab v-if="isAdmin">Employee Sentiment</v-tab>
+				<v-tab v-if="isAdmin">Employees</v-tab>
 				<v-tab>Account</v-tab>
 			</v-tabs>
 
