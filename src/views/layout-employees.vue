@@ -467,4 +467,9 @@ export default {
 		fill: #cecece;
 	}
 }
+
+::v-deep .v-dialog {
+	border-radius: 0px;
+	box-shadow: none;
+}
 </style>

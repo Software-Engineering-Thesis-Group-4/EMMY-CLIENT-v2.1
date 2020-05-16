@@ -1,5 +1,5 @@
 <template>
-	<v-card class="form_container">
+	<v-card class="form_container" tile>
 		<v-toolbar
 			flat
 			dense
@@ -340,6 +340,7 @@ export default {
 .form_container {
 	display: flex;
 	flex-direction: column;
+	border-radius: 0px;
 }
 
 .fileUploadToggleButton {
