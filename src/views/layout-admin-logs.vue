@@ -1,10 +1,8 @@
 <template>
   <div>
-    <v-divider color="#52555A"></v-divider>
     <div class="table-container">
       <template>
         <v-data-table
-          dark
           :headers="headers"
           :items="employees"
           :items-per-page="10"
@@ -108,4 +106,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.table-container{
+  margin-top: 10px;
+}
+
 </style>
