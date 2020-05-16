@@ -1,66 +1,72 @@
 <template>
 	<div class="notification_list">
 
-		<div
-			class="notification_item notification_item--rounded notification_item--spaced"
-			:class="{ 'unread': true }"
-		>
-			<div class="notification_item__employee">
-				<v-img
-					src="/default.jpg"
-					class="employee__photo"
-				>
-				</v-img>
-			</div>
-			<div class="notification_item__content">
-				<span class="content__message">
-					Lorem ipsum dolor sit amet consectetur adipisicing elit.
-					Praesentium, dolores sit. Ipsa, cumque temporibus!
-					Qui eum, dolorum facilis itaque aliquam fuga ea, excepturi, quia aliquid explicabo voluptates eos ab quam.
-				</span>
-				<span class="content__time">
-					{{ content_time }}
-				</span>
-			</div>
-		</div>
-
-		<div
-			class="notification_item notification_item--rounded notification_item--spaced"
-			:class="{ 'unread': false }"
-			v-for="n in 10"
-			:key="n"
-		>
-			<div class="notification_item__employee">
-				<v-img
-					src="/default.jpg"
-					class="employee__photo"
-				></v-img>
-			</div>
-			<div class="notification_item__content">
-				<span class="content__message">
-					Lorem ipsum dolor sit amet consectetur adipisicing elit.
-					Praesentium, dolores sit. Ipsa, cumque temporibus!
-					Qui eum, dolorum facilis itaque aliquam fuga ea, excepturi, quia aliquid explicabo voluptates eos ab quam.
-				</span>
-				<span class="content__time">
-					{{ content_time }}
-				</span>
-			</div>
-		</div>
+		<ExtremeEmotionNotification
+			v-for="item in notifications"
+			:key="item._id"
+			:employeeRef="item.employee"
+			:dateCreated="item.dateCreated"
+			:seenBy="item.seenBy"
+			:emotion="item.emotion"
+		/>
 
 	</div>
 </template>
 
 <script>
 import moment from "moment";
+import ExtremeEmotionNotification from "@/components/Notifications/Templates/ExtremeEmotionNotification.vue";
 
 export default {
+	data() {
+		return {
+			notifications: [
+				{
+					// Notification ObjectId
+					_id: "202asfas234fsedf1sef5wefwef",
+
+					// Employee Reference
+					employee: {
+						employeeId: "2015-02034",
+						firstName: "Nathaniel",
+						lastName: "Saludes",
+						email: "saludesnathaniel@gmail.com",
+						isMale: true,
+						employmentStatus: 1,
+						department: "Faculty",
+						jobTitle: "Software Engineering Teacher",
+						photo: null,
+						fingerprintId: 5,
+						terminated: false,
+						latestLog: {}
+					},
+
+					// Employee Sentiment
+					emotion: "angry",
+
+					// a list of users who already saw the notification
+					seenBy: [
+						"marygil@gmail.com",
+						"joenil@gmail.com",
+						"saludesnathaniel@gmail.com",
+						"test@gmail.com"
+					],
+
+					// when was the notification created
+					dateCreated: "2020-05-16T17:46:59.404Z"
+				}
+			]
+		};
+	},
 	computed: {
 		content_time() {
 			return moment()
 				.subtract(3, "hours")
 				.fromNow();
 		}
+	},
+	components: {
+		ExtremeEmotionNotification
 	}
 };
 </script>
