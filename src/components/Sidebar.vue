@@ -150,7 +150,7 @@
 
 							</div>
 						</template>
-						<span>Audit Logs</span>
+						<span>System Logs</span>
 					</v-tooltip>
 				</router-link>
 			</div>
@@ -183,7 +183,7 @@
 
 							</div>
 						</template>
-						<span>Audit Logs</span>
+						<span>System Settings</span>
 					</v-tooltip>
 				</router-link>
 			</div>
