@@ -190,7 +190,7 @@ const routes = [
 			},
 			{
 				path: 'users',
-				alias: '/users',
+				alias: '/admin/users',
 				meta: {
 					title: 'User Accounts'
 				},
@@ -198,19 +198,19 @@ const routes = [
 				beforeEnter: isAuthenticated // PROTECTED
 			},
 			{
-				path: 'audit',
-				alias: '/auditlogs',
+				path: 'system_logs',
+				alias: '/admin/logs',
 				meta: {
-					title: 'Application Logs'
+					title: 'System Logs'
 				},
 				component: AuditLogsLayout,
 				beforeEnter: isAuthenticated // PROTECTED
 			},
 			{
-				path: 'backup',
-				alias: '/backup',
+				path: 'system_settings',
+				alias: '/admin/settings',
 				meta: {
-					title: 'Backup Settings'
+					title: 'System Settings'
 				},
 				component: BackupSettingsLayout,
 				beforeEnter: isAuthenticated // PROTECTED

@@ -95,7 +95,7 @@
 				class="nav-item"
 				v-if="isAdmin"
 			>
-				<router-link to="/users">
+				<router-link to="/admin/users">
 					<v-tooltip
 						right
 						transition="none"
@@ -127,7 +127,7 @@
 				class="nav-item"
 				v-if="isAdmin"
 			>
-				<router-link to="/auditlogs">
+				<router-link to="/admin/logs">
 					<v-tooltip
 						right
 						transition="none"
@@ -160,7 +160,7 @@
 				class="nav-item"
 				v-if="isAdmin"
 			>
-				<router-link to="/backup">
+				<router-link to="/admin/settings">
 					<v-tooltip
 						right
 						transition="none"
