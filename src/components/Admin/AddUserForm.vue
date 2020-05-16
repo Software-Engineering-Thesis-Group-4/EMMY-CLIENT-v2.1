@@ -1,6 +1,7 @@
 <template>
-	<div>
-
+	<div class="form-container">
+		<v-form>
+		</v-form>
 	</div>
 </template>
 
@@ -9,4 +10,8 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
+.form-container {
+	background-color: white;
+	min-height: 500px;
+}
 </style>
