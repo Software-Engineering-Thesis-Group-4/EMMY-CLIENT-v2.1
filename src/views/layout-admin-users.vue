@@ -17,6 +17,7 @@
 			<v-dialog
 				max-width="600px"
 				v-model="addUser"
+				class="add-user-dialog"
 			>
 				<template v-slot:activator="{ on }">
 					<button
@@ -26,6 +27,8 @@
 						<v-icon class="add_user__icon">mdi-plus</v-icon>Add New User
 					</button>
 				</template>
+
+				<AddUserForm />
 			</v-dialog>
 		</div>
 
@@ -36,7 +39,11 @@
 </template>
 
 <script>
+import AddUserForm from "@/components/Admin/AddUserForm.vue";
 export default {
+	components: {
+		AddUserForm
+	},
 	data() {
 		return {
 			loadingTable: false,
@@ -74,6 +81,11 @@ export default {
 	align-items: flex-start;
 	height: 58px;
 	width: 400px;
+}
+
+::v-deep .v-dialog {
+	border-radius: 0px;
+	box-shadow: none;
 }
 
 .controls__add_user {
