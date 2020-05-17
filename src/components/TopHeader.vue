@@ -68,7 +68,7 @@
 								>
 									<div class="avatar">
 										<v-img
-											:src="user_photo"
+											:src="user_photo || '/placeholder_avatar01.png'"
 											class="user-image"
 										></v-img>
 									</div>
@@ -140,7 +140,11 @@ export default {
 			return this.$store.getters["user/fullname"] || "{User}";
 		},
 		user_photo() {
-			return null || "default.png";
+			if(this.$store.state.user.photo) {
+				return `/${this.$store.state.user.photo}`;
+			}
+
+			return null;
 		}
 	},
 	methods: {

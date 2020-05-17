@@ -7,7 +7,7 @@
 		<div class="notification_item__employee">
 			<!-- employee photo -->
 			<v-img
-				:src="`/${employeeRef.photo}` || `/default.jpg`"
+				:src="employeePhoto || `/placeholder_avatar02.png`"
 				class="employee__photo"
 			>
 			</v-img>
@@ -79,6 +79,13 @@ export default {
 		},
 		emotionIcon() {
 			return `/emotions/${this.emotion}.svg`;
+		},
+		employeePhoto() {
+			if (this.employeeRef.photo) {
+				return `/${this.employeeRef.photo}`;
+			}
+
+			return null;
 		}
 	}
 };

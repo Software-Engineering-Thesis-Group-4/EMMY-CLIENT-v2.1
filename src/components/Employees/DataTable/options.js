@@ -18,6 +18,7 @@ export function loadTableData(employees) {
 				department       : employee.department,
 				jobTitle         : employee.jobTitle,
 				employmentStatus : employee.employmentStatus,
+				photo            : (employee.photo ? employee.photo : null)
 			});
 		}
 	});

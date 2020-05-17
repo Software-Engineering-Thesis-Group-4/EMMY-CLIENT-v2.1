@@ -35,7 +35,7 @@ export default {
 						employmentStatus: 1,
 						department: "Faculty",
 						jobTitle: "Animation Teacher",
-						photo: "employee_sample.png",
+						photo: 'sample.png',
 						fingerprintId: 5,
 						terminated: false,
 						latestLog: {}
