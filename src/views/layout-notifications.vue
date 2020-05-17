@@ -15,10 +15,7 @@
 			<v-tabs-items v-model="tab">
 
 				<!-- Employee Sentiment Notifications (Intense Sentiment notifications) -->
-				<v-tab-item
-					v-if="isAdmin"
-					eager
-				>
+				<v-tab-item v-if="isAdmin">
 					<EmployeeNotifications v-if="!loading" />
 					<div
 						v-if="loading"
@@ -33,7 +30,7 @@
 				</v-tab-item>
 
 				<!-- Account Notifications (user related notification) -->
-				<v-tab-item :eager="true">
+				<v-tab-item>
 					<UserNotifications v-if="!loading" />
 					<div
 						v-if="loading"
@@ -64,42 +61,41 @@ export default {
 	data() {
 		return {
 			loading: true,
-			timeout: null,
 			tab: null,
-			isAdmin: this.$store.state.user.isAdmin
+			isAdmin: this.$store.state.user.isAdmin,
+
+			// testing purpose only *******************************************
+			timeout: null
+			// ****************************************************************
 		};
 	},
 	methods: {
 		fetchData(tabIndex) {
 			switch (tabIndex) {
 				case 0:
-					this.loading = true;
-					clearTimeout(this.timeout);
-					this.timeout = setTimeout(() => {
-						this.loading = false;
-						console.log(
-							"%c fetched employee notifications",
-							"color: limegreen;"
-						);
-					}, 2000);
+					// fetch notification from server
+					this.TEST_SKELETON_LOADER();
 					break;
 
 				case 1:
-					this.loading = true;
-					clearTimeout(this.timeout);
-					this.timeout = setTimeout(() => {
-						this.loading = false;
-						console.log(
-							"%c fetched user notifications",
-							"color: limegreen;"
-						);
-					}, 2000);
+					// fetch notification from server
+					this.TEST_SKELETON_LOADER();
 					break;
 			}
+		},
+		// testing purpose only *******************************************
+		TEST_SKELETON_LOADER() {
+			this.loading = true;
+			clearTimeout(this.timeout);
+			this.timeout = setTimeout(() => {
+				this.loading = false;
+				console.log(
+					"%c fetched employee notifications",
+					"color: limegreen;"
+				);
+			}, 2000);
 		}
-	},
-	mounted() {
-		this.fetchData(0);
+		// ****************************************************************
 	},
 	created() {
 		// TODO: Implement data fetching. Fetch notifications from the database component creation.
