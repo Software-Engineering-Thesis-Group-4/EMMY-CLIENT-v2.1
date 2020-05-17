@@ -49,7 +49,6 @@ export default {
 						"marygil@gmail.com",
 						"joenil@gmail.com",
 						"saludesnathaniel@gmail.com",
-						"test@gmail.com"
 					],
 
 					// when was the notification created
