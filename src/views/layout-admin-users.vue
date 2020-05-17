@@ -10,6 +10,7 @@
 					single-line
 					placeholder="Search Users..."
 					prepend-icon="mdi-database-search"
+					:search-input.sync="search"
 				></v-autocomplete>
 			</div>
 
@@ -34,12 +35,12 @@
 
 		<div class="users_container">
 			<v-data-table
+				:search="search"
 				:headers="headers"
 				:items="users"
 				:items-per-page="10"
 				class="users-table"
 			>
-
 				<template v-slot:item.user="{ item, header, value }">
 					<div class="user">
 						<div class="user__photo">
@@ -60,10 +61,16 @@
 
 				<template #item.actions="{ }">
 					<div class="actions">
-						<button class="actions__button" :disabled="!isAdmin">
+						<button
+							class="actions__button"
+							:disabled="!isAdmin"
+						>
 							<v-icon>mdi-pencil</v-icon>
 						</button>
-						<button class="actions__button" :disabled="!isAdmin">
+						<button
+							class="actions__button"
+							:disabled="!isAdmin"
+						>
 							<v-icon>mdi-delete</v-icon>
 						</button>
 					</div>
@@ -83,15 +90,11 @@ export default {
 	data() {
 		return {
 			isAdmin: this.$store.state.user.isAdmin,
+			search: null,
 			loadingTable: false,
 			addUser: false,
 			headers: [
-				{
-					text: "User",
-					align: "start",
-					sortable: false,
-					value: "user"
-				},
+				{ text: "User", align: "start", value: "user" },
 				{ text: "Email", value: "email" },
 				{ text: "Account Type", value: "type" },
 				{ text: "Status", value: "isActive" },
@@ -213,6 +216,11 @@ export default {
 	// border: 1px dashed #0000002c;
 	// color: #9e009e73;
 	min-height: 500px;
+}
+
+::v-deep .v-data-table-header tr th[role="columnheader"] {
+	font-size: 12px;
+	text-transform: uppercase;
 }
 
 .user {
