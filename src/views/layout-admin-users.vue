@@ -33,13 +33,43 @@
 		</div>
 
 		<div class="users_container">
-			User Accounts List (Component)
 			<v-data-table
 				:headers="headers"
 				:items="users"
 				:items-per-page="10"
 				class="users-table"
-			></v-data-table>
+			>
+
+				<template v-slot:item.user="{ item, header, value }">
+					<div class="user">
+						<div class="user__photo">
+							<v-img :src="item.photo || `/placeholder_avatar01.png`"></v-img>
+						</div>
+						<span class="user__name text-truncate">{{ value }}</span>
+					</div>
+				</template>
+
+				<template v-slot:item.isActive="{ value: isActive }">
+					<span
+						class="account_status"
+						:class="{ 'account_status--disabled': !isActive }"
+					>
+						{{ isActive ? 'Active' : 'Disabled' }}
+					</span>
+				</template>
+
+				<template #item.actions="{ }">
+					<div class="actions">
+						<button class="actions__button" :disabled="!isAdmin">
+							<v-icon>mdi-pencil</v-icon>
+						</button>
+						<button class="actions__button" :disabled="!isAdmin">
+							<v-icon>mdi-delete</v-icon>
+						</button>
+					</div>
+				</template>
+
+			</v-data-table>
 		</div>
 	</div>
 </template>
@@ -52,6 +82,7 @@ export default {
 	},
 	data() {
 		return {
+			isAdmin: this.$store.state.user.isAdmin,
 			loadingTable: false,
 			addUser: false,
 			headers: [
@@ -63,45 +94,45 @@ export default {
 				},
 				{ text: "Email", value: "email" },
 				{ text: "Account Type", value: "type" },
-				{ text: "Status", value: "status" },
-				{ text: "Action", value: "action" }
+				{ text: "Status", value: "isActive" },
+				{ text: "Actions", value: "actions" }
 			],
 			users: [
 				{
 					user: "Dolores, Lorem Ipsum",
 					email: "lorem.dolores@email.com",
 					type: "Administrator",
-					status: "Active"
+					isActive: true
 				},
 				{
 					user: "Dolores, Lorem Ipsum",
 					email: "lorem.dolores@email.com",
 					type: "Administrator",
-					status: "Active"
+					isActive: true
 				},
 				{
 					user: "Dolores, Lorem Ipsum",
 					email: "lorem.dolores@email.com",
 					type: "Administrator",
-					status: "Active"
+					isActive: true
 				},
 				{
 					user: "Dolores, Lorem Ipsum",
 					email: "lorem.dolores@email.com",
 					type: "Administrator",
-					status: "Active"
+					isActive: true
 				},
 				{
 					user: "Dolores, Lorem Ipsum",
 					email: "lorem.dolores@email.com",
 					type: "Administrator",
-					status: "Active"
+					isActive: false
 				},
 				{
 					user: "Dolores, Lorem Ipsum",
 					email: "lorem.dolores@email.com",
 					type: "Administrator",
-					status: "Active"
+					isActive: true
 				}
 			]
 		};
@@ -178,10 +209,67 @@ export default {
 }
 
 .users_container {
-	background-color: #ff00ff1c;
-	border: 1px dashed #0000002c;
+	// background-color: #ff00ff1c;
+	// border: 1px dashed #0000002c;
+	// color: #9e009e73;
 	min-height: 500px;
-	color: #9e009e73;
-	margin-top: 10px;
+}
+
+.user {
+	// border: 1px dashed #00000031;
+	// background-color: #ff00ff25;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	max-width: 400px;
+
+	.user__photo {
+		width: 30px;
+		margin-right: 8px;
+
+		::v-deep .v-image {
+			border-radius: 3px;
+		}
+	}
+}
+
+::v-deep .users-table {
+	border: 1px solid #e2e2e2;
+}
+
+.account_status {
+	color: #0064e7;
+}
+
+.account_status--disabled {
+	color: #ff0000;
+}
+
+.actions {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	// background-color: #ff00ff28;
+}
+
+.actions__button {
+	&:last-child {
+		margin-left: 5px;
+	}
+
+	::v-deep .v-icon {
+		color: #c0c0c0;
+		font-size: 20px;
+	}
+
+	&:hover {
+		::v-deep .v-icon {
+			color: #929292;
+		}
+	}
+
+	&:disabled {
+		cursor: not-allowed;
+	}
 }
 </style>
