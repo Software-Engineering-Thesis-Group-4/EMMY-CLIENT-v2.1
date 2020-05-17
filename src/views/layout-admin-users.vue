@@ -34,6 +34,12 @@
 
 		<div class="users_container">
 			User Accounts List (Component)
+			<v-data-table
+				:headers="headers"
+				:items="users"
+				:items-per-page="10"
+				class="users-table"
+			></v-data-table>
 		</div>
 	</div>
 </template>
@@ -47,7 +53,57 @@ export default {
 	data() {
 		return {
 			loadingTable: false,
-			addUser: false
+			addUser: false,
+			headers: [
+				{
+					text: "User",
+					align: "start",
+					sortable: false,
+					value: "user"
+				},
+				{ text: "Email", value: "email" },
+				{ text: "Account Type", value: "type" },
+				{ text: "Status", value: "status" },
+				{ text: "Action", value: "action" }
+			],
+			users: [
+				{
+					user: "Dolores, Lorem Ipsum",
+					email: "lorem.dolores@email.com",
+					type: "Administrator",
+					status: "Active"
+				},
+				{
+					user: "Dolores, Lorem Ipsum",
+					email: "lorem.dolores@email.com",
+					type: "Administrator",
+					status: "Active"
+				},
+				{
+					user: "Dolores, Lorem Ipsum",
+					email: "lorem.dolores@email.com",
+					type: "Administrator",
+					status: "Active"
+				},
+				{
+					user: "Dolores, Lorem Ipsum",
+					email: "lorem.dolores@email.com",
+					type: "Administrator",
+					status: "Active"
+				},
+				{
+					user: "Dolores, Lorem Ipsum",
+					email: "lorem.dolores@email.com",
+					type: "Administrator",
+					status: "Active"
+				},
+				{
+					user: "Dolores, Lorem Ipsum",
+					email: "lorem.dolores@email.com",
+					type: "Administrator",
+					status: "Active"
+				}
+			]
 		};
 	},
 	computed: {},
