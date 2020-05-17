@@ -121,7 +121,7 @@
 					>
 						<div class="employee-photo">
 							<v-img
-								:src="item.photo || 'default.jpg'"
+								:src="item.photo || 'employee_default.png'"
 								class="employee-image"
 							></v-img>
 						</div>
