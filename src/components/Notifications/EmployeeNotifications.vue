@@ -27,22 +27,22 @@ export default {
 
 					// Employee Reference
 					employee: {
-						employeeId: "2015-02034",
-						firstName: "Nathaniel",
-						lastName: "Saludes",
-						email: "saludesnathaniel@gmail.com",
+						employeeId: "2015-64890",
+						firstName: "Katherine",
+						lastName: "Jean",
+						email: "kathjean@gmail.com",
 						isMale: true,
 						employmentStatus: 1,
 						department: "Faculty",
-						jobTitle: "Software Engineering Teacher",
-						photo: null,
+						jobTitle: "Animation Teacher",
+						photo: "employee_sample.png",
 						fingerprintId: 5,
 						terminated: false,
 						latestLog: {}
 					},
 
 					// Employee Sentiment
-					emotion: "angry",
+					emotion: 1,
 
 					// a list of users who already saw the notification
 					seenBy: [
