@@ -58,7 +58,7 @@ export default {
 	},
 	computed: {
 		hasRead() {
-			return this.seenBy.includes("test@gmail.com");
+			return this.seenBy.includes(this.$store.state.user.email);
 		},
 		time() {
 			return moment(this.dateCreated).fromNow();
