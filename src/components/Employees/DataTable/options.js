@@ -9,16 +9,17 @@ export function loadTableData(employees) {
 	employees.forEach(employee => {
 		if (!employee.terminated) {
 			employeeTableData.push({
-				id               : employee._id,
-				employeeId       : employee.employeeId,
-				firstname        : employee.firstName,
-				lastname         : employee.lastName,
-				name             : `${employee.lastName}, ${employee.firstName}`,
-				email            : employee.email,
-				department       : employee.department,
-				jobTitle         : employee.jobTitle,
-				employmentStatus : employee.employmentStatus,
-				photo            : (employee.photo ? employee.photo : null)
+				id: employee._id,
+				employeeId: employee.employeeId,
+				firstname: employee.firstName,
+				lastname: employee.lastName,
+				name: `${employee.lastName}, ${employee.firstName}`,
+				email: employee.email,
+				department: employee.department,
+				jobTitle: employee.jobTitle,
+				employmentStatus: employee.employmentStatus,
+				photo: (employee.photo ? employee.photo : null),
+				gender: (employee.isMale ? 'male' : 'female')
 			});
 		}
 	});
@@ -28,8 +29,34 @@ export function loadTableData(employees) {
 	return true;
 }
 
-export function getData() {
-	return options.data;
+export function filterData(department, gender, employmentStatus) {
+	let filtered = options.data;
+
+	if (department) {
+		filtered = options.data.filter(item => item.department === department);
+	}
+
+	if (gender) {
+		filtered = options.data.filter(item => item.gender === gender.toLowerCase())
+	}
+
+	if (employmentStatus) {
+		let status = null;
+
+		switch (employmentStatus) {
+			case 'Full-time':
+				status = 1;
+				break;
+
+			case 'Part-time':
+				status = 0;
+				break;
+		}
+
+		filtered = options.data.filter(item => item.employmentStatus == status);
+	}
+
+	options.data = filtered;
 }
 
 export let options = {

@@ -39,6 +39,7 @@
 			<v-menu
 				offset-y
 				:close-on-content-click="false"
+				nudge-bottom="5px"
 			>
 				<template v-slot:activator="{ on }">
 					<button
@@ -56,34 +57,34 @@
 					class="filter-menu-container"
 				>
 					<v-combobox
+						v-model="filters.department"
 						color="#5f7bbe"
 						class="filter-combobox"
 						label="Department"
 						:items="departmentCategories"
 						outlined
 						dense
-						clearable
-						@change="filterData"
+						@change="filter"
 					></v-combobox>
 					<v-combobox
+						v-model="filters.gender"
 						color="#5f7bbe"
 						class="filter-combobox"
 						label="Gender"
 						:items="['Male', 'Female']"
 						outlined
 						dense
-						clearable
-						@change="filterData"
+						@change="filter"
 					></v-combobox>
 					<v-combobox
+						v-model="filters.employmentStatus"
 						color="#5f7bbe"
 						class="filter-combobox"
 						label="Employment Status"
 						:items="['Full-time', 'Part-time']"
 						outlined
 						dense
-						clearable
-						@change="filterData"
+						@change="filter"
 					></v-combobox>
 
 					<button
@@ -102,6 +103,7 @@
 		</div>
 
 		<v-data-table
+			ref="employeeList"
 			v-model="employeeDataTableOptions.selected"
 			:headers="employeeDataTableOptions.headers"
 			:items="employeeDataTableOptions.data"
@@ -137,17 +139,33 @@
 				>{{ !!value ? "Regular" : "Part-time" }}</span>
 			</template>
 
+			<template
+				#header.actions
+				v-if="!isAdmin"
+			></template>
+
 			<template #item.actions="{ item }">
 
-				<div class="actions">
+				<div
+					class="actions"
+					v-if="isAdmin"
+				>
 
 					<!-- Edit Employee Details -->
-					<button class="actions__button" @click="editEmployee(item)" :disabled="!isAdmin">
+					<button
+						class="actions__button"
+						@click="editEmployee(item)"
+						:disabled="!isAdmin"
+					>
 						<v-icon>mdi-pencil</v-icon>
 					</button>
 
 					<!-- Delete employee -->
-					<button class="actions__button" @click="deleteEmployee(item)" :disabled="!isAdmin">
+					<button
+						class="actions__button"
+						@click="deleteEmployee(item)"
+						:disabled="!isAdmin"
+					>
 						<v-icon>mdi-delete</v-icon>
 					</button>
 
@@ -177,7 +195,8 @@
 import AddEmployeeForm from "@/components/Employees/AddEmployeeForm.vue";
 import {
 	options,
-	loadTableData
+	loadTableData,
+	filterData
 } from "@/components/Employees/DataTable/options.js";
 
 export default {
@@ -190,7 +209,13 @@ export default {
 			isAdmin: this.$store.state.user.isAdmin,
 			snackbar: false,
 			text: "Employee Removed.",
-			snackBarTimeOut: 2000
+			snackBarTimeOut: 2000,
+
+			filters: {
+				department: null,
+				gender: null,
+				employmentStatus: null
+			}
 		};
 	},
 	components: {
@@ -236,10 +261,12 @@ export default {
 				loadTableData(employees);
 			});
 		},
-		filterData() {
-			// TODO: Implement Filter Functionality
+		filter() {
+			let { department, gender, employmentStatus } = this.filters;
+			filterData(department, gender, employmentStatus);
 		},
 		clearFilter() {
+			loadTableData(this.$store.getters['employees/employees']);
 			this.$refs.filterDropdown.reset();
 		}
 	},
@@ -445,11 +472,10 @@ export default {
 	&:disabled {
 		cursor: not-allowed;
 	}
-	
+
 	&:last-child {
 		margin-left: 5px;
 	}
-
 }
 
 ::v-deep .v-dialog {
