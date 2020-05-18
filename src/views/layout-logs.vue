@@ -20,6 +20,8 @@
 					transition="scale-transition"
 					offset-y
 					min-width="290px"
+					nudge-top="15px"
+					nudge-right="30px"
 				>
 					<template v-slot:activator="{ on }">
 						<v-text-field
