@@ -17,7 +17,7 @@
 			<!-- Add User -->
 			<v-dialog
 				max-width="600px"
-				v-model="addUser"
+				v-model="showAdduserForm"
 				class="add-user-dialog"
 			>
 				<template v-slot:activator="{ on }">
@@ -35,10 +35,10 @@
 
 		<div class="users_container">
 			<v-data-table
-				:search="search"
-				:headers="headers"
-				:items="users"
-				:items-per-page="10"
+				:loading="loadingTable"
+				:search="userListOptions.search"
+				:headers="userListOptions.headers"
+				:items="userListOptions.data"
 				class="users-table"
 			>
 				<template v-slot:item.user="{ item, header, value }">
@@ -78,11 +78,27 @@
 
 			</v-data-table>
 		</div>
+
+		<v-snackbar
+			v-model="snackbar"
+			:timeout="timeout"
+		>
+			{{ text }}
+			<v-btn
+				color="blue"
+				text
+				@click="snackbar = false"
+			>
+				Close
+			</v-btn>
+		</v-snackbar>
 	</div>
 </template>
 
 <script>
 import AddUserForm from "@/components/Admin/AddUserForm.vue";
+import { loadTableData, options } from "@/components/Admin/user_table.js";
+
 export default {
 	components: {
 		AddUserForm
@@ -92,57 +108,66 @@ export default {
 			isAdmin: this.$store.state.user.isAdmin,
 			search: null,
 			loadingTable: false,
-			addUser: false,
-			headers: [
-				{ text: "User", align: "start", value: "user" },
-				{ text: "Email", value: "email" },
-				{ text: "Account Type", value: "type" },
-				{ text: "Status", value: "isActive" },
-				{ text: "Actions", value: "actions" }
-			],
-			users: [
-				{
-					user: "Dolores, Lorem Ipsum",
-					email: "lorem.dolores@email.com",
-					type: "Administrator",
-					isActive: true
-				},
-				{
-					user: "Dolores, Lorem Ipsum",
-					email: "lorem.dolores@email.com",
-					type: "Administrator",
-					isActive: true
-				},
-				{
-					user: "Dolores, Lorem Ipsum",
-					email: "lorem.dolores@email.com",
-					type: "Administrator",
-					isActive: true
-				},
-				{
-					user: "Dolores, Lorem Ipsum",
-					email: "lorem.dolores@email.com",
-					type: "Administrator",
-					isActive: true
-				},
-				{
-					user: "Dolores, Lorem Ipsum",
-					email: "lorem.dolores@email.com",
-					type: "Administrator",
-					isActive: false
-				},
-				{
-					user: "Dolores, Lorem Ipsum",
-					email: "lorem.dolores@email.com",
-					type: "Administrator",
-					isActive: true
-				}
-			]
+			showAdduserForm: false,
+			userListOptions: options
 		};
 	},
 	computed: {},
-	methods: {},
-	created() {}
+	methods: {
+		fetchUsers() {
+			this.loadingTable = true;
+			
+			// TODO: fetch users from data (exclude 'password')
+			// this.$http.get('/api/users/', (users) => {});
+
+			setTimeout(() => {
+
+				loadTableData([
+					{
+						user: "Dolores, Lorem Ipsum",
+						email: "lorem.dolores@email.com",
+						type: "Administrator",
+						isActive: true
+					},
+					{
+						user: "Dolores, Lorem Ipsum",
+						email: "lorem.dolores@email.com",
+						type: "Administrator",
+						isActive: true
+					},
+					{
+						user: "Dolores, Lorem Ipsum",
+						email: "lorem.dolores@email.com",
+						type: "Administrator",
+						isActive: true
+					},
+					{
+						user: "Dolores, Lorem Ipsum",
+						email: "lorem.dolores@email.com",
+						type: "Administrator",
+						isActive: true
+					},
+					{
+						user: "Dolores, Lorem Ipsum",
+						email: "lorem.dolores@email.com",
+						type: "Administrator",
+						isActive: false
+					},
+					{
+						user: "Dolores, Lorem Ipsum",
+						email: "lorem.dolores@email.com",
+						type: "Administrator",
+						isActive: true
+					}
+				]);
+
+				this.loadingTable = false;
+			}, 2000);
+		}
+	},
+	created() {
+		this.fetchUsers();
+	}
 };
 </script>
 
