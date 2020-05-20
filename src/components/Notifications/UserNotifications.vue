@@ -9,7 +9,7 @@
 		>
 			<div class="notification_item__employee">
 				<v-img
-					src="/default.jpg"
+					src="/placeholder_avatar02.png"
 					class="employee__photo"
 				>
 				</v-img>
