@@ -1,5 +1,21 @@
 export function loadTableData(users) {
+
+	console.log(users);
+
 	let userAccounts = [];
+
+	userAccounts = users.map(user => {
+		return {
+			_id: user._id,
+			firstname: user.firstname,
+			lastname: user.lastname,
+			isAdmin: user.isAdmin,
+			photo: user.photo,
+			username: user.username,
+			isActive: user.isActive,
+		}
+	});
+	
 	userAccounts = users;
 	options.data = userAccounts;
 }
@@ -9,7 +25,7 @@ export let options = {
 	headers: [
 		{ text: "User", align: "start", value: "user" },
 		{ text: "Email", value: "email" },
-		{ text: "Account Type", value: "type" },
+		{ text: "Account Type", value: "accountType" },
 		{ text: "Status", value: "isActive" },
 		{ text: "Actions", value: "actions" }
 	],
