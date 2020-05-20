@@ -5,6 +5,7 @@ import VuexPersist from "vuex-persist";
 import EmotionModule from './modules/dailysentiment.js';
 import EmployeesModule from './modules/employees.js';
 import UserModule from './modules/user.js';
+// TODO: Store module for 'Notifications'
 
 Vue.use(Vuex);
 
