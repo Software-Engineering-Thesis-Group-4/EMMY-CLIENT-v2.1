@@ -159,7 +159,7 @@ export default {
 
 	display: flex;
 	flex-direction: column;
-	height: 28rem;
+	height: max-content;
 }
 
 .form_title {
