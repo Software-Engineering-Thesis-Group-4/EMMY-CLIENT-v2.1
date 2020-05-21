@@ -1,7 +1,5 @@
 export function loadTableData(users) {
 
-	console.log(users);
-
 	let userAccounts = [];
 
 	userAccounts = users.map(user => {
