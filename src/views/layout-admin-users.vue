@@ -194,6 +194,7 @@ export default {
 ::v-deep .v-dialog {
 	border-radius: 0px;
 	box-shadow: none;
+	width: 30rem;
 }
 
 .controls__add_user {
