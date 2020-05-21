@@ -192,7 +192,7 @@
 </template>
 
 <script>
-import AddEmployeeForm from "@/components/Employees/AddEmployeeForm.vue";
+import AddEmployeeForm from "@/components/Employees/AddEmployee/AddEmployee.vue";
 import {
 	options,
 	loadTableData,
