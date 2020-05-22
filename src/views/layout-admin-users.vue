@@ -17,7 +17,7 @@
 			<!-- Add User -->
 			<v-dialog
 				max-width="600px"
-				v-model="showAdduserForm"
+				v-model="showAddUserForm"
 				class="add-user-dialog"
 			>
 				<template v-slot:activator="{ on }">
@@ -29,7 +29,7 @@
 					</button>
 				</template>
 
-				<AddUserForm />
+				<AddUserForm @formCancel="showAddUserForm = false"/>
 			</v-dialog>
 		</div>
 
@@ -64,7 +64,7 @@ export default {
 	},
 	data() {
 		return {
-			showAdduserForm: false,
+			showAddUserForm: false,
 			search: null
 		};
 	},

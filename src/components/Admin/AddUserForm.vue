@@ -91,7 +91,6 @@
 					show-size
 					truncate-length
 					:value="fileValue"
-					@change="fileInput"
 				></v-file-input>
 
 			</div>
@@ -137,9 +136,6 @@ export default {
 		resetForm() {
 			this.$refs.add_user_form.reset();
 			this.$emit("formCancel");
-		},
-		fileInput() {
-			console.log(this.fileValue);
 		}
 	}
 };
