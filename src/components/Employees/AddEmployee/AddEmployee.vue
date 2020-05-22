@@ -17,12 +17,12 @@
 
 			<!-- Single Resister Form Component -->
 			<v-tab-item>
-				<SingleRegisterForm @formCancel="closeDialog" />
+				<SingleRegisterForm @closeForm="closeDialog" @formCancel="closeDialog" />
 			</v-tab-item>
 
 			<!-- CSV Upload Form Component -->
 			<v-tab-item>
-				<CSVUploadForm @formCancel="closeDialog" />
+				<CSVUploadForm @closeForm="closeDialog" @formCancel="closeDialog" />
 			</v-tab-item>
 
 		</v-tabs>

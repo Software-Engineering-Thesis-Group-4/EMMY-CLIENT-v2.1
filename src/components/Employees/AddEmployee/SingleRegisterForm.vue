@@ -30,6 +30,7 @@
 			</div>
 
 			<v-select
+				v-model="form_data.gender"
 				:items="['Male', 'Female']"
 				filled
 				dense
@@ -39,6 +40,7 @@
 			></v-select>
 
 			<v-text-field
+				v-model="form_data.email"
 				placeholder="Email"
 				dense
 				filled
@@ -50,6 +52,7 @@
 			<p class="section_label">Work Details</p>
 
 			<v-text-field
+				v-model="form_data.employee_id"
 				placeholder="Employee ID"
 				dense
 				filled
@@ -58,6 +61,7 @@
 			></v-text-field>
 
 			<v-select
+				v-model="form_data.department"
 				:items="department_categories"
 				dense
 				filled
@@ -66,6 +70,7 @@
 			></v-select>
 
 			<v-select
+				v-model="form_data.employment_status"
 				:items="['Full-time', 'Part-time']"
 				filled
 				dense
@@ -74,6 +79,7 @@
 			></v-select>
 
 			<v-text-field
+				v-model="form_data.job_title"
 				placeholder="Job Title"
 				dense
 				filled
@@ -81,7 +87,19 @@
 				class="textfield"
 			></v-text-field>
 
+			<v-text-field
+				v-model="form_data.fingerprint_id"
+				placeholder="Fingerprint Number"
+				min="0"
+				dense
+				filled
+				color="black"
+				type="number"
+				class="textfield"
+			></v-text-field>
+
 			<v-file-input
+				v-model="form_data.photo"
 				accept="image/*"
 				placeholder="Upload Photo"
 				filled
@@ -89,6 +107,8 @@
 				color="black"
 				small-chips
 				show-size
+				prepend-icon="mdi-camera"
+				ref="file_input"
 			></v-file-input>
 
 		</div>
@@ -121,16 +141,49 @@ export default {
 				employee_id: null,
 				department: null,
 				employment_status: null,
-				job_title: null
+				job_title: null,
+				photo: null
 			},
 
 			department_categories: this.$store.state.employees.departments
 		};
 	},
+	computed: {
+		isMale() {
+			let male = null;
+
+			switch (this.form_data.gender) {
+				case "Male":
+					male = true;
+					break;
+
+				case "Female":
+					male = false;
+					break;
+			}
+
+			return male;
+		}
+	},
 	methods: {
 		registerEmployee() {
-			alert("registerEmployee() NOT IMPLEMENTED.");
-			// TODO: create POST request to add a new employee
+			let new_employee = {
+				employee_id: this.form_data.employee_id,
+				firstname: this.form_data.firstname,
+				lastname: this.form_data.lastname,
+				email: this.form_data.email,
+				isMale: this.isMale,
+				employment_status: this.form_data.employment_status,
+				department: this.form_data.department,
+				job_title: this.form_data.job_title,
+				fingerprint_id: this.form_data.fingerprint_id,
+				photo: this.form_data.photo
+			};
+
+			// TODO: Implement Client Side Validations
+
+			this.$store.dispatch('employees/ADD_EMPLOYEE', new_employee);
+			this.$emit('closeForm');
 			// if request is success, (emit an event | show a confirmation dialog)
 		},
 		resetForm() {
