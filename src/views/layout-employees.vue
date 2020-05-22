@@ -30,7 +30,7 @@
 				</template>
 
 				<AddEmployeeForm
-					@closeDialog="toggleAddEmployeeDialog"
+					@closeDialog="showAddEmployeeDialog = false"
 					@addedNewEmployee="fetchEmployees"
 				/>
 			</v-dialog>
@@ -98,7 +98,7 @@
 
 			<!-- Employee Count -->
 			<div class="employee-count">
-				<span>Employee count: {{ this.employeeCount }}</span>
+				<span>Employees: {{ this.employeeCount }}</span>
 			</div>
 		</div>
 
@@ -162,24 +162,51 @@
 
 					<!-- Delete employee -->
 					<button
+						@click="showConfirDeleteDialog(item)"
 						class="actions__button"
-						@click="deleteEmployee(item)"
 						:disabled="!isAdmin"
 					>
 						<v-icon>mdi-delete</v-icon>
 					</button>
-
 				</div>
 
 			</template>
 
 		</v-data-table>
 
+		<!-- Confirm Delete Dialog -->
+		<v-dialog
+			max-width="290"
+			v-model="showDeleteDialog"
+			@click:outside="confirmDelete(false)"
+		>
+			<v-card outlined>
+				<v-card-title>Confirm Delete</v-card-title>
+				<v-card-text>
+					Are you sure you want to mark <strong>{{ terminatedEmployee.firstname }} {{ terminatedEmployee.lastname }}</strong> as terminated?
+				</v-card-text>
+				<v-card-actions>
+					<v-btn
+						text
+						outlined
+						@click="confirmDelete(false)"
+					>Cancel</v-btn>
+					<v-btn
+						depressed
+						color="error"
+						@click="confirmDelete(true)"
+					>Delete</v-btn>
+				</v-card-actions>
+			</v-card>
+		</v-dialog>
+
+		<!-- Delete Snackbar -->
 		<v-snackbar
 			v-model="snackbar"
 			:timeout="snackBarTimeOut"
 		>
-			{{ text }}
+			<span>Employee Removed.</span>
+
 			<v-btn
 				color="#779AEC"
 				text
@@ -200,61 +227,75 @@ import {
 } from "@/components/Employees/DataTable/options.js";
 
 export default {
+	components: {
+		AddEmployeeForm
+	},
 	data() {
 		return {
+			isAdmin: this.$store.state.user.isAdmin,
+
 			employeeDataTableOptions: options,
 			loadingEmployeeDataTable: false,
-			showAddEmployeeDialog: false,
-			departmentCategories: this.$store.state.employees.departments,
-			isAdmin: this.$store.state.user.isAdmin,
-			snackbar: false,
-			text: "Employee Removed.",
-			snackBarTimeOut: 2000,
 
+			// Add Employee
+			departmentCategories: this.$store.state.employees.departments,
+			showAddEmployeeDialog: false,
+
+			// Filters
 			filters: {
 				department: null,
 				gender: null,
 				employmentStatus: null
-			}
+			},
+
+			// Confirm Delete Employee
+			showDeleteDialog: false,
+			terminatedEmployee: {},
+			snackbar: false,
+			snackBarTimeOut: 2000
 		};
-	},
-	components: {
-		AddEmployeeForm
 	},
 	computed: {
 		employeeCount: () => {
 			return options.data.length;
-		},
-		employees() {
-			let employees = options.data.map(employee => {
-				return employee.name;
-			});
-
-			return employees;
 		}
 	},
 	methods: {
 		editEmployee(employee) {
 			if (this.isAdmin) {
-				// TODO: Implement Edit Employee functionality
-				employee;
-				alert("TODO: Implement edit employee functionality");
+				alert("editEmployee() not implemented.");
 			}
 		},
-		deleteEmployee(employee) {
+		showConfirDeleteDialog(employee) {
+			this.terminatedEmployee = employee;
+			this.showDeleteDialog = true;
+		},
+		confirmDelete(confirm) {
 			if (this.isAdmin) {
-				// TODO: show a confirmation dialog to the user before commiting to make an employee as "terminated"
-				this.$store
-					.dispatch("employees/DELETE_EMPLOYEE", employee.id)
-					.then(() => {
-						this.snackbar = true;
-					});
+				// check if user is admin
+
+				if (confirm) {
+					// check if user confirms the deletion
+					this.$store
+						.dispatch(
+							"employees/DELETE_EMPLOYEE",
+							this.terminatedEmployee.id
+						)
+						.then(() => {
+							this.snackbar = true;
+						})
+						.catch(() => {
+							console.log("[SERVER ERROR] Unable to remove employee.");
+						});
+				}
+
+				this.showDeleteDialog = false;
+				this.terminatedEmployee = {};
 			} else {
-				alert("Unauthorized.");
+				console.log("Not authorized to perform action [DELETE]");
+				this.showDeleteDialog = false;
+				this.terminatedEmployee = {};
 			}
-		},
-		toggleAddEmployeeDialog() {
-			this.showAddEmployeeDialog = false;
 		},
 		fetchEmployees() {
 			this.$store.dispatch("employees/FETCH_EMPLOYEES").then(employees => {
@@ -266,7 +307,7 @@ export default {
 			filterData(department, gender, employmentStatus);
 		},
 		clearFilter() {
-			loadTableData(this.$store.getters['employees/employees']);
+			loadTableData(this.$store.getters["employees/employees"]);
 			this.$refs.filterDropdown.reset();
 		}
 	},
