@@ -53,16 +53,21 @@ const EmployeesModule = {
 				return response.data;
 
 			} catch (error) {
-				console.error(error);
+				console.dir(error);
 			}
 
 		},
 		async FETCH_ATTENDANCELOGS(context) {
 			try {
 				let response = await Vue.axios.get('/api/employeelogs');
-				let logs = response.data.filter(item => !item.deleted);
-				context.commit('LOAD_ATTENDANCELOGS', logs);
-				return logs;
+
+				if (typeof response.data === 'object') {
+					let logs = response.data.filter(item => !item.deleted);
+					context.commit('LOAD_ATTENDANCELOGS', logs);
+					return logs;
+				}
+
+				return [];
 
 			} catch (error) {
 				console.error(error);
