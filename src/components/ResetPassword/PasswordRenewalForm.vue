@@ -19,8 +19,9 @@
 				dense
 				single-line
 				color="#82EFCA"
-				clearable
-				type="password"
+				@click:append="showPassword = !showPassword"
+				:append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+				:type="showPassword ? 'text' : 'password'"
 				:loading="loading"
 				class="form__field_password"
 			></v-text-field>
@@ -32,8 +33,9 @@
 				dense
 				single-line
 				color="#82EFCA"
-				clearable
-				type="password"
+				@click:append="showPassword = !showPassword"
+				:append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+				:type="showPassword ? 'text' : 'password'"
 				:loading="loading"
 				class="form__field_password"
 			></v-text-field>
@@ -51,8 +53,10 @@ export default {
 	data() {
 		return {
 			password: null,
-			confirmPassword: null
-		}
+			confirmPassword: null,
+			loading: false,
+			showPassword: false
+		};
 	}
 };
 </script>

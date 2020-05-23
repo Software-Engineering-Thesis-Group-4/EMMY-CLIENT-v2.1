@@ -12,7 +12,7 @@
 		<v-form
 			ref="reset_form"
 			class="reset_form"
-			@submit.prevent="sendCode"
+			@submit.prevent="createRequest"
 		>
 			<v-text-field
 				v-model="email"
@@ -41,14 +41,14 @@ export default {
 		};
 	},
 	methods: {
-		sendCode() {
+		createRequest() {
 			this.loading = true;
 			// TODO: create api request for reset password
 			this.$http
 				.post("/api/users/reset-password", { email: this.email })
 				.then(() => {
 					this.loading = false;
-					this.$router.push("/sdfsdf");
+					this.$router.replace("/reset/verify");
 				})
 				.catch(err => {
 					console.log(err.response.data);

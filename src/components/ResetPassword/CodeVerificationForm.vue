@@ -37,11 +37,12 @@ export default {
 	data() {
 		return {
 			code: null,
-		}
+			loading: false
+		};
 	},
 	methods: {
 		verifyCode() {
-			alert('verifyCode() not implemented...')
+			alert("verifyCode() not implemented...");
 		}
 	}
 };
