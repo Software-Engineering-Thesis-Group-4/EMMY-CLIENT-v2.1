@@ -80,16 +80,18 @@ const routes = [
 			},
 			{
 				path: 'reset/password',
+				alias: '/forgot_password',
 				name: 'password_reset',
 				component: PasswordResetRequestForm
 			},
 			{
-				path: 'reset/confirm',
+				path: 'reset/verify',
+				alias: '/code_verification',
 				name: 'code_verification',
 				component: CodeVerificationForm
 			},
 			{
-				path: 'reset/renew',
+				path: 'reset/renew/:token',
 				name: 'password_renewal',
 				component: PasswordRenewalForm
 			},
