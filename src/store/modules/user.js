@@ -10,6 +10,7 @@ const UserModule = {
 		email: null,
 		isAdmin: false,
 		photo: null,
+		userId: null,
 	},
 	mutations: {
 		AUTH_ERROR() {
@@ -22,6 +23,7 @@ const UserModule = {
 			state.firstname = user.firstname;
 			state.lastname = user.lastname;
 			state.photo = user.photo;
+			state.userId = user.userId
 		},
 		CLEAR(state) {
 			state.username = null;
@@ -30,6 +32,7 @@ const UserModule = {
 			state.email = null;
 			state.isAdmin = false;
 			state.photo = null;
+			state.userId = null;
 
 			localStorage.clear();
 		},
@@ -63,7 +66,14 @@ const UserModule = {
 		},
 		async LOGOUT({ commit, state }) {
 			try {
-				await Vue.axios.post('/auth/logout', { email: state.email });
+
+				await Vue.axios.post('/auth/logout', {
+					email: state.email,
+					loggedInUsername: state.username,
+					userId: state.userId,
+					access_token: localStorage.getItem('access_token')
+				});
+
 				commit('CLEAR');
 
 				console.log(`%c Logged Out.`, `color: lightgreen;`);
