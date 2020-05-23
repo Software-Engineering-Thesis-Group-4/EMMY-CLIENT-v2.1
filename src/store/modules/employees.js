@@ -45,10 +45,15 @@ const EmployeesModule = {
 	},
 	// --------------------------------------------------------------------------------------------------
 	actions: {
-		async FETCH_EMPLOYEES(context) {
-
+		async FETCH_EMPLOYEES(context, state) {
 			try {
-				let response = await Vue.axios.get('/api/employees');
+				let response = await Vue.axios.get('/api/employees', {
+					params: {
+						userId: context.rootState.user.userId,
+						access_token: localStorage.getItem('access_token')
+					}
+				});
+
 				context.commit('LOAD_EMPLOYEES', response.data);
 				return response.data;
 
@@ -57,9 +62,14 @@ const EmployeesModule = {
 			}
 
 		},
-		async FETCH_ATTENDANCELOGS(context) {
+		async FETCH_ATTENDANCELOGS(context, state) {
 			try {
-				let response = await Vue.axios.get('/api/employeelogs');
+				let response = await Vue.axios.get('/api/employeelogs', {
+					params: {
+						userId: context.rootState.user.userId,
+						access_token: localStorage.getItem('access_token')
+					}
+				});
 
 				if (typeof response.data === 'object') {
 					let logs = response.data.filter(item => !item.deleted);
@@ -75,7 +85,11 @@ const EmployeesModule = {
 		},
 		async ADD_EMPLOYEE(context, formData) {
 			try {
-				let response = await Vue.axios.post(`/api/employees/enroll`, formData);
+				let response = await Vue.axios.post(`/api/employees/enroll`, {
+					userId: context.rootState.user.userId,
+					access_token: localStorage.getItem('access_token'),
+					...formData
+				});
 				console.log(response);
 				context;
 			} catch (error) {
@@ -84,7 +98,10 @@ const EmployeesModule = {
 		},
 		async DELETE_EMPLOYEE(context, id) {
 			try {
-				Vue.axios.delete(`/api/employees/${id}`);
+				Vue.axios.delete(`/api/employees/${id}`, {
+					userId: context.rootState.user.userId,
+					access_token: localStorage.getItem('access_token'),
+				});
 				context.commit('DELETE_EMPLOYEE', id);
 			} catch (error) {
 				console.error(error.response.data);
