@@ -154,7 +154,7 @@
 					<!-- Edit Employee Details -->
 					<button
 						class="actions__button"
-						@click="editEmployee(item)"
+						@click="showEditFormDialog(item)"
 						:disabled="!isAdmin"
 					>
 						<v-icon>mdi-pencil</v-icon>
@@ -162,7 +162,7 @@
 
 					<!-- Delete employee -->
 					<button
-						@click="showConfirDeleteDialog(item)"
+						@click="showConfirmDeleteDialog(item)"
 						class="actions__button"
 						:disabled="!isAdmin"
 					>
@@ -200,6 +200,13 @@
 			</v-card>
 		</v-dialog>
 
+		<!-- Edit Form Dialog -->
+		<EditForm
+			:activate="editForm"
+			@closeDialog="editForm=false"
+			:employee_ref="editEmployeeReference"
+		/>
+
 		<!-- Delete Snackbar -->
 		<v-snackbar
 			v-model="snackbar"
@@ -220,6 +227,7 @@
 
 <script>
 import AddEmployeeForm from "@/components/Employees/AddEmployee/AddEmployee.vue";
+import EditForm from "@/components/Employees/EditForm/EditForm.vue";
 import {
 	options,
 	loadTableData,
@@ -228,7 +236,8 @@ import {
 
 export default {
 	components: {
-		AddEmployeeForm
+		AddEmployeeForm,
+		EditForm
 	},
 	data() {
 		return {
@@ -252,7 +261,11 @@ export default {
 			showDeleteDialog: false,
 			terminatedEmployee: {},
 			snackbar: false,
-			snackBarTimeOut: 2000
+			snackBarTimeOut: 2000,
+
+			// Edit Form Dialog
+			editForm: false,
+			editEmployeeReference: {}
 		};
 	},
 	computed: {
@@ -261,12 +274,15 @@ export default {
 		}
 	},
 	methods: {
-		editEmployee(employee) {
+		showEditFormDialog(employee) {
 			if (this.isAdmin) {
-				alert("editEmployee() not implemented.");
+				this.editEmployeeReference = employee;
+				this.editForm = true;
+			} else {
+				alert("you are not authorized to perform this action.");
 			}
 		},
-		showConfirDeleteDialog(employee) {
+		showConfirmDeleteDialog(employee) {
 			this.terminatedEmployee = employee;
 			this.showDeleteDialog = true;
 		},
