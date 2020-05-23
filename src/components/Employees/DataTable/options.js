@@ -19,7 +19,8 @@ export function loadTableData(employees) {
 				jobTitle: employee.jobTitle,
 				employmentStatus: employee.employmentStatus,
 				photo: (employee.photo ? employee.photo : null),
-				gender: (employee.isMale ? 'male' : 'female')
+				gender: (employee.isMale ? 'Male' : 'Female'),
+				fingerprintId: employee.fingerprintId
 			});
 		}
 	});
