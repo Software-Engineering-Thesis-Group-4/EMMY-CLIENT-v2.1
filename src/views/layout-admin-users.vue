@@ -29,7 +29,7 @@
 					</button>
 				</template>
 
-				<AddUserForm @formCancel="showAddUserForm = false"/>
+				<AddUserForm @closeForm="showAddUserForm = false"/>
 			</v-dialog>
 		</div>
 
