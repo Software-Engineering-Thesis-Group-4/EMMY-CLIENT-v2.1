@@ -80,7 +80,7 @@ const UserModule = {
 				return true;
 
 			} catch (error) {
-				
+
 				commit('CLEAR');
 
 				console.log(`%c Logout Error. ${error.response.data}. (${moment().format('LTS')})`, "color: red;");
@@ -110,6 +110,23 @@ const UserModule = {
 			} catch (error) {
 				console.log(`%c ${error.response.data} (${moment().format('LTS')})`, 'color:red;');
 				commit('CLEAR');
+				return false;
+			}
+		},
+		async ENROLL_USER({ commit, state }, user) {
+			try {
+				await Vue.axios.post('/api/users/enroll', {
+					access_token: localStorage.getItem('access_token'),
+					userId: state.userId,
+					loggedInUsername: state.username,
+					...user
+				});
+
+				return true;
+
+			} catch (error) {
+				// console.log(`%c ${error.response.data} (${moment().format('LTS')})`, 'color:red;');
+				console.error(error);
 				return false;
 			}
 		}
