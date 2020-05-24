@@ -9,7 +9,7 @@
 		<template v-slot:item.user="{ item }">
 			<div class="user">
 				<div class="user__photo">
-					<v-img :src="item.photo || `/placeholder_avatar01.png`"></v-img>
+					<v-img :src="`/${ item.photo || 'placeholder_avatar01.png' }`"></v-img>
 				</div>
 				<span class="user__name text-truncate">{{ `${item.lastname}, ${item.firstname}` }}</span>
 			</div>
