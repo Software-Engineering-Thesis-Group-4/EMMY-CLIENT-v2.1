@@ -62,7 +62,7 @@ export function filterData(allEmployees, { department, gender, employmentStatus 
 		filtered = filtered.filter(item => item.employmentStatus === status);
 	}
 
-	options.data = filtered;
+	loadTableData(filtered)
 }
 
 export let options = {
