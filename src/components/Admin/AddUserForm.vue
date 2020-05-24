@@ -68,7 +68,7 @@
 				></v-text-field>
 
 				<v-text-field
-					v-model="form_data.confirm_password"
+					v-model="form_data.confirmPassword"
 					:type="showPassword ? 'text' : 'password'"
 					:append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
 					@click:append="showPassword = !showPassword"
@@ -120,22 +120,41 @@ export default {
 				username: null,
 				email: null,
 				account_type: null,
-				isActive: true,
 				password: null,
-				confirm_password: null,
+				confirmPassword: null,
 				photo: null
 			},
 			fileValue: null,
 			showPassword: false
 		};
 	},
+	computed: {
+		isAdmin() {
+			return this.form_data.account_type.toLowerCase() === "administrator"
+				? true
+				: false;
+		}
+	},
 	methods: {
 		registerUser() {
-			alert("registerUser() NOT IMPLEMENTED.");
+			let user = { ...this.form_data };
+
+			// remove account_type property and replace with boolean 'isAdmin' field
+			delete user.account_type;
+			user.isAdmin = this.isAdmin;
+
+			this.$store.dispatch("user/ENROLL_USER", user).then(success => {
+				if (success) {
+					this.$refs.add_user_form.reset();
+					this.$emit("closeForm");
+				} else {
+					this.$emit("closeForm");
+				}
+			});
 		},
 		resetForm() {
 			this.$refs.add_user_form.reset();
-			this.$emit("formCancel");
+			this.$emit("closeForm");
 		}
 	}
 };
