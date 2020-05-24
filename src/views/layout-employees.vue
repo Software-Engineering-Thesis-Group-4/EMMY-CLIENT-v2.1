@@ -64,6 +64,7 @@
 						:items="departmentCategories"
 						outlined
 						dense
+						clearable
 						@change="filter"
 					></v-combobox>
 					<v-combobox
@@ -74,6 +75,7 @@
 						:items="['Male', 'Female']"
 						outlined
 						dense
+						clearable
 						@change="filter"
 					></v-combobox>
 					<v-combobox
@@ -84,6 +86,7 @@
 						:items="['Full-time', 'Part-time']"
 						outlined
 						dense
+						clearable
 						@change="filter"
 					></v-combobox>
 
@@ -319,8 +322,7 @@ export default {
 			});
 		},
 		filter() {
-			let { department, gender, employmentStatus } = this.filters;
-			filterData(department, gender, employmentStatus);
+			filterData(this.$store.state.employees.employees, this.filters);
 		},
 		clearFilter() {
 			loadTableData(this.$store.getters["employees/employees"]);

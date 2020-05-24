@@ -30,15 +30,20 @@ export function loadTableData(employees) {
 	return true;
 }
 
-export function filterData(department, gender, employmentStatus) {
-	let filtered = options.data;
+export function filterData(allEmployees, { department, gender, employmentStatus }) {
+	let filtered = allEmployees;
 
 	if (department) {
-		filtered = options.data.filter(item => item.department === department);
+		filtered = filtered.filter(item => item.department === department);
 	}
 
 	if (gender) {
-		filtered = options.data.filter(item => item.gender === gender.toLowerCase())
+		let isMale = (gender === "Male" ? true : false);
+		filtered = filtered.filter((item) => {
+			if (item.isMale === isMale) {
+				return item;
+			}
+		});
 	}
 
 	if (employmentStatus) {
@@ -54,7 +59,7 @@ export function filterData(department, gender, employmentStatus) {
 				break;
 		}
 
-		filtered = options.data.filter(item => item.employmentStatus == status);
+		filtered = filtered.filter(item => item.employmentStatus === status);
 	}
 
 	options.data = filtered;
