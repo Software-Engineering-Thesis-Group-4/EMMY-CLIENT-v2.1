@@ -89,7 +89,12 @@ export default {
 			this.loadingTable = true;
 
 			this.$http
-				.get("/api/users/")
+				.get("/api/users/", {
+					params: {
+						userId: this.$store.state.user.userId,
+						access_token: localStorage.getItem("access_token")
+					}
+				})
 				.then(response => {
 					loadTableData(response.data);
 					this.loadingTable = false;
@@ -112,7 +117,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .users-table {
 	border: 1px solid #e2e2e2;
 }

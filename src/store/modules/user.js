@@ -80,6 +80,9 @@ const UserModule = {
 				return true;
 
 			} catch (error) {
+				
+				commit('CLEAR');
+
 				console.log(`%c Logout Error. ${error.response.data}. (${moment().format('LTS')})`, "color: red;");
 				return false;
 			}
