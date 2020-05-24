@@ -23,17 +23,23 @@
 			<!-- angry sentiment notification message -->
 			<span
 				class="content__message"
-				v-if="sentiment === 'Angry'"
+				v-if="emotion === 1"
 			>
-				<strong>{{ `${ employee.firstName } ${employee.lastName}` }}</strong> Lorem ipsum dolor sit amet consectetur adipisicing elit.
-				Praesentium, dolores sit. Ipsa, cumque temporibus! <strong class="sentiment">{{ sentiment }}</strong>
-				Qui eum, dolorum facilis itaque aliquam fuga ea, excepturi, quia aliquid explicabo voluptates eos ab quam.
+				<strong>{{ `${ employee.firstName } ${employee.lastName}` }}</strong> is feeling <strong class="sentiment">{{ sentiment }}</strong> today.
+			</span>
+
+			<!-- angry sentiment notification message -->
+			<span
+				class="content__message"
+				v-if="emotion === 2"
+			>
+				<strong>{{ `${ employee.firstName } ${employee.lastName}` }}</strong> is feeling <strong class="sentiment">{{ sentiment }}</strong> today.
 			</span>
 
 			<!-- amazing sentiment notification message -->
 			<span
 				class="content__message"
-				v-if="sentiment === 'Amazing'"
+				v-if="emotion === 'Amazing'"
 			>
 				<strong>{{ `${ employee.firstName } ${employee.lastName}` }}</strong> Lorem ipsum dolor sit amet consectetur adipisicing elit.
 				Praesentium, dolores sit. Ipsa, cumque temporibus! <strong class="sentiment">{{ sentiment }}</strong>
@@ -61,7 +67,7 @@ export default {
 			return this.seenBy.includes(this.$store.state.user.email);
 		},
 		time() {
-			return moment(this.dateCreated).fromNow();
+			return moment(this.dateCreated).calendar();
 		},
 		sentiment() {
 			let sentiment = "";
@@ -70,8 +76,8 @@ export default {
 					sentiment = "Angry";
 					break;
 
-				case 5:
-					sentiment = "Amazing";
+				case 2:
+					sentiment = "Sad";
 					break;
 			}
 

@@ -48,7 +48,6 @@ const UserModule = {
 		}, */
 		async LOGIN(context, { email, password }) {
 			try {
-
 				const response = await Vue.axios.post('/auth/login', { email, password });
 				context.commit('AUTH_SUCCESS', response.data);
 

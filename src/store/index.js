@@ -2,10 +2,10 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import VuexPersist from "vuex-persist";
 
-import EmotionModule from './modules/dailysentiment.js';
-import EmployeesModule from './modules/employees.js';
-import UserModule from './modules/user.js';
-// TODO: Store module for 'Notifications'
+import EmotionModule from './modules/dailysentiment';
+import EmployeesModule from './modules/employees';
+import UserModule from './modules/user';
+import NotificationsModule from './modules/notifications';
 
 Vue.use(Vuex);
 
@@ -27,7 +27,8 @@ export default new Vuex.Store({
 	modules: {
 		emotions: EmotionModule,
 		employees: EmployeesModule,
-		user: UserModule
+		user: UserModule,
+		notifications: NotificationsModule
 	},
 	plugins: [vuexLocalStorage.plugin]
 })

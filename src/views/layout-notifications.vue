@@ -62,40 +62,48 @@ export default {
 		return {
 			loading: true,
 			tab: null,
-			isAdmin: this.$store.state.user.isAdmin,
-
-			// testing purpose only *******************************************
-			timeout: null
-			// ****************************************************************
+			isAdmin: this.$store.state.user.isAdmin
 		};
 	},
 	methods: {
 		fetchData(tabIndex) {
 			switch (tabIndex) {
 				case 0:
-					// fetch notification from server
-					this.TEST_SKELETON_LOADER();
+					this.loading = true;
+					this.$store
+						.dispatch("notifications/FETCH_NOTIFICATIONS_EMOTION")
+						.then(success => {
+							if (success) {
+								console.log(
+									`%c fetched all emotion notifications!`,
+									`color: lightgreen;`
+								);
+							}
+
+							this.loading = false;
+						});
+
 					break;
 
 				case 1:
 					// fetch notification from server
-					this.TEST_SKELETON_LOADER();
+					this.loading = true;
+					this.$store
+						.dispatch("notifications/FETCH_NOTIFICATIONS_CRUD")
+						.then(success => {
+							if (success) {
+								console.log(
+									`%c fetched all account notifications!`,
+									`color: lightgreen;`
+								);
+							}
+
+							this.loading = false;
+						});
+
 					break;
 			}
-		},
-		// testing purpose only *******************************************
-		TEST_SKELETON_LOADER() {
-			this.loading = true;
-			clearTimeout(this.timeout);
-			this.timeout = setTimeout(() => {
-				this.loading = false;
-				console.log(
-					"%c fetched employee notifications",
-					"color: limegreen;"
-				);
-			}, 2000);
 		}
-		// ****************************************************************
 	},
 	created() {
 		// TODO: Implement data fetching. Fetch notifications from the database component creation.

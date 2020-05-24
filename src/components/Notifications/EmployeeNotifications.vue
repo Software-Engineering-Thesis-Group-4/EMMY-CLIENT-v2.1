@@ -1,7 +1,7 @@
 <template>
 	<div class="notification_list">
 
-		<ExtremeEmotionNotification
+		<EmotionNotification
 			v-for="item in notifications"
 			:key="item._id"
 			:employeeRef="item.employee"
@@ -15,57 +15,24 @@
 
 <script>
 import moment from "moment";
-import ExtremeEmotionNotification from "@/components/Notifications/Templates/ExtremeEmotionNotification.vue";
+import EmotionNotification from "@/components/Notifications/Templates/EmotionNotification.vue";
 
 export default {
 	data() {
-		return {
-			notifications: [
-				{
-					// Notification ObjectId
-					_id: "202asfas234fsedf1sef5wefwef",
-
-					// Employee Reference
-					employee: {
-						employeeId: "2015-64890",
-						firstName: "Katherine",
-						lastName: "Jean",
-						email: "kathjean@gmail.com",
-						isMale: true,
-						employmentStatus: 1,
-						department: "Faculty",
-						jobTitle: "Animation Teacher",
-						photo: 'sample.png',
-						fingerprintId: 5,
-						terminated: false,
-						latestLog: {}
-					},
-
-					// Employee Sentiment
-					emotion: 1,
-
-					// a list of users who already saw the notification
-					seenBy: [
-						"marygil@gmail.com",
-						"joenil@gmail.com",
-						"saludesnathaniel@gmail.com",
-					],
-
-					// when was the notification created
-					dateCreated: "2020-05-16T17:46:59.404Z"
-				}
-			]
-		};
+		return {};
 	},
 	computed: {
 		content_time() {
 			return moment()
 				.subtract(3, "hours")
 				.fromNow();
+		},
+		notifications() {
+			return this.$store.state.notifications.emotion_notifications;
 		}
 	},
 	components: {
-		ExtremeEmotionNotification
+		EmotionNotification
 	}
 };
 </script>

@@ -4,8 +4,8 @@
 		<div
 			class="notification_item notification_item--rounded notification_item--spaced"
 			:class="{ 'unread': true }"
-			v-for="n in 3"
-			:key="n"
+			v-for="n in notifications"
+			:key="n._id"
 		>
 			<div class="notification_item__employee">
 				<v-img
@@ -13,30 +13,6 @@
 					class="employee__photo"
 				>
 				</v-img>
-			</div>
-			<div class="notification_item__content">
-				<span class="content__message">
-					Lorem ipsum dolor sit amet consectetur adipisicing elit.
-					Praesentium, dolores sit. Ipsa, cumque temporibus!
-					Qui eum, dolorum facilis itaque aliquam fuga ea, excepturi, quia aliquid explicabo voluptates eos ab quam.
-				</span>
-				<span class="content__time">
-					{{ content_time }}
-				</span>
-			</div>
-		</div>
-
-		<div
-			class="notification_item notification_item--rounded notification_item--spaced"
-			:class="{ 'unread': false }"
-			v-for="n in 0"
-			:key="n"
-		>
-			<div class="notification_item__employee">
-				<v-img
-					src="/default.jpg"
-					class="employee__photo"
-				></v-img>
 			</div>
 			<div class="notification_item__content">
 				<span class="content__message">
@@ -65,6 +41,9 @@ export default {
 			return moment()
 				.subtract(3, "hours")
 				.fromNow();
+		},
+		notifications() {
+			return this.$store.state.notifications.crud_notifications;
 		}
 	}
 };
