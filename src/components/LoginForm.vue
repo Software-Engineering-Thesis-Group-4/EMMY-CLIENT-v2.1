@@ -113,6 +113,10 @@ export default {
 					if (login_success) {
 						this.errorMessage = "";
 						this.showErrorMessage = false;
+
+						// fetch emotion notifications upon logging in
+						this.$store.dispatch("notifications/FETCH_ALL_NOTIFICATIONS");
+
 						this.$router.push("/dashboard");
 					} else {
 						this.errorMessage = message;
