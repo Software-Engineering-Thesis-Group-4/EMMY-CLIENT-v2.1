@@ -15,7 +15,7 @@
 						<router-link to="/notifications">
 							<!-- badge -->
 							<svg
-								v-if="notification"
+								v-if="hasNotifications"
 								xmlns="http://www.w3.org/2000/svg"
 								width="11"
 								height="11"
@@ -132,8 +132,7 @@ export default {
 		pageTitle() {
 			return this.$route.meta.title;
 		},
-		notification() {
-			// TODO: get number of notifications. if notification count >= 1, return true, else false
+		hasNotifications() {
 			return true;
 		},
 		tooltip_user_name() {
