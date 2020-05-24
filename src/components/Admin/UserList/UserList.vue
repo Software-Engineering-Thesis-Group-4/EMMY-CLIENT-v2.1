@@ -44,15 +44,6 @@
 			</div>
 		</template>
 
-		<template v-slot:item.isActive="{ item, value }">
-			<span
-				class="account_status"
-				:class="{ 'account_status--disabled': !value }"
-			>
-				{{ value ? 'Active' : 'Disabled' }}
-			</span>
-		</template>
-
 		<template #item.actions="{ }">
 			<div class="actions">
 				<button
@@ -162,14 +153,6 @@ export default {
 	.crown__svg {
 		height: 15px;
 	}
-}
-
-.account_status {
-	color: #0064e7;
-}
-
-.account_status--disabled {
-	color: #ff0000;
 }
 
 .actions {

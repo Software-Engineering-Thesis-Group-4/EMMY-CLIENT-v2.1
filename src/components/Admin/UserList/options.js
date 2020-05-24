@@ -13,7 +13,7 @@ export function loadTableData(users) {
 			isActive: user.isActive,
 		}
 	});
-	
+
 	userAccounts = users;
 	options.data = userAccounts;
 }
@@ -24,7 +24,6 @@ export let options = {
 		{ text: "User", align: "start", value: "user" },
 		{ text: "Email", value: "email" },
 		{ text: "Account Type", value: "accountType" },
-		{ text: "Status", value: "isActive" },
 		{ text: "Actions", value: "actions" }
 	],
 	data: [],
