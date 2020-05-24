@@ -75,6 +75,11 @@ export default {
 			dataTableOptions: options
 		};
 	},
+	computed: {
+		user_search() {
+			return this.search;
+		}
+	},
 	methods: {
 		fetchUsers() {
 			this.loadingTable = true;
@@ -96,9 +101,10 @@ export default {
 				});
 		}
 	},
-	computed: {
-		user_search() {
-			return this.search;
+	sockets: {
+		enrolledNewUser: function({ user }) {
+			confirm(`a new user (${user}) has been registered!`);
+			this.fetchUsers();
 		}
 	},
 	created() {
