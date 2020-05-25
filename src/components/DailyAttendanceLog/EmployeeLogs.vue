@@ -6,9 +6,7 @@
 			:search="search"
 			:loading="isLoading"
 			loading-text="Loading... Please wait"
-			item-key="id"
-			multi-sort
-			class="elevation-1"
+			class="employee-log-table"
 		>
 
 			<template #item.timeIn="{ item, value }">
@@ -200,6 +198,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.employee-log-table {
+	border: 1px solid #00000021;
+}
+
 .time-in,
 .time-out {
 	display: flex;

@@ -106,6 +106,7 @@
 		</div>
 
 		<v-data-table
+			class="employee-table"
 			ref="employeeList"
 			v-model="employeeDataTableOptions.selected"
 			:headers="employeeDataTableOptions.headers"
@@ -113,9 +114,7 @@
 			:search="employeeDataTableOptions.search"
 			:loading="loadingEmployeeDataTable"
 			loading-text="Loading... Please wait"
-			item-key="id"
 			sort-by="name"
-			class="elevation-1"
 		>
 
 			<template v-slot:item.name="{ item, value }">
@@ -461,6 +460,10 @@ export default {
 			filter: brightness(0.95);
 		}
 	}
+}
+
+.employee-table {
+	border: 1px solid #00000021;
 }
 
 .employee {
