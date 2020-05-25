@@ -30,6 +30,7 @@
 <script>
 import EmployeeDetails from "@/components/EmployeeProfile/EmployeeDetails.vue";
 import EmployeeInsights from "@/components/EmployeeProfile/EmployeeInsights.vue";
+
 export default {
 	data() {
 		return {
@@ -71,8 +72,8 @@ export default {
 
 .main-container {
 	// background-color: #ff00ff2d;
+	// border: 1px dashed #0000002d;
 	margin-top: 10px;
-	border: 1px dashed #0000002d;
 	display: grid;
 	grid-template-columns: max-content 1fr;
 	column-gap: 15px;
