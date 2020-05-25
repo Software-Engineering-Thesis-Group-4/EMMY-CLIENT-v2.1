@@ -1,6 +1,9 @@
 <template>
 	<div class="layout-container">
-		<router-link to="/employees" class="employee-list-link">&lt; Employee List</router-link>
+		<router-link
+			to="/employees"
+			class="employee-list-link"
+		>&lt; Employee List</router-link>
 
 		<div
 			class="main-container"
@@ -9,7 +12,6 @@
 			<EmployeeDetails :employeeRef="employee" />
 			<EmployeeInsights />
 		</div>
-
 
 		<div
 			v-else
@@ -33,12 +35,7 @@ export default {
 		return {
 			employeeId: this.$route.params._id,
 			employee: {},
-			loading: true,
-
-			/* testing ------------------- */
-			// TESTING: Remove timeout...
-			timeout: null
-			/* testing ------------------- */
+			loading: true
 		};
 	},
 	components: {
@@ -46,17 +43,14 @@ export default {
 		EmployeeInsights
 	},
 	mounted() {
-		// TESTING: Remove timeout...
-		this.timeout = setTimeout(() => {
-			this.$store.dispatch("employees/FETCH_EMPLOYEES").then(() => {
-				let employee = this.$store.getters["employees/getEmployee"](
-					this.employeeId
-				);
+		this.$store.dispatch("employees/FETCH_EMPLOYEES").then(() => {
+			let employee = this.$store.getters["employees/getEmployee"](
+				this.employeeId
+			);
 
-				this.employee = employee;
-				this.loading = false;
-			});
-		}, 1800);
+			this.employee = employee;
+			this.loading = false;
+		});
 	}
 };
 </script>
