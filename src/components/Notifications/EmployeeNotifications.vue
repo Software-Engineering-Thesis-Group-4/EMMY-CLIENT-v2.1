@@ -22,11 +22,6 @@ export default {
 		return {};
 	},
 	computed: {
-		content_time() {
-			return moment()
-				.subtract(3, "hours")
-				.fromNow();
-		},
 		notifications() {
 			return this.$store.state.notifications.emotion_notifications;
 		}
