@@ -34,6 +34,7 @@
 
 <script>
 export default {
+	props: ["reset_token"],
 	data() {
 		return {
 			code: null,
@@ -42,7 +43,21 @@ export default {
 	},
 	methods: {
 		verifyCode() {
-			alert("verifyCode() not implemented...");
+			this.$http
+				.post("/api/users/reset-password-key", {
+					key: this.code,
+					reset_token: this.reset_token
+				})
+				.then(response => {
+					if (response.data) {
+						this.$router.push({
+							name: "password_renewal",
+							params: {
+								user: response.data.user
+							}
+						});
+					}
+				});
 		}
 	}
 };

@@ -88,11 +88,13 @@ const routes = [
 				path: 'reset/verify',
 				alias: '/code_verification',
 				name: 'code_verification',
+				props: true,
 				component: CodeVerificationForm
 			},
 			{
 				path: 'reset/renew/:token',
 				name: 'password_renewal',
+				props: true,
 				component: PasswordRenewalForm
 			},
 		]

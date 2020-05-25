@@ -46,9 +46,17 @@ export default {
 			// TODO: create api request for reset password
 			this.$http
 				.post("/api/users/reset-password", { email: this.email })
-				.then(() => {
+				.then(response => {
 					this.loading = false;
-					this.$router.replace("/reset/verify");
+
+					if (response.data) {
+						this.$router.push({
+							name: "code_verification",
+							params: {
+								reset_token: response.data.resetTok
+							}
+						});
+					}
 				})
 				.catch(err => {
 					console.log(err.response.data);

@@ -50,6 +50,7 @@
 
 <script>
 export default {
+	props: ["user"],
 	data() {
 		return {
 			password: null,
@@ -57,6 +58,22 @@ export default {
 			loading: false,
 			showPassword: false
 		};
+	},
+	methods: {
+		verifyCode() {
+			this.$http
+				.post("/api/users/reset-password-final", {
+					user: this.user,
+					password: this.password,
+					confirmPassword: this.confirmPassword
+				})
+				.then(response => {
+					console.log(response.data);
+				})
+				.catch(error => {
+					console.error(error);
+				});
+		}
 	}
 };
 </script>
