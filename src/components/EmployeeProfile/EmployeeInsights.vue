@@ -1,6 +1,5 @@
 <template>
 	<div class="section insights-section">
-
 	</div>
 </template>
 
@@ -11,5 +10,8 @@ export default {};
 <style lang="scss" scoped>
 .insights-section {
 	width: 100%;
+	height: 100%;
+	border: 1px dashed #00000021;
+	border-radius: 5px;
 }
 </style>
