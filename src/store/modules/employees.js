@@ -124,9 +124,14 @@ const EmployeesModule = {
 		attendanceLogs: state => {
 			return state.attendanceLogs
 		},
-		getEmployee: (state) => (id) => {
-			return state.employees.find(employee => employee.employeeId === id)
-		}
+		getEmployee: state => id => {
+			let employee = state.employees.find(item => item.employeeId === id);
+			if(employee) {
+				return employee;
+			}
+
+			return {};
+		},
 	}
 }
 
