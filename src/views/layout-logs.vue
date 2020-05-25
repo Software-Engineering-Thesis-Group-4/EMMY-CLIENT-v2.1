@@ -102,7 +102,7 @@
 </template>
 
 <script>
-import EmployeeLogsTable from "@/components/DailyAttendanceLog/DataTable/EmployeeLogs.vue";
+import EmployeeLogsTable from "@/components/DailyAttendanceLog/EmployeeLogs.vue";
 import moment from "moment";
 
 export default {
