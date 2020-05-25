@@ -4,7 +4,7 @@
 			<!-- Search Field ------------------------------------------------------------------------------------- -->
 			<div class="search-field">
 				<v-autocomplete
-					:search-input.sync="dataTableOptions.search"
+					:search-input.sync="searchInput"
 					color="#779AEC"
 					clearable
 					:hide-no-data="true"
@@ -95,105 +95,24 @@
 					</button>
 				</v-form>
 			</v-menu>
-
 		</div>
 
-		<v-data-table
-			v-model="dataTableOptions.selected"
-			:headers="dataTableOptions.headers"
-			:items="dataTableOptions.data"
-			:search="dataTableOptions.search"
-			:loading="loadingEmployeeDataTable"
-			loading-text="Loading... Please wait"
-			item-key="id"
-			multi-sort
-			class="elevation-1"
-		>
-			<template v-slot:item.timeIn="{ item }">
-				<div class="time">
-					<img
-						:src="getEmotionImagePath(item.emotionIn)"
-						v-if="admin"
-						class="emotion-log"
-					/>{{ item.timeIn }}
-				</div>
-			</template>
-
-			<template v-slot:item.timeOut="{ item }">
-				<div
-					v-if="item.timeOut"
-					class="time"
-				>
-					<img
-						:src="getEmotionImagePath(item.emotionOut, item.timeOut)"
-						v-if="admin"
-						class="emotion-log"
-					/>{{ item.timeOut }}
-				</div>
-
-				<div
-					v-else
-					class="no-timeout"
-				>
-					--
-				</div>
-			</template>
-
-			<template v-slot:item.employee="{ item, value }">
-				<router-link :to="{ path: `/employee/${item.ref.employeeId}` }">{{ value }}</router-link>
-			</template>
-
-			<template
-				#header.actions
-				v-if="!admin"
-			></template>
-
-			<template v-slot:item.actions="{ item }">
-
-				<div
-					class="actions"
-					v-if="admin"
-				>
-					<!-- Edit -->
-					<button
-						class="actions__button"
-						@click="editLog(item)"
-						:disabled="!admin"
-					>
-						<v-icon>mdi-pencil</v-icon>
-					</button>
-
-					<!-- Delete -->
-					<button
-						@click="deleteLog(item)"
-						class="actions__button"
-						:disabled="!admin"
-					>
-						<v-icon>mdi-delete</v-icon>
-					</button>
-				</div>
-
-			</template>
-		</v-data-table>
+		<EmployeeLogsTable :searchInput.sync="searchInput"/>
 	</div>
 </template>
 
 <script>
+import EmployeeLogsTable from "@/components/DailyAttendanceLog/DataTable/EmployeeLogs.vue";
 import moment from "moment";
-import {
-	options,
-	loadEmployeeLogs
-} from "@/components/DailyAttendanceLog/DataTable/options.js";
 
 export default {
+	components: { EmployeeLogsTable },
 	data() {
 		return {
 			admin: this.$store.state.user.isAdmin,
-			dataTableOptions: options,
-			loadingEmployeeDataTable: false,
 			dates: [new Date().toISOString().substr(0, 10)],
-			selectedItems: options.selected,
-			departmentCategories: this.$store.state.employees.departments
+			departmentCategories: this.$store.state.employees.departments,
+			searchInput: null
 		};
 	},
 	computed: {
@@ -221,50 +140,17 @@ export default {
 
 			return "Invalid Date";
 		},
-		autocompleteItems() {
-			let employees = options.data.map(item => {
-				return item.employee;
-			});
-
-			return employees;
-		},
 		maxDate() {
 			let today = moment().format();
 			return today;
 		}
 	},
 	methods: {
-		getEmotionImagePath(emotion, timeOut) {
-			if (timeOut === null) {
-				return null;
-			}
-
-			return `/emotions/${emotion}.png`;
-		},
-		filterOnDateRange() {
-			console.log("TODO: Implement Date Range Filter");
-		},
+		filterOnDateRange() {},
 		filterData() {},
 		clearFilter() {
 			this.$refs.filterDropdown.reset();
-		},
-		editLog(item) {
-			item;
-			// TODO: Implement edit log functionality
-			alert(`TODO: Implement edit log functionality`);
-		},
-		deleteLog(item) {
-			// TODO: make a confirmation dialog to confirm if the user wants to delete the sentiment log
-			console.log(item);
-
-			// item.id (is the objectId of the sentiment log)
-			this.$store.dispatch("employees/DELETE_EMPLOYEELOG", item._id);
 		}
-	},
-	created() {
-		this.$store.dispatch("employees/FETCH_ATTENDANCELOGS").then(logs => {
-			loadEmployeeLogs(logs);
-		});
 	}
 };
 </script>

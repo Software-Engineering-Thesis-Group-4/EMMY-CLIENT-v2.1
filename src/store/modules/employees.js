@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import { loadTableData } from '@/components/Employees/DataTable/options.js';
-import { loadEmployeeLogs } from "@/components/DailyAttendanceLog/DataTable/options";
 
 const EmployeesModule = {
 	namespaced: true,
@@ -40,7 +39,6 @@ const EmployeesModule = {
 		},
 		DELETE_EMPLOYEELOG(state, id) {
 			state.attendanceLogs = state.attendanceLogs.filter(item => item._id !== id);
-			loadEmployeeLogs(state.attendanceLogs);
 		}
 	},
 	// --------------------------------------------------------------------------------------------------
@@ -111,10 +109,18 @@ const EmployeesModule = {
 		},
 		async DELETE_EMPLOYEELOG(context, id) {
 			try {
-				Vue.axios.delete(`/api/employeelogs/${id}`);
+				await Vue.axios.delete(`/api/employeelogs/${id}`, {
+					params: {
+						userId: context.rootState.user.userId,
+						access_token: localStorage.getItem('access_token'),
+					}
+				});
 				context.commit('DELETE_EMPLOYEELOG', id);
+				return true;
+
 			} catch (error) {
 				console.error(error.response.data);
+				return false;
 			}
 		}
 	},
