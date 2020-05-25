@@ -65,7 +65,7 @@ export let options = {
 		{
 			text: "EDIT / DELETE",
 			value: "actions",
-			align: "center",
+			align: "start",
 			sortable: false
 		}
 	],
