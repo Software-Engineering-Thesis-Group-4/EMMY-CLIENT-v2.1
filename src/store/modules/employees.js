@@ -99,8 +99,10 @@ const EmployeesModule = {
 		async DELETE_EMPLOYEE(context, id) {
 			try {
 				Vue.axios.delete(`/api/employees/${id}`, {
-					userId: context.rootState.user.userId,
-					access_token: localStorage.getItem('access_token'),
+					params: {
+						userId: context.rootState.user.userId,
+						access_token: localStorage.getItem('access_token'),
+					}
 				});
 				context.commit('DELETE_EMPLOYEE', id);
 			} catch (error) {
@@ -126,7 +128,7 @@ const EmployeesModule = {
 		},
 		getEmployee: state => id => {
 			let employee = state.employees.find(item => item.employeeId === id);
-			if(employee) {
+			if (employee) {
 				return employee;
 			}
 
