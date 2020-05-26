@@ -61,8 +61,10 @@ const NotificationsModule = {
 			try {
 				let response = await Vue.axios.get('/api/users/crud-notifications');
 
-				if (response.data && typeof response.data === 'object') {
+				if (response.data) {
 					context.commit('LOAD_CRUD_NOTIFICATIONS', response.data);
+				} else {
+					context.commit('LOAD_EMOTION_NOTIFICATIONS', [])
 				}
 
 				return true;
