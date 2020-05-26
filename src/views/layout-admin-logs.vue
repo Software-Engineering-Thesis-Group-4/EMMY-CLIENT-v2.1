@@ -5,7 +5,7 @@
 				<v-data-table
 					:headers="options.headers"
 					:items="options.data"
-					:items-per-page="10"
+					:items-per-page="15"
 					:loading="loading"
 					class="logs-table"
 				>
@@ -75,9 +75,13 @@ export default {
 					time: item.date,
 					description: item.description,
 					action: item.action,
-					agent: item.isServer ? "System" : "{username}"
+					agent: item.user
+						? `${item.user.firstname} ${item.user.lastname}`
+						: "--"
 				};
 			});
+
+			logs.sort((a, b) => new Date(b.date) - new Date(a.date));
 
 			this.options.data = logs;
 		},
@@ -91,7 +95,7 @@ export default {
 	mounted() {
 		this.loading = true;
 		this.$http
-			.get("/api/auditlogs", {
+			.get("/api/auditlogs/admin", {
 				params: {
 					userId: this.$store.state.user.userId,
 					access_token: localStorage.getItem("access_token")
