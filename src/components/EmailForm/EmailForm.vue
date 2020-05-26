@@ -79,6 +79,8 @@
 				<v-autocomplete
 					small-chips
 					dense
+					:items="employees"
+					v-model="selectedEmployees"
 					label="Select Employees"
 					multiple
 					outlined
@@ -86,14 +88,12 @@
 					color="#7198f3"
 					class="email_form__employees"
 				>
-					<template v-slot:selection="">
-						<v-chip></v-chip>
-					</template>
 				</v-autocomplete>
 
 				<!-- Email Subject -->
 				<v-text-field
 					label="Subject"
+					v-model="subject"
 					outlined
 					dense
 					single-line
@@ -131,6 +131,8 @@ export default {
 			isAdmin: this.$store.state.user.isAdmin,
 			showForm: false,
 			content: null,
+			subject: null,
+			selectedEmployees: [],
 			toolbarOptions: [
 				[
 					{ font: [] },
@@ -156,6 +158,11 @@ export default {
 	computed: {
 		email__date() {
 			return moment().format("LL");
+		},
+		employees() {
+			return this.$store.getters["employees/employees"].map(
+				item => `${item.firstName} ${item.lastName}`
+			);
 		}
 	},
 	methods: {
