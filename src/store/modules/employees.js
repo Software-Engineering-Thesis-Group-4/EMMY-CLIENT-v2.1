@@ -73,6 +73,8 @@ const EmployeesModule = {
 					let logs = response.data.filter(item => !item.deleted);
 					context.commit('LOAD_ATTENDANCELOGS', logs);
 					return logs;
+				} else {
+					context.commit('LOAD_ATTENDANCELOGS', []);
 				}
 
 				return [];
@@ -122,6 +124,30 @@ const EmployeesModule = {
 				console.error(error.response.data);
 				return false;
 			}
+		},
+		async UPLOAD_CSV(context, payload) {
+			try {
+				let response = await Vue.axios.post('/api/employees/csv/import', {
+					userId: context.rootState.user.userId,
+					loggedInUsername: context.rootState.user.username,
+					access_token: localStorage.getItem('access_token'),
+					csvImport: payload
+				});
+
+				context.dispatch('FETCH_EMPLOYEES');
+
+				if (response.status === 204) {
+					console.log(response.data);
+				}
+
+				console.log(response.data);
+				return true;
+
+			} catch (error) {
+				console.error(error);
+				return false;
+			}
+
 		}
 	},
 	// --------------------------------------------------------------------------------------------------
