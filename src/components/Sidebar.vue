@@ -196,7 +196,6 @@
 export default {
 	data() {
 		return {
-			notificationsCount: 1,
 			isAdmin: this.$store.state.user.isAdmin
 		};
 	}
