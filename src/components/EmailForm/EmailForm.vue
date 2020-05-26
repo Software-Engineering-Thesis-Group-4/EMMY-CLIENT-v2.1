@@ -86,6 +86,7 @@
 					outlined
 					single-line
 					color="#7198f3"
+					@focus="loadEmployees"
 					class="email_form__employees"
 				>
 				</v-autocomplete>
@@ -132,6 +133,7 @@ export default {
 			showForm: false,
 			content: null,
 			subject: null,
+			employees: [],
 			selectedEmployees: [],
 			toolbarOptions: [
 				[
@@ -158,11 +160,6 @@ export default {
 	computed: {
 		email__date() {
 			return moment().format("LL");
-		},
-		employees() {
-			return this.$store.getters["employees/employees"].map(
-				item => `${item.firstName} ${item.lastName}`
-			);
 		}
 	},
 	methods: {
@@ -173,7 +170,16 @@ export default {
 		},
 		sendEmail() {
 			console.log(this.content);
+		},
+		loadEmployees() {
+			let employees = this.$store.getters["employees/employees"];
+			this.employees = employees.map(item => {
+				return `${item.firstName} ${item.lastName}`;
+			});
 		}
+	},
+	mounted() {
+		this.loadEmployees();
 	}
 };
 </script>
