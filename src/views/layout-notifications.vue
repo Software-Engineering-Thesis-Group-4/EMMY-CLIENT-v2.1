@@ -73,13 +73,6 @@ export default {
 					this.$store
 						.dispatch("notifications/FETCH_NOTIFICATIONS_EMOTION")
 						.then(success => {
-							if (success) {
-								console.log(
-									`%c fetched all emotion notifications!`,
-									`color: lightgreen;`
-								);
-							}
-
 							this.loading = false;
 						});
 
@@ -91,13 +84,6 @@ export default {
 					this.$store
 						.dispatch("notifications/FETCH_NOTIFICATIONS_CRUD")
 						.then(success => {
-							if (success) {
-								console.log(
-									`%c fetched all account notifications!`,
-									`color: lightgreen;`
-								);
-							}
-
 							this.loading = false;
 						});
 
@@ -105,9 +91,22 @@ export default {
 			}
 		}
 	},
+	sockets: {
+		newEmotionNotification() {
+			this.$store.dispatch("notifications/FETCH_NOTIFICATIONS_EMOTION");
+		},
+		newCRUDNotification() {
+			this.$store.dispatch("notifications/FETCH_NOTIFICATIONS_CRUD");
+		}
+	},
 	created() {
-		// TODO: Implement data fetching. Fetch notifications from the database component creation.
-		// TODO: if user is NOT an admin, ONLY fetch account notifications.
+		if (this.isAdmin) {
+			this.$store.dispatch("notifications/FETCH_NOTIFICATIONS_EMOTION");
+			this.$store.dispatch("notifications/FETCH_NOTIFICATIONS_CRUD");
+		}
+	},
+	beforeDestroy() {
+		this.$store.dispatch("notifications/MARK_AS_READ");
 	}
 };
 </script>

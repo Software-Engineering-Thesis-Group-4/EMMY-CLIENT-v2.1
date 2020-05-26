@@ -3,15 +3,18 @@ import Vue from 'vue';
 const NotificationsModule = {
 	namespaced: true,
 	state: {
+		hasNew: false,
 		emotion_notifications: [],
 		crud_notifications: [],
 	},
 	mutations: {
 		SOCKET_newEmotionNotification(state, payload) {
-			// TODO: (SERVER SIDE) emit a socket event in server side when a new emotion notification is created.
+			console.log(`%c VUEX SOCKET: NEW SENTIMENT NOTIFICATION!`, 'color: lightgreen;');
+			state.hasNew = true;
 		},
 		SOCKET_newCRUDNotification(state, payload) {
-			// TODO: (SERVER SIDE) emit a socket event in server side when a new crud notification is created.
+			console.log(`%c VUEX SOCKET: NEW CRUD NOTIFICATION!`, 'color: lightgreen;');
+			state.hasNew = true;
 		},
 		LOAD_ALL_NOTIFICATIONS(state, payload) {
 			// TODO: (SERVER SIDE) create an API for fetching ALL types of notifications
@@ -21,6 +24,10 @@ const NotificationsModule = {
 		},
 		LOAD_CRUD_NOTIFICATIONS(state, payload) {
 			state.crud_notifications = payload
+		},
+		MARK_AS_READ(state) {
+			console.log(`%c VUEX SOCKET: MARKED NOTIFICATIONS AS READ!`, 'color: lightgreen;');
+			state.hasNew = false;
 		}
 	},
 	actions: {
@@ -37,8 +44,10 @@ const NotificationsModule = {
 			try {
 				let response = await Vue.axios.get('/api/users/emotion-notifications');
 
-				if (response.data && typeof response.data === 'object') {
+				if (response.data) {
 					context.commit('LOAD_EMOTION_NOTIFICATIONS', response.data);
+				} else {
+					context.commit('LOAD_EMOTION_NOTIFICATIONS', [])
 				}
 
 				return true;
@@ -63,9 +72,14 @@ const NotificationsModule = {
 				return false;
 			}
 		},
+		MARK_AS_READ(context) {
+			context.commit('MARK_AS_READ')
+		}
 	},
 	getters: {
-		hasUnreadNotifications: state => false, // TODO: create a getter for determining if there are unread notifications (will be used in TopHeader notification bell icon)
+		hasNew: state => state.hasNew,
+		getEmotionNotifications: state => state.emotion_notifications,
+		getCrudNotifications: state => state.crud_notifications,
 	},
 }
 

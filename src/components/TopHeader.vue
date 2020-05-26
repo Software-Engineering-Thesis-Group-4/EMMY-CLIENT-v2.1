@@ -15,7 +15,7 @@
 						<router-link to="/notifications">
 							<!-- badge -->
 							<svg
-								v-if="hasNotifications"
+								:class="{ 'hidden': !hasNewNotifications }"
 								xmlns="http://www.w3.org/2000/svg"
 								width="11"
 								height="11"
@@ -132,18 +132,18 @@ export default {
 		pageTitle() {
 			return this.$route.meta.title;
 		},
-		hasNotifications() {
-			return true;
-		},
 		tooltip_user_name() {
 			return this.$store.getters["user/fullname"] || "{User}";
 		},
 		user_photo() {
-			if(this.$store.state.user.photo) {
+			if (this.$store.state.user.photo) {
 				return `/${this.$store.state.user.photo}`;
 			}
 
 			return null;
+		},
+		hasNewNotifications() {
+			return this.$store.getters["notifications/hasNew"];
 		}
 	},
 	methods: {
@@ -154,6 +154,17 @@ export default {
 				}
 			});
 		}
+	},
+	sockets: {
+		newEmotionNotification() {
+			console.log(
+				`%c TOP HEADER: NEW SENTIMENT NOTIFICATION!`,
+				"color: lightgreen;"
+			);
+		}
+	},
+	mounted() {
+		this.$store.dispatch("notifications/FETCH_NOTIFICATIONS_EMOTION");
 	}
 };
 </script>
@@ -274,5 +285,9 @@ export default {
 			filter: brightness(0.9);
 		}
 	}
+}
+
+.hidden {
+	visibility: hidden;
 }
 </style>

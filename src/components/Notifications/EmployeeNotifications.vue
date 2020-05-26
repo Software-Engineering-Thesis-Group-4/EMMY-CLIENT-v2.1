@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import moment from "moment";
 import EmotionNotification from "@/components/Notifications/Templates/EmotionNotification.vue";
 
 export default {
@@ -23,7 +22,12 @@ export default {
 	},
 	computed: {
 		notifications() {
-			return this.$store.state.notifications.emotion_notifications;
+			let notifications = this.$store.state.notifications
+				.emotion_notifications;
+			notifications.sort(
+				(a, b) => new Date(b.dateCreated) - new Date(a.dateCreated)
+			);
+			return notifications;
 		}
 	},
 	components: {
