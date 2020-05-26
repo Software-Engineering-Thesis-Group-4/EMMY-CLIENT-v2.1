@@ -65,8 +65,9 @@
 					class="filter-menu-container"
 				>
 					<v-combobox
+						v-model="filters.department"
 						color="#5f7bbe"
-						class="filter-combobox"
+						class="filter-input"
 						label="Department"
 						:items="departmentCategories"
 						outlined
@@ -75,8 +76,9 @@
 						@change="filterData"
 					></v-combobox>
 					<v-combobox
+						v-model="filters.gender"
 						color="#5f7bbe"
-						class="filter-combobox"
+						class="filter-input"
 						label="Gender"
 						:items="['Male', 'Female']"
 						outlined
@@ -84,12 +86,36 @@
 						clearable
 						@change="filterData"
 					></v-combobox>
+					<v-select
+						class="filter-input"
+						v-model="filters.emotionIn"
+						:items="sentiments"
+						chips
+						label="Time In Emotion"
+						multiple
+						dense
+						outlined
+						clearable
+						@change="filterData"
+					></v-select>
+					<v-select
+						class="filter-input"
+						v-model="filters.emotionOut"
+						:items="sentiments"
+						chips
+						dense
+						label="Time Out Emotion"
+						multiple
+						outlined
+						clearable
+						@change="filterData"
+					></v-select>
 
 					<!-- TODO: Time in and out filter -->
 
 					<button
 						class="button-clear-filters"
-						@click="clearFilter"
+						@click="resetFilters"
 					>
 						Reset
 					</button>
@@ -97,7 +123,12 @@
 			</v-menu>
 		</div>
 
-		<EmployeeLogsTable :searchInput.sync="searchInput"/>
+		<!-- Employee Log List ---------------------------------------------------------------------------------- -->
+		<EmployeeLogsTable
+			ref="EmployeeLogTable"
+			:searchInput.sync="searchInput"
+			:filters.sync="filters"
+		/>
 	</div>
 </template>
 
@@ -112,7 +143,16 @@ export default {
 			admin: this.$store.state.user.isAdmin,
 			dates: [new Date().toISOString().substr(0, 10)],
 			departmentCategories: this.$store.state.employees.departments,
-			searchInput: null
+			searchInput: null,
+
+			filters: {
+				department: null,
+				gender: null,
+				emotionIn: [],
+				emotionOut: []
+			},
+
+			sentiments: ["Amazing", "Happy", "Okay", "Sad", "Angry", "Unsubmitted"]
 		};
 	},
 	computed: {
@@ -147,9 +187,20 @@ export default {
 	},
 	methods: {
 		filterOnDateRange() {},
-		filterData() {},
-		clearFilter() {
-			this.$refs.filterDropdown.reset();
+		resetFilters() {
+			this.filters = {
+				department: null,
+				gender: null,
+				emotionIn: [],
+				emotionOut: []
+			};
+
+			this.$refs.EmployeeLogTable.parseTableItems(
+				this.$store.state.employees.attendanceLogs
+			);
+		},
+		filterData() {
+			this.$refs.EmployeeLogTable.filterLogs();
 		}
 	}
 };
@@ -232,7 +283,7 @@ export default {
 	padding: 20px;
 	width: 350px;
 
-	.filter-combobox {
+	.filter-input {
 		width: 100%;
 	}
 

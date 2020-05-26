@@ -73,7 +73,8 @@
 import moment from "moment";
 export default {
 	props: {
-		searchInput: String
+		searchInput: String,
+		filters: Object
 	},
 	data() {
 		return {
@@ -131,6 +132,7 @@ export default {
 		}
 	},
 	methods: {
+		// Data Manipulation ----------------------------------------------------------------------------------------
 		fetchAttendanceLogData() {
 			this.isLoading = true;
 			this.$store.dispatch("employees/FETCH_ATTENDANCELOGS").then(() => {
@@ -138,6 +140,61 @@ export default {
 				this.isLoading = false;
 			});
 		},
+		getBooleanGender(gender) {
+			return gender.toUpperCase() === "MALE" ? true : false;
+		},
+		getStringSentiment(numericSentiment) {
+			switch (numericSentiment) {
+				case 0:
+					return "Unsubmitted";
+				case 1:
+					return "Angry";
+				case 2:
+					return "Sad";
+				case 3:
+					return "Okay";
+				case 4:
+					return "Happy";
+				case 5:
+					return "Amazing";
+				default:
+					return null;
+			}
+		},
+		filterLogs() {
+			let filtered = this.$store.getters["employees/attendanceLogs"];
+
+			if (this.filters.department) {
+				filtered = filtered.filter(
+					item => item.employeeRef.department === this.filters.department
+				);
+			}
+			if (this.filters.gender) {
+				filtered = filtered.filter(
+					item =>
+						item.employeeRef.isMale ===
+						this.getBooleanGender(this.filters.gender)
+				);
+			}
+			if (this.filters.emotionIn.length > 0) {
+				filtered = filtered.filter(item =>
+					this.filters.emotionIn.includes(
+						this.getStringSentiment(item.emotionIn)
+					)
+				);
+			}
+			if (this.filters.emotionOut.length > 0) {
+				filtered = filtered.filter(item =>
+					this.filters.emotionOut.includes(
+						this.getStringSentiment(item.emotionOut)
+					)
+				);
+			}
+
+			this.parseTableItems(filtered);
+		},
+
+		// Parsing & Formatting -------------------------------------------------------------------------------------
 		parseTableItems(items) {
 			let data = items.map(log => {
 				return {
@@ -167,6 +224,7 @@ export default {
 			return moment(dateCreated).format("LL (dddd)");
 		},
 
+		// Operation Methods---------------------------------------------------------------------------------------
 		deleteLog(log) {
 			if (
 				confirm(
@@ -184,7 +242,7 @@ export default {
 					});
 
 				this.fetchAttendanceLogData();
-				alert('Deleted a log');
+				alert("Deleted a log");
 			}
 		},
 		editLog(log) {
