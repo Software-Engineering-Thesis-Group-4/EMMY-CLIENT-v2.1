@@ -13,7 +13,7 @@ export function loadTableData(employees) {
 				employeeId: employee.employeeId,
 				firstname: employee.firstName,
 				lastname: employee.lastName,
-				name: `${employee.lastName}, ${employee.firstName}`,
+				name: `${employee.lastName} ${employee.firstName}`,
 				email: employee.email,
 				department: employee.department,
 				jobTitle: employee.jobTitle,

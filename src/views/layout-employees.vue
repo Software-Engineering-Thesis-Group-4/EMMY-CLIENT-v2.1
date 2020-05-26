@@ -117,7 +117,7 @@
 			sort-by="name"
 		>
 
-			<template v-slot:item.name="{ item, value }">
+			<template v-slot:item.name="{ item }">
 				<div class="employee">
 					<router-link
 						:to="{ path: `/employee/${item.employeeId}`}"
@@ -129,7 +129,7 @@
 								class="employee-image"
 							></v-img>
 						</div>
-						{{ value }}
+						{{ `${item.lastname}, ${item.firstname}` }}
 					</router-link>
 				</div>
 			</template>

@@ -35,7 +35,7 @@
 			</template>
 
 			<template #item.name="{ item, value }">
-				<router-link :to="`/employee/${item.employeeRef.employeeId}`">
+				<router-link :to="`/employee/${item.employeeRef.employeeId}`" class="employee-name">
 					{{ value }}
 				</router-link>
 			</template>
@@ -274,6 +274,14 @@ export default {
 .log_sentiment {
 	max-width: 1.8rem;
 	margin-right: 5px;
+}
+
+.employee-name {
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+	}
 }
 
 .actions {
