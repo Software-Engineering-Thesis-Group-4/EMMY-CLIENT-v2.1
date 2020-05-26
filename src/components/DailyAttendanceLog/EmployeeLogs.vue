@@ -10,19 +10,19 @@
 		>
 
 			<template #item.timeIn="{ item, value }">
-				<div class="time-in">
+				<div class="time-in" v-if="value">
 					<v-img
 						:src="parseEmotionImagePath(item.emotionIn)"
 						class="log_sentiment"
 					></v-img>
 					{{ moment_parseTime(value) }}
-
 				</div>
 			</template>
 
 			<template #item.timeOut="{ item, value }">
 				<div class="time-out">
 					<v-img
+						v-if="value"
 						:src="parseEmotionImagePath(item.emotionOut)"
 						class="log_sentiment"
 					></v-img>
@@ -218,6 +218,9 @@ export default {
 				: "/emotions/0.png";
 		},
 		moment_parseTime(time) {
+			if (!time) {
+				return "--";
+			}
 			return moment(time).format("LT");
 		},
 		moment_parseDateCreated(dateCreated) {
