@@ -282,6 +282,14 @@ export default {
 			alert(`edit ${log._id}`);
 		}
 	},
+	sockets: {
+		employeeLog() {
+			this.fetchAttendanceLogData();
+		},
+		employeeSentiment() {
+			this.fetchAttendanceLogData();
+		},
+	},
 	mounted() {
 		this.fetchAttendanceLogData();
 	}
