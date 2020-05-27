@@ -7,7 +7,7 @@
 					<EmployeeSatisfaction />
 				</div>
 				<div class="subgroup_container">
-					<span>Sentiment of the week</span>
+					<SentimentOfTheWeek />
 				</div>
 			</div>
 			<div class="overallchart_container">
@@ -37,6 +37,7 @@
 <script>
 import OverallChart from "@/components/Dashboard/OverallChart/OverallChart.vue";
 import EmployeeSatisfaction from "@/components/Dashboard/EmployeeSatisfaction/EmployeeSatisfaction.vue";
+import SentimentOfTheWeek from "@/components/Dashboard/SentimentOfTheWeek/SentimentOfTheWeek.vue";
 import PositiveSentimentByGender from "@/components/Dashboard/PositiveSentimentByGender/PositiveSentimentByGender.vue";
 import NegativeSentimentByGender from "@/components/Dashboard/NegativeSentimentByGender/NegativeSentimentByGender.vue";
 import DepartmentChart from "@/components/Dashboard/DepartmentChart/DepartmentChart.vue";
@@ -48,9 +49,13 @@ export default {
 	components: {
 		OverallChart,
 		EmployeeSatisfaction,
+		SentimentOfTheWeek,
 		PositiveSentimentByGender,
 		NegativeSentimentByGender,
 		DepartmentChart
+	},
+	async mounted() {
+		await this.$store.dispatch("employees/FETCH_ATTENDANCELOGS");
 	}
 };
 </script>
