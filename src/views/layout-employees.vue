@@ -315,10 +315,9 @@ export default {
 				this.terminatedEmployee = {};
 			}
 		},
-		fetchEmployees() {
-			this.$store.dispatch("employees/FETCH_EMPLOYEES").then(employees => {
-				loadTableData(employees);
-			});
+		async fetchEmployees() {
+			await this.$store.dispatch("employees/FETCH_EMPLOYEES");
+			loadTableData(this.$store.getters["employees/employees"]);
 		},
 		filter() {
 			filterData(this.$store.state.employees.employees, this.filters);
@@ -326,6 +325,12 @@ export default {
 		clearFilter() {
 			loadTableData(this.$store.getters["employees/employees"]);
 			this.$refs.filterDropdown.reset();
+		}
+	},
+	sockets: {
+		csvFileImportSuccess() {
+			alert("Imported new csv file");
+			this.fetchEmployees();
 		}
 	},
 	created() {
