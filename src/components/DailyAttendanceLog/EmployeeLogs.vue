@@ -78,11 +78,7 @@
 <script>
 import moment from "moment";
 export default {
-	props: {
-		searchInput: String,
-		filters: Object,
-		dateRange: Array
-	},
+	props: ["searchInput", "filters"],
 	data() {
 		return {
 			isAdmin: this.$store.state.user.isAdmin,
@@ -168,22 +164,24 @@ export default {
 					return null;
 			}
 		},
-		filterByDateRange() {
+		filterByDateRange(startDate, endDate) {
+			startDate = new Date(startDate);
+			endDate = new Date(endDate);
 			let filtered = this.$store.getters["employees/attendanceLogs"];
 
-			if (this.dateRange > 1) {
+			if (moment(startDate).format("LL") !== moment(endDate).format("LL")) {
+				let range = [startDate, endDate].sort((a, b) => a - b);
+
 				filtered = filtered.filter(
 					item =>
-						moment(item.dateCreated).isSameOrAfter(
-							moment(this.dateRange[0])
-						) &&
-						moment(item.dateCreated).isSameOrBefore(
-							moment(this.dateRange[1])
-						)
+						moment(item.dateCreated).isSameOrAfter(moment(range[0])) &&
+						moment(item.dateCreated).isSameOrBefore(moment(range[1]))
 				);
 			} else {
-				filtered = filtered.filter(item =>
-					moment(item.dateCreated).isSame(moment(this.dateRange[0]))
+				filtered = filtered.filter(
+					item =>
+						moment(item.dateCreated).format("LL") ===
+						moment(startDate).format("LL")
 				);
 			}
 
@@ -288,7 +286,7 @@ export default {
 		},
 		employeeSentiment() {
 			this.fetchAttendanceLogData();
-		},
+		}
 	},
 	mounted() {
 		this.fetchAttendanceLogData();

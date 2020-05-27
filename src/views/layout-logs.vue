@@ -150,14 +150,7 @@ export default {
 	data() {
 		return {
 			admin: this.$store.state.user.isAdmin,
-			dates: [
-				moment()
-					.utcOffset(8)
-					.format(),
-				moment()
-					.utcOffset(8)
-					.format()
-			],
+			dates: [moment().format(), moment().format()],
 			departmentCategories: this.$store.state.employees.departments,
 			searchInput: null,
 
@@ -177,20 +170,25 @@ export default {
 			return today;
 		},
 		dateRangeValue() {
-			let now = moment().format("LL");
+			let now = moment();
+			let value = null;
 
-			if (this.dates.length > 1) {
-				let dates = this.dates;
-				dates.sort((a, b) => new Date(a) - new Date(b));
+			if (this.dates.length === 2) {
+				let selectedDates = [new Date(this.dates[0]), new Date(this.dates[1])].sort((a,b) => a - b);
 
-				let startDate = moment(dates[0]).format("LL");
-				let endDate = moment(dates[1]).format("LL");
+				value = `${moment(selectedDates[0]).format("LL")} - ${moment(selectedDates[1]).format("LL")}`;
 
-				if (startDate === now && endDate === now) {
-					return "Today";
+				return value;
+			}
+
+			if (this.dates.length === 1) {
+				if (moment(this.dates[0]).format("LL") === moment().format("LL")) {
+					value = "Today";
+					return value;
 				}
 
-				return `${startDate} ~ ${endDate}`;
+				value = moment(this.dates[0]).format("LL");
+				return value;
 			}
 
 			return moment(this.dates[0]).format("LL");
@@ -218,7 +216,7 @@ export default {
 					.utcOffset(8)
 					.format()
 			];
-			
+
 			this.$refs.EmployeeLogTable.parseTableItems(
 				this.$store.state.employees.attendanceLogs
 			);
@@ -227,7 +225,10 @@ export default {
 			this.$refs.EmployeeLogTable.filterLogs();
 		},
 		filterOnDateRange() {
-			this.$refs.EmployeeLogTable.filterByDateRange();
+			this.$refs.EmployeeLogTable.filterByDateRange(
+				this.dates[0],
+				this.dates[1]
+			);
 		}
 	}
 };
