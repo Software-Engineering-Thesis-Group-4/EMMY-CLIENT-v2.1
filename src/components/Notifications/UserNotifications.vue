@@ -21,7 +21,7 @@
 					Qui eum, dolorum facilis itaque aliquam fuga ea, excepturi, quia aliquid explicabo voluptates eos ab quam.
 				</span>
 				<span class="content__time">
-					{{ content_time }}
+					sdgsdgsdgsdg
 				</span>
 			</div>
 		</div>
@@ -37,13 +37,10 @@ export default {
 		return {};
 	},
 	computed: {
-		content_time() {
-			return moment()
-				.subtract(3, "hours")
-				.fromNow();
-		},
 		notifications() {
-			return this.$store.state.notifications.crud_notifications;
+			let notifs = this.$store.state.notifications.crud_notifications;
+			console.log(notifs);
+			return notifs;
 		}
 	}
 };
