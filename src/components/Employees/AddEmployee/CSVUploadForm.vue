@@ -11,6 +11,7 @@
 			color="black"
 			show-size
 			clearable
+			name="csvImport"
 		></v-file-input>
 
 		<div class="controls-container">
