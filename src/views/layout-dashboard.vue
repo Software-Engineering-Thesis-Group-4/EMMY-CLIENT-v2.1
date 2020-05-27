@@ -23,7 +23,13 @@
 			<div class="cg2_subgroup">
 				<NegativeSentimentByGender />
 			</div>
-			<div class="cg2_subgroup"></div>
+			<div class="cg2_subgroup">
+				Negative Sentiments By Log Mode
+			</div>
+		</div>
+
+		<div class="chart_group-3">
+			<DepartmentChart />
 		</div>
 	</div>
 </template>
@@ -33,6 +39,7 @@ import OverallChart from "@/components/Dashboard/OverallChart/OverallChart.vue";
 import EmployeeSatisfaction from "@/components/Dashboard/EmployeeSatisfaction/EmployeeSatisfaction.vue";
 import PositiveSentimentByGender from "@/components/Dashboard/PositiveSentimentByGender/PositiveSentimentByGender.vue";
 import NegativeSentimentByGender from "@/components/Dashboard/NegativeSentimentByGender/NegativeSentimentByGender.vue";
+import DepartmentChart from "@/components/Dashboard/DepartmentChart/DepartmentChart.vue";
 
 export default {
 	data() {
@@ -42,7 +49,8 @@ export default {
 		OverallChart,
 		EmployeeSatisfaction,
 		PositiveSentimentByGender,
-		NegativeSentimentByGender
+		NegativeSentimentByGender,
+		DepartmentChart
 	}
 };
 </script>
@@ -102,6 +110,8 @@ export default {
 	grid-template-columns: 1fr 1fr 1fr;
 	column-gap: 14px;
 	margin-top: 14px;
+	font-size: 14px;
+	max-height: 300px;
 
 	.cg2_subgroup {
 		display: flex;
@@ -112,5 +122,14 @@ export default {
 		height: 100%;
 		padding: 10px;
 	}
+}
+
+.chart_group-3 {
+	// background-color: white;
+	// border: 1px dashed #00000027;
+	display: grid;
+	min-height: 300px;
+	height: max-content;
+	margin-top: 14px;
 }
 </style>
