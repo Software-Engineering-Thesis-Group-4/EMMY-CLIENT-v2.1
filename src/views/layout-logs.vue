@@ -184,7 +184,7 @@ export default {
 				dates.sort((a, b) => new Date(a) - new Date(b));
 
 				let startDate = moment(dates[0]).format("LL");
-				let endDate = moment(dates[0]).format("LL");
+				let endDate = moment(dates[1]).format("LL");
 
 				if (startDate === now && endDate === now) {
 					return "Today";
