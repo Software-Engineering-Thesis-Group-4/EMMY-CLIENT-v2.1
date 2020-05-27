@@ -1,6 +1,11 @@
 <template>
 	<div class="main-container">
 
+		<button class="generate-pdf-report-button">
+			<v-icon class="button-icon">mdi-file-pdf</v-icon>
+			<span>Download PDF Report</span>
+		</button>
+
 		<div class="chart_group-1">
 			<div class="cg1_subgroup">
 				<div class="subgroup_container">
@@ -53,9 +58,6 @@ export default {
 		PositiveSentimentByGender,
 		NegativeSentimentByGender,
 		DepartmentChart
-	},
-	async mounted() {
-		await this.$store.dispatch("employees/FETCH_ATTENDANCELOGS");
 	}
 };
 </script>
@@ -69,6 +71,25 @@ export default {
 	max-width: 1522.39px;
 	width: 100%;
 	padding-top: 7px;
+}
+
+.generate-pdf-report-button {
+	background: linear-gradient(0deg, #5a79c2 0%, #7198f3 100%);
+	border: 1px solid #5a79c2;
+	color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	max-width: max-content;
+	padding: 8px 15px;
+	font-size: 14px;
+	border-radius: 5px;
+	margin-bottom: 10px;
+
+	.button-icon {
+		margin-right: 5px;
+		color: white;
+	}
 }
 
 .chart_group-1 {
