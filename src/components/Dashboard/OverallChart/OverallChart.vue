@@ -30,10 +30,9 @@ export default {
 			logs: `employees/attendanceLogs`
 		})
 	},
-	beforeMount() {
-		this.$store.dispatch("employees/FETCH_ATTENDANCELOGS").then(logs => {
-			this.$refs.chart.updateSeries(updateData(logs), true);
-		});
+	mounted() {
+		let logs = this.$store.getters["employees/attendanceLogs"];
+		this.$refs.chart.updateSeries(updateData(logs), true);
 	}
 };
 </script>

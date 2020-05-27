@@ -70,7 +70,7 @@ export default {
 				},
 				stroke: {
 					curve: "smooth",
-					width: 3,
+					width: 3
 				},
 				colors: ["#82EFCA"],
 				xaxis: {
@@ -100,7 +100,7 @@ export default {
 					}
 				},
 				yaxis: {
-					show: false,
+					show: false
 				},
 				tooltip: {
 					enabled: true,
@@ -155,62 +155,62 @@ export default {
 			.subtract(15, "days")
 			.format();
 
-		this.$store.dispatch("employees/FETCH_ATTENDANCELOGS").then(logs => {
-			logs.sort((a, b) => new Date(a.in) - new Date(b.in));
+		let logs = this.$store.getters["employees/attendanceLogs"];
+		
+		logs.sort((a, b) => new Date(a.in) - new Date(b.in));
 
-			// get all logs that was created 1 week from now
-			let logsOfTheWeek = logs.filter(log => {
-				let logDate = moment(log.dateCreated);
-				if (
-					logDate.isSameOrAfter(past) &&
-					logDate.isSameOrBefore(moment().format())
-				) {
-					return log;
-				}
-			});
-
-			let newSeries = logsOfTheWeek.map(
-				({ emotionIn, emotionOut, dateCreated }) => {
-					let satisfaction = 0;
-
-					switch (emotionIn) {
-						case 3:
-							satisfaction += 1;
-							break;
-						case 4:
-							satisfaction += 2;
-							break;
-						case 5:
-							satisfaction += 3;
-							break;
-					}
-
-					switch (emotionOut) {
-						case 3:
-							satisfaction += 1;
-							break;
-						case 4:
-							satisfaction += 2;
-							break;
-						case 5:
-							satisfaction += 3;
-							break;
-					}
-
-					return {
-						x: dateCreated,
-						y: satisfaction
-					};
-				}
-			);
-
-			this.series = [
-				{
-					name: "satisfaction score",
-					data: newSeries
-				}
-			];
+		// get all logs that was created 1 week from now
+		let logsOfTheWeek = logs.filter(log => {
+			let logDate = moment(log.dateCreated);
+			if (
+				logDate.isSameOrAfter(past) &&
+				logDate.isSameOrBefore(moment().format())
+			) {
+				return log;
+			}
 		});
+
+		let newSeries = logsOfTheWeek.map(
+			({ emotionIn, emotionOut, dateCreated }) => {
+				let satisfaction = 0;
+
+				switch (emotionIn) {
+					case 3:
+						satisfaction += 1;
+						break;
+					case 4:
+						satisfaction += 2;
+						break;
+					case 5:
+						satisfaction += 3;
+						break;
+				}
+
+				switch (emotionOut) {
+					case 3:
+						satisfaction += 1;
+						break;
+					case 4:
+						satisfaction += 2;
+						break;
+					case 5:
+						satisfaction += 3;
+						break;
+				}
+
+				return {
+					x: dateCreated,
+					y: satisfaction
+				};
+			}
+		);
+
+		this.series = [
+			{
+				name: "satisfaction score",
+				data: newSeries
+			}
+		];
 	}
 };
 </script>

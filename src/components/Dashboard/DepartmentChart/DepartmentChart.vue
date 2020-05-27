@@ -49,7 +49,7 @@ export default {
 	methods: {
 		changeDepartment(department) {
 			let allLogs = [];
-			if(department) {
+			if (department) {
 				if (this.logs) {
 					allLogs = this.logs.filter(
 						item => item.employeeRef.department === department
@@ -64,10 +64,9 @@ export default {
 			return;
 		}
 	},
-	beforeMount() {
-		this.$store.dispatch("employees/FETCH_ATTENDANCELOGS").then(logs => {
-			this.$refs.chart.updateSeries(updateData(logs), true);
-		});
+	mounted() {
+		let logs = this.$store.getters["employees/attendanceLogs"];
+		this.$refs.chart.updateSeries(updateData(logs), true);
 	}
 };
 </script>
