@@ -42,11 +42,11 @@ export function updateData(logs) {
 	// get all the emotions per month
 	let emotions = {
 		'unsubmitted': [[], [], [], [], [], [], [], [], [], [], [], []],
-		'angry'      : [[], [], [], [], [], [], [], [], [], [], [], []],
-		'unhappy'    : [[], [], [], [], [], [], [], [], [], [], [], []],
-		'okay'       : [[], [], [], [], [], [], [], [], [], [], [], []],
-		'happy'      : [[], [], [], [], [], [], [], [], [], [], [], []],
-		'amazing'    : [[], [], [], [], [], [], [], [], [], [], [], []],
+		'angry': [[], [], [], [], [], [], [], [], [], [], [], []],
+		'unhappy': [[], [], [], [], [], [], [], [], [], [], [], []],
+		'okay': [[], [], [], [], [], [], [], [], [], [], [], []],
+		'happy': [[], [], [], [], [], [], [], [], [], [], [], []],
+		'amazing': [[], [], [], [], [], [], [], [], [], [], [], []],
 	}
 
 	logs.forEach(item => {
@@ -90,7 +90,7 @@ export const chartData = {
 			enabled: false
 		},
 		title: {
-			text: "Overall Sentiment by Month",
+			text: "Overall Sentiment by Month (Current Year)",
 			margin: 10,
 			offsetX: 0,
 			offsetY: 0,
