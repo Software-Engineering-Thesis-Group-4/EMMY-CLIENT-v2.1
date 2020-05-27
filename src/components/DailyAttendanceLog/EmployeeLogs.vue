@@ -174,8 +174,8 @@ export default {
 
 				filtered = filtered.filter(
 					item =>
-						moment(item.dateCreated).isSameOrAfter(moment(range[0])) &&
-						moment(item.dateCreated).isSameOrBefore(moment(range[1]))
+						moment(item.dateCreated).isSameOrAfter(moment(range[0]).startOf('day')) &&
+						moment(item.dateCreated).isSameOrBefore(moment(range[1]).endOf('day'))
 				);
 			} else {
 				filtered = filtered.filter(
