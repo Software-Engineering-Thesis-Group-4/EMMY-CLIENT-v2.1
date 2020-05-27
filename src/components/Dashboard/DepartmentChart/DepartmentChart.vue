@@ -64,7 +64,8 @@ export default {
 			return;
 		}
 	},
-	mounted() {
+	async mounted() {
+		await this.$store.dispatch('employees/FETCH_ATTENDANCELOGS')
 		let logs = this.$store.getters["employees/attendanceLogs"];
 		this.$refs.chart.updateSeries(updateData(logs), true);
 	}

@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import apexchart from "vue-apexcharts";
 import { chartData, updateData } from "./options.js";
 
@@ -25,12 +24,9 @@ export default {
 	components: {
 		apexchart
 	},
-	computed: {
-		...mapGetters({
-			logs: `employees/attendanceLogs`
-		})
-	},
-	mounted() {
+	computed: {},
+	async mounted() {
+		await this.$store.dispatch("employees/FETCH_ATTENDANCELOGS");
 		let logs = this.$store.getters["employees/attendanceLogs"];
 		this.$refs.chart.updateSeries(updateData(logs), true);
 	}

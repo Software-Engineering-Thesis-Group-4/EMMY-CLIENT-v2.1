@@ -47,7 +47,7 @@ export default {
 					redrawOnParentResize: false
 				},
 				title: {
-					text: "Employee Satisfaction",
+					text: "Employee Satisfaction Score",
 					align: "left",
 					margin: 10,
 					offsetX: 0,
@@ -70,7 +70,7 @@ export default {
 				},
 				stroke: {
 					curve: "smooth",
-					width: 3
+					width: 4
 				},
 				colors: ["#82EFCA"],
 				xaxis: {
@@ -150,13 +150,15 @@ export default {
 	components: {
 		apexchart
 	},
-	beforeMount() {
+	async beforeMount() {
+		await this.$store.dispatch("employees/FETCH_ATTENDANCELOGS");
+
 		let past = moment()
-			.subtract(15, "days")
+			.subtract(7, "days")
 			.format();
 
 		let logs = this.$store.getters["employees/attendanceLogs"];
-		
+
 		logs.sort((a, b) => new Date(a.in) - new Date(b.in));
 
 		// get all logs that was created 1 week from now
