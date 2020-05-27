@@ -10,8 +10,11 @@
 			placeholder="Click here to upload a 'CSV' file..."
 			color="black"
 			show-size
-			clearable
 			name="csvImport"
+			clearable
+			ref="csvImportInput"
+			type="file"
+			v-model="files"
 		></v-file-input>
 
 		<div class="controls-container">
@@ -30,9 +33,34 @@
 
 <script>
 export default {
+	data() {
+		return {
+			files: null
+		};
+	},
 	methods: {
 		uploadCSVFile() {
-			alert("uploadCSVFile() NOT Implemented.");
+			this.$http
+				.post(
+					"/api/employees/csv/import",
+					{
+						userId: this.$store.state.user.userId,
+						loggedInUsername: this.$store.state.user.username,
+						access_token: localStorage.getItem("access_token"),
+						csvImport: this.files
+					},
+					{
+						headers: {
+							"Content-Type": "multipart/form-data"
+						}
+					}
+				)
+				.then(response => {
+					console.log(response.data);
+				})
+				.catch(error => {
+					console.log(error);
+				});
 		},
 		resetForm() {
 			this.$refs.csv_upload_form.reset();
