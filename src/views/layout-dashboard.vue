@@ -29,7 +29,7 @@
 				<NegativeSentimentByGender />
 			</div>
 			<div class="cg2_subgroup">
-				Negative Sentiments By Log Mode
+				<Leaderboard />
 			</div>
 		</div>
 
@@ -46,6 +46,7 @@ import SentimentOfTheWeek from "@/components/Dashboard/SentimentOfTheWeek/Sentim
 import PositiveSentimentByGender from "@/components/Dashboard/PositiveSentimentByGender/PositiveSentimentByGender.vue";
 import NegativeSentimentByGender from "@/components/Dashboard/NegativeSentimentByGender/NegativeSentimentByGender.vue";
 import DepartmentChart from "@/components/Dashboard/DepartmentChart/DepartmentChart.vue";
+import Leaderboard from "@/components/Dashboard/Leaderboard/Leaderboard.vue";
 
 export default {
 	data() {
@@ -57,6 +58,7 @@ export default {
 		SentimentOfTheWeek,
 		PositiveSentimentByGender,
 		NegativeSentimentByGender,
+		Leaderboard,
 		DepartmentChart
 	}
 };
