@@ -25,7 +25,7 @@
 				>
 					<template v-slot:activator="{ on }">
 						<v-text-field
-							v-model="dateRangeText"
+							v-model="dateRangeValue"
 							color="#779AEC"
 							label="Date range filter"
 							prepend-icon="mdi-calendar"
@@ -35,12 +35,20 @@
 					</template>
 
 					<v-date-picker
+						ref="dateRangeFilter"
 						v-model="dates"
 						:max="maxDate"
 						range
 						color="#567DD8"
-						@change="filterOnDateRange()"
-					></v-date-picker>
+						@change="filterOnDateRange"
+					>
+						<v-spacer></v-spacer>
+
+						<button
+							class="date-picker-reset"
+							@click="resetDateRangeFilter"
+						>Reset</button>
+					</v-date-picker>
 				</v-menu>
 			</div>
 
@@ -128,6 +136,7 @@
 			ref="EmployeeLogTable"
 			:searchInput.sync="searchInput"
 			:filters.sync="filters"
+			:dateRange.sync="dates"
 		/>
 	</div>
 </template>
@@ -141,7 +150,14 @@ export default {
 	data() {
 		return {
 			admin: this.$store.state.user.isAdmin,
-			dates: [new Date().toISOString().substr(0, 10)],
+			dates: [
+				moment()
+					.utcOffset(8)
+					.format(),
+				moment()
+					.utcOffset(8)
+					.format()
+			],
 			departmentCategories: this.$store.state.employees.departments,
 			searchInput: null,
 
@@ -156,37 +172,31 @@ export default {
 		};
 	},
 	computed: {
-		dateRangeText() {
-			let today = new Date().toISOString().substr(0, 10);
-
-			if (this.dates.length === 1) {
-				if (this.dates[0] === today) {
-					return "Today";
-				}
-
-				return moment(this.dates[0]).format("ll");
-			} else if (this.dates.length === 2) {
-				if (this.dates[0] === today) {
-					return "Today";
-				} else if (this.dates[0] === this.dates[1]) {
-					return moment(this.dates[0]).format("ll");
-				}
-
-				let d1 = moment(this.dates[0]).format("ll");
-				let d2 = moment(this.dates[1]).format("ll");
-
-				return `${d1} - ${d2}`;
-			}
-
-			return "Invalid Date";
-		},
 		maxDate() {
 			let today = moment().format();
 			return today;
+		},
+		dateRangeValue() {
+			let now = moment().format("LL");
+
+			if (this.dates.length > 1) {
+				let dates = this.dates;
+				dates.sort((a, b) => new Date(a) - new Date(b));
+
+				let startDate = moment(dates[0]).format("LL");
+				let endDate = moment(dates[0]).format("LL");
+
+				if (startDate === now && endDate === now) {
+					return "Today";
+				}
+
+				return `${startDate} ~ ${endDate}`;
+			}
+
+			return moment(this.dates[0]).format("LL");
 		}
 	},
 	methods: {
-		filterOnDateRange() {},
 		resetFilters() {
 			this.filters = {
 				department: null,
@@ -199,8 +209,25 @@ export default {
 				this.$store.state.employees.attendanceLogs
 			);
 		},
+		resetDateRangeFilter() {
+			this.dates = [
+				moment()
+					.utcOffset(8)
+					.format(),
+				moment()
+					.utcOffset(8)
+					.format()
+			];
+			
+			this.$refs.EmployeeLogTable.parseTableItems(
+				this.$store.state.employees.attendanceLogs
+			);
+		},
 		filterData() {
 			this.$refs.EmployeeLogTable.filterLogs();
+		},
+		filterOnDateRange() {
+			this.$refs.EmployeeLogTable.filterByDateRange();
 		}
 	}
 };
@@ -272,6 +299,33 @@ export default {
 			color: white;
 			opacity: 0.6;
 		}
+	}
+}
+
+.date-picker-reset {
+	background: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		from(#5a79c2),
+		to(#7198f3)
+	);
+	background: linear-gradient(0deg, #5a79c2 0%, #7198f3 100%);
+	color: white;
+	font-weight: 500;
+	height: 40px;
+	padding: 5px 15px;
+	width: 100%;
+	border: 1px solid #6c8cd6;
+	border-radius: 5px;
+	text-align: center;
+
+	&:hover {
+		filter: brightness(0.95);
+	}
+
+	&:active {
+		filter: brightness(0.9);
 	}
 }
 

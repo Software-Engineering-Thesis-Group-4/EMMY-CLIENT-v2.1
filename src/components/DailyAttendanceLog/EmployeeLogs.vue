@@ -10,7 +10,10 @@
 		>
 
 			<template #item.timeIn="{ item, value }">
-				<div class="time-in" v-if="value">
+				<div
+					class="time-in"
+					v-if="value"
+				>
 					<v-img
 						:src="parseEmotionImagePath(item.emotionIn)"
 						class="log_sentiment"
@@ -35,7 +38,10 @@
 			</template>
 
 			<template #item.name="{ item, value }">
-				<router-link :to="`/employee/${item.employeeRef.employeeId}`" class="employee-name">
+				<router-link
+					:to="`/employee/${item.employeeRef.employeeId}`"
+					class="employee-name"
+				>
 					{{ value }}
 				</router-link>
 			</template>
@@ -74,7 +80,8 @@ import moment from "moment";
 export default {
 	props: {
 		searchInput: String,
-		filters: Object
+		filters: Object,
+		dateRange: Array
 	},
 	data() {
 		return {
@@ -161,6 +168,27 @@ export default {
 					return null;
 			}
 		},
+		filterByDateRange() {
+			let filtered = this.$store.getters["employees/attendanceLogs"];
+
+			if (this.dateRange > 1) {
+				filtered = filtered.filter(
+					item =>
+						moment(item.dateCreated).isSameOrAfter(
+							moment(this.dateRange[0])
+						) &&
+						moment(item.dateCreated).isSameOrBefore(
+							moment(this.dateRange[1])
+						)
+				);
+			} else {
+				filtered = filtered.filter(item =>
+					moment(item.dateCreated).isSame(moment(this.dateRange[0]))
+				);
+			}
+
+			this.parseTableItems(filtered);
+		},
 		filterLogs() {
 			let filtered = this.$store.getters["employees/attendanceLogs"];
 
@@ -209,6 +237,8 @@ export default {
 					emotionOut: log.emotionOut
 				};
 			});
+
+			data.sort((a, b) => new Date(b.dateCreated) - new Date(a.dateCreated));
 
 			this.options.data = data;
 		},
