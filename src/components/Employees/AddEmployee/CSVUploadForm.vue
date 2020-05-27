@@ -40,26 +40,23 @@ export default {
 	},
 	methods: {
 		uploadCSVFile() {
+			let formData = new FormData();
+			formData.append("csvImport", this.$refs.csvImportInput.value);
+			formData.append("userId", this.$store.state.user.userId);
+			formData.append("loggedInUsername", this.$store.state.user.username);
+			formData.append("access_token", localStorage.getItem("access_token"));
+
 			this.$http
-				.post(
-					"/api/employees/csv/import",
-					{
-						userId: this.$store.state.user.userId,
-						loggedInUsername: this.$store.state.user.username,
-						access_token: localStorage.getItem("access_token"),
-						csvImport: this.files
-					},
-					{
-						headers: {
-							"Content-Type": "multipart/form-data"
-						}
+				.post("/api/employees/csv/import", formData, {
+					headers: {
+						"Content-Type": "multipart/form-data"
 					}
-				)
+				})
 				.then(response => {
-					console.log(response.data);
+					this.resetForm();
 				})
 				.catch(error => {
-					console.log(error);
+					console.dir(error);
 				});
 		},
 		resetForm() {
