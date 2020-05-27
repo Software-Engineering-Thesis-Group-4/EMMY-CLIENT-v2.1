@@ -52,7 +52,12 @@ const EmployeesModule = {
 					}
 				});
 
-				context.commit('LOAD_EMPLOYEES', response.data);
+				if(response.data) {
+					context.commit('LOAD_EMPLOYEES', response.data);
+				} else {
+					context.commit('LOAD_EMPLOYEES', []);
+				}
+
 				return response.data;
 
 			} catch (error) {
