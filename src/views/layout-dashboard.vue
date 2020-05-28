@@ -28,7 +28,10 @@
 			<div class="cg2_subgroup">
 				<NegativeSentimentByGender />
 			</div>
-			<div class="cg2_subgroup">
+			<div
+				class="cg2_subgroup"
+				v-if="isAdmin"
+			>
 				<Leaderboard />
 			</div>
 		</div>
@@ -50,7 +53,9 @@ import Leaderboard from "@/components/Dashboard/Leaderboard/Leaderboard.vue";
 
 export default {
 	data() {
-		return {};
+		return {
+			isAdmin: this.$store.state.user.isAdmin
+		};
 	},
 	components: {
 		OverallChart,
@@ -133,13 +138,13 @@ export default {
 }
 
 .chart_group-2 {
-	display: grid;
+	display: flex;
+	flex-direction: row;
 	width: 100%;
-	grid-template-columns: 1fr 1fr 1fr;
-	column-gap: 14px;
 	margin-top: 14px;
 	font-size: 14px;
-	max-height: 300px;
+	max-height: max-content;
+	max-width: 100%;
 
 	.cg2_subgroup {
 		display: flex;
@@ -147,8 +152,13 @@ export default {
 		border: 0.5px solid #dedede;
 		border-radius: 5px;
 		width: 100%;
-		height: 100%;
+		height: 18rem;
 		padding: 10px;
+		margin-right: 15px;
+
+		&:last-child {
+			margin-right: 0px;
+		}
 	}
 }
 
