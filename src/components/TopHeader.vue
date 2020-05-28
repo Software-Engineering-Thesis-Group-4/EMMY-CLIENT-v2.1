@@ -11,6 +11,7 @@
 					<div
 						v-on="on"
 						class="group-item notification-button"
+						v-if="isAdmin"
 					>
 						<router-link to="/notifications">
 							<!-- badge -->
@@ -126,7 +127,9 @@
 <script>
 export default {
 	data() {
-		return {};
+		return {
+			isAdmin: this.$store.state.user.isAdmin
+		};
 	},
 	computed: {
 		pageTitle() {
