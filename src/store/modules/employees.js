@@ -95,10 +95,14 @@ const EmployeesModule = {
 					access_token: localStorage.getItem('access_token'),
 					...formData
 				});
-				console.log(response);
-				context;
+
+				return { success: true, errors: null }
+
 			} catch (error) {
-				console.error(error.response.data);
+				return {
+					success: false,
+					errors: error.response.data
+				};
 			}
 		},
 		async DELETE_EMPLOYEE(context, id) {

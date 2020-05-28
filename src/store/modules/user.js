@@ -114,19 +114,18 @@ const UserModule = {
 		},
 		async ENROLL_USER({ commit, state }, user) {
 			try {
-				await Vue.axios.post('/api/users/enroll', {
+				let response = await Vue.axios.post('/api/users/enroll', {
 					access_token: localStorage.getItem('access_token'),
 					userId: state.userId,
 					loggedInUsername: state.username,
 					...user
 				});
 
-				return true;
+				return { success: true, errors: null };
 
 			} catch (error) {
-				// console.log(`%c ${error.response.data} (${moment().format('LTS')})`, 'color:red;');
 				console.error(error);
-				return false;
+				return { success: false, errors: error.response.data };
 			}
 		}
 	},
