@@ -38,7 +38,7 @@ export default {
 		return {
 			departmentCategories: this.$store.state.employees.departments,
 			chartData,
-			selectedDepartment: "Admissions"
+			selectedDepartment: null
 		};
 	},
 	computed: {
