@@ -6,6 +6,7 @@ import EmotionModule from './modules/dailysentiment';
 import EmployeesModule from './modules/employees';
 import UserModule from './modules/user';
 import NotificationsModule from './modules/notifications';
+import SettingsModule from './modules/settings';
 
 Vue.use(Vuex);
 
@@ -28,7 +29,8 @@ export default new Vuex.Store({
 		emotions: EmotionModule,
 		employees: EmployeesModule,
 		user: UserModule,
-		notifications: NotificationsModule
+		notifications: NotificationsModule,
+		settings: SettingsModule
 	},
 	plugins: [vuexLocalStorage.plugin]
 })

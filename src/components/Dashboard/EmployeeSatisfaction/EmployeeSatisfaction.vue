@@ -154,7 +154,8 @@ export default {
 		await this.$store.dispatch("employees/FETCH_ATTENDANCELOGS");
 
 		let past = moment()
-			.subtract(15, "days").startOf('day')
+			.subtract(15, "days")
+			.startOf("day");
 
 		let logs = this.$store.getters["employees/attendanceLogs"];
 
@@ -165,7 +166,8 @@ export default {
 			let logDate = moment(log.dateCreated);
 			if (
 				logDate.isSameOrAfter(past) &&
-				logDate.isSameOrBefore(moment().endOf('day'))
+				logDate.isSameOrBefore(moment().endOf("day")) &&
+				log.employeeRef.employmentStatus === 1
 			) {
 				return log;
 			}

@@ -15,7 +15,7 @@
 			></v-select>
 		</div>
 		<apexchart
-			ref="chart"
+			ref="departmentChart"
 			type="bar"
 			width="100%"
 			height="310px"
@@ -52,22 +52,32 @@ export default {
 			if (department) {
 				if (this.logs) {
 					allLogs = this.logs.filter(
-						item => item.employeeRef.department === department
+						item =>
+							item.employeeRef.department === department &&
+							item.employeeRef.employmentStatus === 1
 					);
 				}
 			} else {
-				this.$refs.chart.updateSeries(updateData(this.logs), true);
+				this.$refs.departmentChart.updateSeries(
+					updateData(this.logs),
+					true
+				);
 				return;
 			}
 
-			this.$refs.chart.updateSeries(updateData(allLogs), true);
+			this.$refs.departmentChart.updateSeries(updateData(allLogs), true);
 			return;
 		}
 	},
 	async mounted() {
-		await this.$store.dispatch('employees/FETCH_ATTENDANCELOGS')
-		let logs = this.$store.getters["employees/attendanceLogs"];
-		this.$refs.chart.updateSeries(updateData(logs), true);
+		await this.$store.dispatch("employees/FETCH_ATTENDANCELOGS");
+		let fulltimeEmployees = this.logs.filter(
+			item => item.employeeRef.employmentStatus === 1
+		);
+		this.$refs.departmentChart.updateSeries(
+			updateData(fulltimeEmployees),
+			true
+		);
 	}
 };
 </script>

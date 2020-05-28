@@ -42,22 +42,29 @@ export default {
 	methods: {
 		initializeLeaderboard() {
 			let employees = this.employees;
-			let leaderboard = [];
-
 			if (employees.length > 0) {
-				employees.forEach(item => {
-					if (item.leaderboardEmoCount && item.leaderboardEmoCount > 0) {
-					leaderboard.push({
-						id: item._id,
-						firstname: item.firstName,
-						lastname: item.lastName,
-						count: item.leaderboardEmoCount
-					});
-					}
-				});
+				employees = employees.filter(item => item.employmentStatus === 1);
 
-				leaderboard = leaderboard.sort((a, b) => b.count - a.count);
-				this.leaderboard = leaderboard;
+				let leaderboard = [];
+
+				if (employees.length > 0) {
+					employees.forEach(item => {
+						if (
+							item.leaderboardEmoCount &&
+							item.leaderboardEmoCount > 0
+						) {
+							leaderboard.push({
+								id: item._id,
+								firstname: item.firstName,
+								lastname: item.lastName,
+								count: item.leaderboardEmoCount
+							});
+						}
+					});
+
+					leaderboard = leaderboard.sort((a, b) => b.count - a.count);
+					this.leaderboard = leaderboard;
+				}
 			}
 		}
 	},

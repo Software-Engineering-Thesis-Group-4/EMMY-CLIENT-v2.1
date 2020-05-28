@@ -4,42 +4,47 @@
 		<div
 			class="notification_item notification_item--rounded notification_item--spaced"
 			:class="{ 'unread': true }"
-			v-for="n in notifications"
-			:key="n._id"
+			v-for="notif in notifications"
+			:key="notif._id"
 		>
-			<div class="notification_item__employee">
-				<v-img
-					src="/placeholder_avatar02.png"
-					class="employee__photo"
-				>
-				</v-img>
-			</div>
-			<div class="notification_item__content">
-				<span class="content__message">
-					Lorem ipsum dolor sit amet consectetur adipisicing elit.
-					Praesentium, dolores sit. Ipsa, cumque temporibus!
-					Qui eum, dolorum facilis itaque aliquam fuga ea, excepturi, quia aliquid explicabo voluptates eos ab quam.
-				</span>
-				<span class="content__time">
-					sdgsdgsdgsdg
-				</span>
-			</div>
+
+			<CreateOperation
+				v-if="notif.operation === 'create'"
+				:notification_ref="notif"
+			/>
+
+			<DeleteOperation
+				v-else-if="notif.operation === 'terminated'"
+				:notification_ref="notif"
+			/>
+
+			<UpdateOperation
+				v-else-if="notif.operation === 'update'"
+				:notification_ref="notif"
+			/>
+
 		</div>
 
 	</div>
 </template>
 
 <script>
-import moment from "moment";
+import CreateOperation from "./Templates/CreateEmployeeNotification.vue";
+import DeleteOperation from "./Templates/DeleteEmployeeNotification.vue";
+import UpdateOperation from "./Templates/UpdateEmployeeNotification.vue";
 
 export default {
+	components: {
+		CreateOperation,
+		DeleteOperation,
+		UpdateOperation
+	},
 	data() {
 		return {};
 	},
 	computed: {
 		notifications() {
 			let notifs = this.$store.state.notifications.crud_notifications;
-			console.log(notifs);
 			return notifs;
 		}
 	}
@@ -71,64 +76,6 @@ export default {
 		&:hover {
 			background: #0000002c;
 		}
-	}
-}
-
-.notification_item {
-	border: 1px solid #0000001f;
-	background-color: white;
-	min-height: max-content;
-	font-size: 14px;
-	padding: 10px;
-	margin-top: -1px;
-	display: flex;
-	flex-direction: row;
-
-	&:hover {
-		filter: brightness(0.97);
-		// cursor: pointer;
-	}
-}
-
-.notification_item--rounded {
-	border-radius: 3px;
-}
-
-.notification_item--spaced {
-	margin-top: 10px;
-}
-
-.unread {
-	background-color: #edf2fa;
-	border: 1px solid #00000010;
-
-	&:hover {
-		filter: brightness(0.97);
-		// cursor: pointer;
-	}
-}
-
-.notification_item__employee {
-	// border: 1px dotted #0000001f;
-	width: 50px;
-	height: 50px;
-	display: flex;
-
-	.employee__photo {
-		border-radius: 999px;
-	}
-}
-
-.notification_item__content {
-	// border: 1px dotted #0000001f;
-	width: 100%;
-	min-height: 50px;
-	margin-left: 10px;
-	display: flex;
-	flex-direction: column;
-
-	.content__time {
-		color: #0000004d;
 	}
 }
 </style>

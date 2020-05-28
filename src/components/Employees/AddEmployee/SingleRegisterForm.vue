@@ -1,6 +1,5 @@
 <template>
 	<v-form
-		lazy-validation
 		@submit.prevent="registerEmployee"
 		class="single-register-form"
 		ref="single_register_form"
@@ -79,7 +78,9 @@
 			<v-select
 				v-model="form_data.employment_status"
 				:error-messages="errors.employment_status"
-				:items="['Full-time', 'Part-time']"
+				:items="employmentStatus"
+				item-text="text"
+				item-value="value"
 				filled
 				dense
 				color="black"
@@ -167,7 +168,12 @@ export default {
 				fingerprint_id: ""
 			},
 
-			department_categories: this.$store.state.employees.departments
+			department_categories: this.$store.state.employees.departments,
+
+			employmentStatus: [
+				{ text: "Full-time", value: 1 },
+				{ text: "Part-time", value: 0 }
+			]
 		};
 	},
 	computed: {
@@ -185,12 +191,20 @@ export default {
 			}
 
 			return male;
-		},
-		getError(field) {
-			return this.errors[field].msg;
 		}
 	},
 	methods: {
+		resetErrors() {
+			this.errors.firstname = "";
+			this.errors.lastname = "";
+			this.errors.isMale = "";
+			this.errors.email = "";
+			this.errors.employee_id = "";
+			this.errors.department = "";
+			this.errors.employment_status = "";
+			this.errors.job_title = "";
+			this.errors.fingerprint_id = "";
+		},
 		registerEmployee() {
 			let new_employee = {
 				employee_id: this.form_data.employee_id,
@@ -205,35 +219,26 @@ export default {
 				photo: this.form_data.photo
 			};
 
+			console.log(new_employee);
+
 			this.$store
 				.dispatch("employees/ADD_EMPLOYEE", new_employee)
 				.then(({ success, errors }) => {
 					if (!success) {
-						this.errors.firstname = errors.firstname.msg;
-						this.errors.lastname = errors.lastname.msg;
-						this.errors.isMale = errors.isMale.msg;
-						this.errors.email = errors.email.msg;
-						this.errors.employee_id = errors.employee_id.msg;
-						this.errors.department = errors.department.msg;
-						this.errors.employment_status = errors.employment_status.msg;
-						this.errors.job_title = errors.job_title.msg;
-						this.errors.fingerprint_id = errors.fingerprint_id.msg;
+						// console.log(errors);
+						this.resetErrors();
+						for (const key in errors) {
+							this.errors[key] = errors[key].msg;
+						}
 					} else {
+						console.log(errors);
+						this.resetErrors();
 						this.$emit("closeForm");
 					}
 				});
 		},
 		resetForm() {
-			this.errors.firstname = "";
-			this.errors.lastname = "";
-			this.errors.isMale = "";
-			this.errors.email = "";
-			this.errors.employee_id = "";
-			this.errors.department = "";
-			this.errors.employment_status = "";
-			this.errors.job_title = "";
-			this.errors.fingerprint_id = "";
-
+			this.resetErrors();
 			this.$refs.single_register_form.reset();
 			this.$emit("formCancel");
 		}

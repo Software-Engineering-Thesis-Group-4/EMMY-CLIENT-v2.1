@@ -3,7 +3,7 @@
 		<Sidebar />
 		<TopHeader />
 		<div class="view-container">
-			<router-view />			
+			<router-view />
 		</div>
 		<EmailForm />
 	</div>
@@ -21,8 +21,7 @@ export default {
 		EmailForm
 	},
 	data() {
-		return {
-		}
+		return {};
 	},
 	methods: {
 		logout() {
@@ -32,6 +31,9 @@ export default {
 				}
 			});
 		}
+	},
+	mounted() {
+		this.$store.dispatch("settings/FETCH_SETTINGS_STATE");
 	}
 };
 </script>

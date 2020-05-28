@@ -10,7 +10,7 @@ import NoConnectionBanner from "@/components/NoConnectionBanner.vue";
 export default {
 	components: {
 		NoConnectionBanner
-	}
+	},
 };
 </script>
 

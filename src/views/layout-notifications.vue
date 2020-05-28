@@ -1,6 +1,9 @@
 <template>
 	<div class="layout-container">
-		<div class="content-container" v-if="isAdmin">
+		<div
+			class="content-container"
+			v-if="isAdmin"
+		>
 			<v-tabs
 				v-model="tab"
 				background-color="transparent"
@@ -106,7 +109,17 @@ export default {
 		}
 	},
 	beforeDestroy() {
-		this.$store.dispatch("notifications/MARK_AS_READ");
+		let unread = this.$store.getters["notifications/getUnreadNotifications"](
+			this.$store.state.user.email
+		);
+
+		if (unread.length > 0) {
+			unread = unread.map(item => item._id);
+			this.$store.dispatch("notifications/MARK_AS_READ", {
+				unread,
+				email: this.$store.state.user.email
+			});
+		}
 	}
 };
 </script>

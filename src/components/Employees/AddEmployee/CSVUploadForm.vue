@@ -53,10 +53,13 @@ export default {
 					}
 				})
 				.then(response => {
+					alert("Successfully Imported Employees!");
 					this.resetForm();
 				})
 				.catch(error => {
-					console.dir(error);
+					if (error.response.data) {
+						alert(error.response.data.message);
+					}
 				});
 		},
 		resetForm() {

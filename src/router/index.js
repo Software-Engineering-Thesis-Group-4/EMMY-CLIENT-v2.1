@@ -55,10 +55,6 @@ const isNotLoggedIn = (to, form, next) => {
 	}
 }
 
-const isAdmin = (to, from, next) => {
-	// TODO: Create middleware to check if current user is as administrator
-}
-
 
 // ROUTES --------------------------------------------------------------------------------------------------------------
 const routes = [

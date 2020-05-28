@@ -16,9 +16,6 @@ const NotificationsModule = {
 			console.log(`%c VUEX SOCKET: NEW CRUD NOTIFICATION!`, 'color: lightgreen;');
 			state.hasNew = true;
 		},
-		LOAD_ALL_NOTIFICATIONS(state, payload) {
-			// TODO: (SERVER SIDE) create an API for fetching ALL types of notifications
-		},
 		LOAD_EMOTION_NOTIFICATIONS(state, payload) {
 			state.emotion_notifications = payload;
 		},
@@ -31,15 +28,6 @@ const NotificationsModule = {
 		}
 	},
 	actions: {
-		async FETCH_ALL_NOTIFICATIONS() {
-			// TODO: (SERVER SIDE) create an API for fetching ALL types of notifications
-			console.log(
-				`%c TODO: fetch all notifications [VUEX ACTION]!`,
-				`color: lightgreen;`
-			);
-
-			return true;
-		},
 		async FETCH_NOTIFICATIONS_EMOTION(context) {
 			try {
 				let response = await Vue.axios.get('/api/users/emotion-notifications');
@@ -74,14 +62,21 @@ const NotificationsModule = {
 				return false;
 			}
 		},
-		MARK_AS_READ(context) {
-			context.commit('MARK_AS_READ')
+		async MARK_AS_READ(context, payload) {
+			try {
+				// await Vue.axios.post('/api/users/seenEmotionNotifs', payload);
+				context.commit('MARK_AS_READ')
+			} catch (error) {
+				console.log(error)
+			}
 		}
 	},
 	getters: {
 		hasNew: state => state.hasNew,
 		getEmotionNotifications: state => state.emotion_notifications,
 		getCrudNotifications: state => state.crud_notifications,
+		getUnreadNotifications: state => email => state.emotion_notifications.filter(notif => !notif.seenBy.includes(email)),
+
 	},
 }
 

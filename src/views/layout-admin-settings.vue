@@ -23,6 +23,9 @@ export default {
 			menu: false,
 			modal: false
 		};
+	},
+	mounted() {
+		this.$store.dispatch("settings/FETCH_SETTINGS_STATE");
 	}
 };
 </script>

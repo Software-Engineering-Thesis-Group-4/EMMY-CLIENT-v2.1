@@ -53,10 +53,12 @@ export default {
 	},
 	computed: {
 		today() {
-			return moment().endOf('day');
+			return moment().endOf("day");
 		},
 		startOfWeek() {
-			return moment(this.today).day(1).startOf('day');
+			return moment(this.today)
+				.day(1)
+				.startOf("day");
 		}
 	},
 	methods: {
@@ -67,6 +69,7 @@ export default {
 			if (logs.length > 0) {
 				logs = logs.filter(
 					item =>
+						item.employeeRef.employmentStatus === 1 &&
 						moment(item.dateCreated).isSameOrAfter(this.startOfWeek) &&
 						moment(item.dateCreated).isSameOrBefore(this.today)
 				);

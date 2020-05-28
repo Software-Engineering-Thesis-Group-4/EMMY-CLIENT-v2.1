@@ -68,9 +68,9 @@
 		</v-dialog>
 
 		<EditForm
+			ref="editUserForm"
 			:activate="editForm"
 			@closeDialog="resetEditForm"
-			:user_ref="editUserReference"
 		/>
 	</div>
 </template>
@@ -95,8 +95,7 @@ export default {
 			showDeleteDialog: false,
 			editForm: false,
 
-			confirmDeleteUser: {},
-			editUserReference: {}
+			confirmDeleteUser: {}
 		};
 	},
 	computed: {},
@@ -107,7 +106,7 @@ export default {
 		},
 		showEditFormDialog(user) {
 			this.editForm = true;
-			this.editUserReference = user;
+			this.$refs.editUserForm.editEmployeeClicked(user);
 		},
 		confirmDelete(confirm) {
 			if (this.isAdmin) {
@@ -125,7 +124,6 @@ export default {
 		},
 		resetEditForm() {
 			this.editForm = false;
-			this.editUserReference = {};
 		}
 	}
 };

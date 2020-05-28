@@ -28,6 +28,7 @@ export default {
 	async mounted() {
 		await this.$store.dispatch("employees/FETCH_ATTENDANCELOGS");
 		let logs = this.$store.getters["employees/attendanceLogs"];
+		logs = logs.filter(item => item.employeeRef.employmentStatus === 1);
 		this.$refs.chart.updateSeries(updateData(logs), true);
 	}
 };

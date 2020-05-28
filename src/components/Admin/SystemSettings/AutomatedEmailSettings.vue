@@ -25,13 +25,21 @@
 export default {
 	data() {
 		return {
-			automatedEmailEnabled: true
+			automatedEmailEnabled: null
 		};
 	},
+	computed: {},
 	methods: {
 		saveAutomatedEmailSettings() {
-			alert("saveAutomatedEmailSettings() NOT IMPLEMENTED!");
+			this.$store.dispatch(
+				"settings/UPDATE_AUTO_EMAIL",
+				this.automatedEmailEnabled
+			);
 		}
+	},
+	async mounted() {
+		await this.$store.dispatch("settings/FETCH_SETTINGS_STATE");
+		this.automatedEmailEnabled = this.$store.getters["settings/autoEmail"];
 	}
 };
 </script>

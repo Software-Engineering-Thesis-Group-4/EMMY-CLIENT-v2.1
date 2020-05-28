@@ -43,7 +43,7 @@ export default {
 	methods: {
 		createRequest() {
 			this.loading = true;
-			// TODO: create api request for reset password
+			
 			this.$http
 				.post("/api/users/reset-password", { email: this.email })
 				.then(response => {

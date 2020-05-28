@@ -52,7 +52,7 @@ const EmployeesModule = {
 					}
 				});
 
-				if(response.data) {
+				if (response.data) {
 					context.commit('LOAD_EMPLOYEES', response.data);
 				} else {
 					context.commit('LOAD_EMPLOYEES', []);
@@ -99,6 +99,7 @@ const EmployeesModule = {
 				return { success: true, errors: null }
 
 			} catch (error) {
+				console.dir(error);
 				return {
 					success: false,
 					errors: error.response.data
@@ -110,12 +111,13 @@ const EmployeesModule = {
 				Vue.axios.delete(`/api/employees/${id}`, {
 					params: {
 						userId: context.rootState.user.userId,
+						loggedInUsername: context.rootState.user.username,
 						access_token: localStorage.getItem('access_token'),
 					}
 				});
 				context.commit('DELETE_EMPLOYEE', id);
 			} catch (error) {
-				console.error(error.response.data);
+				console.error(error);
 			}
 		},
 		async DELETE_EMPLOYEELOG(context, id) {
@@ -124,6 +126,7 @@ const EmployeesModule = {
 					params: {
 						userId: context.rootState.user.userId,
 						access_token: localStorage.getItem('access_token'),
+						loggedInUsername: context.rootState.user.username
 					}
 				});
 				context.commit('DELETE_EMPLOYEELOG', id);

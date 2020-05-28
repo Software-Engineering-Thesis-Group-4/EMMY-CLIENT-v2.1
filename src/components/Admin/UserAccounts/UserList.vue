@@ -97,7 +97,15 @@ export default {
 					}
 				})
 				.then(response => {
-					loadTableData(response.data);
+					let users = response.data;
+
+					if (users.length > 0) {
+						let otherUsers = users.filter(
+							item => item.email !== this.$store.state.user.email
+						);
+						loadTableData(otherUsers);
+					}
+
 					this.loadingTable = false;
 				})
 				.catch(err => {
@@ -106,10 +114,10 @@ export default {
 				});
 		},
 		showConfirmDeleteDialog(item) {
-			this.$emit('deleteActionClicked', item)
+			this.$emit("deleteActionClicked", item);
 		},
 		showEditForm(item) {
-			this.$emit('editActionClicked', item)
+			this.$emit("editActionClicked", item);
 		}
 	},
 	sockets: {

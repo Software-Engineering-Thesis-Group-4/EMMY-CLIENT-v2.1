@@ -96,6 +96,18 @@
 					></v-combobox>
 					<v-select
 						class="filter-input"
+						v-model="filters.employmentStatus"
+						:items="employmentStatus"
+						item-text="text"
+						item-value="value"
+						label="Employment Status"
+						dense
+						outlined
+						clearable
+						@change="filterData"
+					></v-select>
+					<v-select
+						class="filter-input"
 						v-model="filters.emotionIn"
 						:items="sentiments"
 						chips
@@ -157,11 +169,23 @@ export default {
 			filters: {
 				department: null,
 				gender: null,
+				employmentStatus: null,
 				emotionIn: [],
 				emotionOut: []
 			},
 
-			sentiments: ["Amazing", "Happy", "Okay", "Sad", "Angry", "Unsubmitted"]
+			sentiments: [
+				"Amazing",
+				"Happy",
+				"Okay",
+				"Sad",
+				"Angry",
+				"Unsubmitted"
+			],
+			employmentStatus: [
+				{ text: "Full-time", value: "1" },
+				{ text: "Part-time", value: "0" }
+			]
 		};
 	},
 	computed: {
@@ -174,9 +198,14 @@ export default {
 			let value = null;
 
 			if (this.dates.length === 2) {
-				let selectedDates = [new Date(this.dates[0]), new Date(this.dates[1])].sort((a,b) => a - b);
+				let selectedDates = [
+					new Date(this.dates[0]),
+					new Date(this.dates[1])
+				].sort((a, b) => a - b);
 
-				value = `${moment(selectedDates[0]).format("LL")} - ${moment(selectedDates[1]).format("LL")}`;
+				value = `${moment(selectedDates[0]).format("LL")} - ${moment(
+					selectedDates[1]
+				).format("LL")}`;
 
 				return value;
 			}
@@ -199,6 +228,7 @@ export default {
 			this.filters = {
 				department: null,
 				gender: null,
+				employmentStatus: null,
 				emotionIn: [],
 				emotionOut: []
 			};

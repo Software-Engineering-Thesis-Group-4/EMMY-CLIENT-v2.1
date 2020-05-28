@@ -1,22 +1,12 @@
 <template>
 	<div class="layout-container">
 		<v-form
-			@submit.prevent=""
+			@submit.prevent="updatePassword"
 			class="form"
 		>
-			<label>Old Password</label>
-			<v-text-field
-				class="input-field"
-				single-line
-				outlined
-				dense
-				color="#779AEC"
-				type="password"
-				autocomplete="false"
-			></v-text-field>
-
 			<label>New Password</label>
 			<v-text-field
+				v-model="form_data.password"
 				class="input-field"
 				single-line
 				outlined
@@ -28,6 +18,7 @@
 
 			<label>Confirm Password</label>
 			<v-text-field
+				v-model="form_data.confirmPassword"
 				class="input-field"
 				single-line
 				outlined
@@ -56,7 +47,35 @@
 </template>
 
 <script>
-export default {};
+export default {
+	data() {
+		return {
+			form_data: {
+				password: null,
+				confirmPassword: null
+			}
+		};
+	},
+	methods: {
+		updatePassword() {
+			this.$http
+				.post("/api/users/change-password", {
+					loggedInUsername: this.$store.state.user.username,
+					userId: this.$store.state.user.userId,
+					access_token: localStorage.getItem("access_token"),
+					...this.form_data
+				})
+				.then(response => {
+					if (response.status === 200) {
+						alert("Successfully changed password!");
+					}
+				})
+				.catch(errors => {
+					alert(errors.response.data);
+				});
+		}
+	}
+};
 </script>
 
 <style lang="scss" scoped>

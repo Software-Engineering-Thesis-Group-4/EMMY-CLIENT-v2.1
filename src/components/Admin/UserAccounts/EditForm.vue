@@ -19,7 +19,7 @@
 			<div class="inner-container">
 				<div class="field-group">
 					<v-text-field
-						:value="userRef.firstname"
+						v-model="form_data.firstname"
 						label="First Name"
 						dense
 						filled
@@ -29,7 +29,7 @@
 					></v-text-field>
 
 					<v-text-field
-						:value="userRef.lastname"
+						v-model="form_data.lastname"
 						label="Last Name"
 						dense
 						filled
@@ -39,7 +39,7 @@
 				</div>
 
 				<v-text-field
-					:value="userRef.email"
+					v-model="form_data.email"
 					label="Email"
 					dense
 					filled
@@ -49,7 +49,7 @@
 				></v-text-field>
 
 				<v-text-field
-					:value="userRef.username"
+					v-model="form_data.username"
 					label="Username"
 					dense
 					filled
@@ -58,7 +58,7 @@
 				></v-text-field>
 
 				<v-select
-					:value="userRef.isAdmin"
+					v-model="form_data.isAdmin"
 					:items="accountTypes"
 					item-text="type"
 					item-value="value"
@@ -66,8 +66,31 @@
 					filled
 					return-object
 					color="black"
-					label="Department"
+					label="Account Type"
 				></v-select>
+
+				<v-text-field
+					v-model="form_data.password"
+					:type="showPassword ? 'text' : 'password'"
+					:append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+					@click:append="showPassword = !showPassword"
+					label="Password"
+					filled
+					color="black"
+					class="password-field"
+				></v-text-field>
+
+				<v-text-field
+					v-model="form_data.confirmPassword"
+					:error-messages="errors.confirmPassword"
+					:type="showPassword ? 'text' : 'password'"
+					:append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+					@click:append="showPassword = !showPassword"
+					label="Confirm Password"
+					filled
+					color="black"
+					class="password-field"
+				></v-text-field>
 			</div>
 
 			<div class="controls-container">
@@ -89,13 +112,33 @@
 
 <script>
 export default {
-	props: ["activate", "user_ref"],
+	props: ["activate"],
 	data() {
 		return {
+			form_data: {
+				firstname: null,
+				lastname: null,
+				email: null,
+				username: null,
+				isAdmin: null,
+				password: null,
+				confirmPassword: null
+			},
 			accountTypes: [
-				{ type: 'Administrator', value: true},
-				{ type: 'Standard User', value: false},
-			]
+				{ type: "Administrator", value: true },
+				{ type: "Standard User", value: false }
+			],
+			showPassword: false,
+
+			errors: {
+				firstname: "",
+				lastname: "",
+				username: "",
+				email: "",
+				account_type: "",
+				password: "",
+				confirmPassword: ""
+			}
 		};
 	},
 	computed: {
@@ -104,11 +147,36 @@ export default {
 		}
 	},
 	methods: {
+		editEmployeeClicked(user) {
+			this.form_data = {
+				firstname: user.firstname,
+				lastname: user.lastname,
+				email: user.email,
+				username: user.username,
+				isAdmin: user.isAdmin,
+				password: null,
+				confirmPassword: null
+			};
+		},
 		resetForm() {
 			this.$emit("closeDialog");
 		},
 		updateUser() {
-			alert("updateUser() NOT IMPLEMENTED");
+			// FIX: ------------------------------------------------
+			this.$http
+				.patch("/api/users/change-user-profile", {
+					userId: this.$store.state.user.userId,
+					loggedInUsername: this.$store.state.user.username,
+					access_token: localStorage.getItem("access_token"),
+					...this.form_data
+				})
+				.then(response => {
+					console.log(response);
+				})
+				.catch(error => {
+					console.log(error);
+				});
+			// FIX: ------------------------------------------------
 		}
 	}
 };
