@@ -10,7 +10,7 @@
 			v-if="!loading"
 		>
 			<EmployeeDetails :employeeRef="employee" />
-			<EmployeeInsights />
+			<EmployeeInsights v-if="isAdmin" />
 		</div>
 
 		<div
@@ -34,6 +34,7 @@ import EmployeeInsights from "@/components/EmployeeProfile/EmployeeInsights.vue"
 export default {
 	data() {
 		return {
+			isAdmin: this.$store.state.user.isAdmin,
 			employeeId: this.$route.params._id,
 			employee: {},
 			loading: true
