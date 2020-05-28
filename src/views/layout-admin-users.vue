@@ -29,46 +29,105 @@
 					</button>
 				</template>
 
-				<AddUserForm @closeForm="showAddUserForm = false"/>
+				<AddUserForm @closeForm="showAddUserForm = false" />
 			</v-dialog>
 		</div>
 
 		<div class="users_container">
-			<UserList :search="search" />
+			<UserList
+				:search="search"
+				@deleteActionClicked="showConfirmDeleteDialog"
+				@editActionClicked="showEditFormDialog"
+			/>
 		</div>
 
-		<!-- <v-snackbar
-			v-model="snackbar"
-			:timeout="timeout"
+		<!-- Confirm Delete Dialog -->
+		<v-dialog
+			max-width="290"
+			v-model="showDeleteDialog"
+			@click:outside="confirmDelete(false)"
 		>
-			{{ text }}
-			<v-btn
-				color="blue"
-				text
-				@click="snackbar = false"
-			>
-				Close
-			</v-btn>
-		</v-snackbar> -->
+			<v-card outlined>
+				<v-card-title>Confirm Delete</v-card-title>
+				<v-card-text>
+					Are you sure you want to delete the account of <strong>{{ confirmDeleteUser.firstname }} {{ confirmDeleteUser.lastname }}</strong>?
+				</v-card-text>
+				<v-card-actions>
+					<v-btn
+						text
+						outlined
+						@click="confirmDelete(false)"
+					>Cancel</v-btn>
+					<v-btn
+						depressed
+						color="error"
+						@click="confirmDelete(true)"
+					>Delete</v-btn>
+				</v-card-actions>
+			</v-card>
+		</v-dialog>
+
+		<EditForm
+			:activate="editForm"
+			@closeDialog="resetEditForm"
+			:user_ref="editUserReference"
+		/>
 	</div>
 </template>
 
 <script>
-import UserList from "@/components/Admin/UserList/UserList.vue";
-import AddUserForm from "@/components/Admin/AddUserForm.vue";
+import UserList from "@/components/Admin/UserAccounts/UserList.vue";
+import AddUserForm from "@/components/Admin/UserAccounts/AddUserForm.vue";
+import EditForm from "@/components/Admin/UserAccounts/EditForm.vue";
 
 export default {
 	components: {
 		AddUserForm,
-		UserList
+		UserList,
+		EditForm
 	},
 	data() {
 		return {
+			isAdmin: this.$store.state.user.isAdmin,
+			search: null,
+
 			showAddUserForm: false,
-			search: null
+			showDeleteDialog: false,
+			editForm: false,
+
+			confirmDeleteUser: {},
+			editUserReference: {}
 		};
 	},
-	computed: {}
+	computed: {},
+	methods: {
+		showConfirmDeleteDialog(user) {
+			this.confirmDeleteUser = user;
+			this.showDeleteDialog = true;
+		},
+		showEditFormDialog(user) {
+			this.editForm = true;
+			this.editUserReference = user;
+		},
+		confirmDelete(confirm) {
+			if (this.isAdmin) {
+				if (confirm) {
+					alert(`deleted ${this.confirmDeleteUser}`);
+				}
+
+				this.showDeleteDialog = false;
+				this.confirmDeleteUser = {};
+			} else {
+				console.log("Not authorized to perform action [DELETE]");
+				this.showDeleteDialog = false;
+				this.confirmDeleteUser = {};
+			}
+		},
+		resetEditForm() {
+			this.editForm = false;
+			this.editUserReference = {};
+		}
+	}
 };
 </script>
 

@@ -24,6 +24,7 @@ export let options = {
 	search: null,
 	headers: [
 		{ text: "User", align: "start", value: "user" },
+		{ text: "Username", align: "start", value: "username" },
 		{ text: "Email", value: "email" },
 		{ text: "Account Type", value: "accountType" },
 		{ text: "Actions", value: "actions", sortable: false }

@@ -44,23 +44,24 @@
 			</div>
 		</template>
 
-		<template #item.actions="{ }">
+		<template #item.actions="{ item }">
 			<div class="actions">
 				<button
 					class="actions__button"
 					:disabled="!isAdmin"
+					@click="showEditForm(item)"
 				>
 					<v-icon>mdi-pencil</v-icon>
 				</button>
 				<button
 					class="actions__button"
 					:disabled="!isAdmin"
+					@click="showConfirmDeleteDialog(item)"
 				>
 					<v-icon>mdi-delete</v-icon>
 				</button>
 			</div>
 		</template>
-
 	</v-data-table>
 </template>
 
@@ -72,7 +73,11 @@ export default {
 		return {
 			isAdmin: this.$store.state.user.isAdmin,
 			loadingTable: false,
-			dataTableOptions: options
+			dataTableOptions: options,
+
+			// confirm delete
+			showDeleteDialog: true,
+			confirmDeleteUser: {}
 		};
 	},
 	computed: {
@@ -99,6 +104,12 @@ export default {
 					console.log(err.response.data);
 					this.loadingTable = false;
 				});
+		},
+		showConfirmDeleteDialog(item) {
+			this.$emit('deleteActionClicked', item)
+		},
+		showEditForm(item) {
+			this.$emit('editActionClicked', item)
 		}
 	},
 	sockets: {
