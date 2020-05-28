@@ -1,6 +1,6 @@
 <template>
 	<div class="layout-container">
-		<div class="content-container">
+		<div class="content-container" v-if="isAdmin">
 			<v-tabs
 				v-model="tab"
 				background-color="transparent"
@@ -15,7 +15,7 @@
 			<v-tabs-items v-model="tab">
 
 				<!-- Employee Sentiment Notifications (Intense Sentiment notifications) -->
-				<v-tab-item v-if="isAdmin">
+				<v-tab-item>
 					<EmployeeNotifications v-if="!loading" />
 					<div
 						v-if="loading"
