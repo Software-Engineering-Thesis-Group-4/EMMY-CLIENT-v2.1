@@ -1,6 +1,6 @@
 <template>
 	<div class="chart-container">
-		<span>Sentiment of the Week</span>
+		<span>Sentiment of the Week (Most Prominent)</span>
 		<div
 			class="sentiment-container"
 			v-if="sentimentOfTheWeek.length > 0"
@@ -51,19 +51,24 @@ export default {
 			}
 		};
 	},
-	computed: {},
+	computed: {
+		today() {
+			return moment().endOf('day');
+		},
+		startOfWeek() {
+			return moment(this.today).day(1).startOf('day');
+		}
+	},
 	methods: {
 		async getSentimentOfTheWeek() {
 			await this.$store.dispatch("employees/FETCH_ATTENDANCELOGS");
 			let logs = this.$store.getters["employees/attendanceLogs"];
-			let today = moment("2020-12-26"); // FIX: remove date
-			let startOfWeek = moment(today).day("Monday");
 
 			if (logs.length > 0) {
 				logs = logs.filter(
 					item =>
-						moment(item.dateCreated).isSameOrAfter(startOfWeek) &&
-						moment(item.dateCreated).isSameOrBefore(today)
+						moment(item.dateCreated).isSameOrAfter(this.startOfWeek) &&
+						moment(item.dateCreated).isSameOrBefore(this.today)
 				);
 
 				let emotions = [];
