@@ -17,8 +17,7 @@ import EmployeeProfileLayout from '@/views/layout-employeeprofile.vue';
 // Admin layouts
 import AuditLogsLayout from "@/views/layout-admin-logs.vue";
 import AccountManagementLayout from "@/views/layout-admin-users.vue";
-import BackupSettingsLayout from "@/views/layout-admin-backup.vue";
-
+import BackupSettingsLayout from "@/views/layout-admin-settings.vue";
 
 
 // Components ----------------------------------------------------------------------------------------------------------
