@@ -1,6 +1,7 @@
 <template>
 	<div>
-		Page Not Found (404)
+		Forbidden (403)
+		<router-link to="/login">Go Back</router-link>
 	</div>
 </template>
 

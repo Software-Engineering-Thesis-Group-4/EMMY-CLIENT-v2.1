@@ -10,7 +10,8 @@ import AttendanceLogsLayout from '@/views/layout-logs.vue'
 import LoginLayout from '@/views/layout-login.vue'
 import SentimentSelectionLayout from '@/views/layout-sentimentselection.vue'
 import NotificationLayout from '@/views/layout-notifications.vue';
-import PageNotFoundLayout from "@/views/layout-404.vue";
+import PageNotFoundLayout from "@/views/layout-404-NotFound.vue";
+import UnauthorizedPageLayout from "@/views/layout-403-Forbidden.vue";
 import AccountSettingsLayout from '@/views/layout-settings.vue';
 import EmployeeProfileLayout from '@/views/layout-employeeprofile.vue';
 
@@ -223,6 +224,10 @@ const routes = [
 	{
 		path: '/dailysentiment',
 		component: SentimentSelectionLayout
+	},
+	{
+		path: '/forbidden',
+		component: UnauthorizedPageLayout
 	},
 	{
 		path: '*',
