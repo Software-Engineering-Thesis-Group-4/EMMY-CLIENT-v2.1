@@ -19,6 +19,7 @@
 			<router-link
 				to="/activity"
 				class="link"
+				v-if="false"
 			>
 				<div class="link-tab">Activity Log</div>
 			</router-link>
@@ -36,7 +37,9 @@
 <script>
 export default {
 	data() {
-		return {};
+		return {
+			isAdmin: this.$store.state.user.isAdmin
+		};
 	},
 	computed: {
 		viewHeader() {
