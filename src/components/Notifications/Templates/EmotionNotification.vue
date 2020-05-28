@@ -67,7 +67,7 @@ export default {
 			return this.seenBy.includes(this.$store.state.user.email);
 		},
 		time() {
-			return moment(this.dateCreated).calendar();
+			return moment(this.dateCreated).format('LLL');
 		},
 		sentiment() {
 			let sentiment = "";
