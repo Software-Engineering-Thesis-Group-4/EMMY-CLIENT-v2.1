@@ -1,6 +1,7 @@
 <template>
 	<div class="form-container">
 		<v-form
+			lazy-validation
 			@submit.prevent="registerUser"
 			ref="add_user_form"
 			class="add-user-form"
@@ -11,6 +12,7 @@
 				<div class="field-group">
 					<v-text-field
 						v-model="form_data.firstname"
+						:error-messages="errors.firstname"
 						placeholder="First Name"
 						dense
 						filled
@@ -21,6 +23,7 @@
 
 					<v-text-field
 						v-model="form_data.lastname"
+						:error-messages="errors.lastname"
 						placeholder="Last Name"
 						dense
 						filled
@@ -31,6 +34,7 @@
 
 				<v-text-field
 					v-model="form_data.email"
+					:error-messages="errors.email"
 					placeholder="Email"
 					dense
 					filled
@@ -40,6 +44,7 @@
 
 				<v-text-field
 					v-model="form_data.username"
+					:error-messages="errors.username"
 					placeholder="Username"
 					dense
 					filled
@@ -47,8 +52,11 @@
 				></v-text-field>
 
 				<v-select
-					v-model="form_data.account_type"
-					:items="['Administrator', 'Standard User']"
+					v-model="form_data.isAdmin"
+					:error-messages="errors.account_type"
+					:items="accountTypes"
+					item-text="label"
+					item-value="value"
 					filled
 					dense
 					color="black"
@@ -57,6 +65,7 @@
 
 				<v-text-field
 					v-model="form_data.password"
+					:error-messages="errors.password"
 					:type="showPassword ? 'text' : 'password'"
 					:append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
 					@click:append="showPassword = !showPassword"
@@ -69,6 +78,7 @@
 
 				<v-text-field
 					v-model="form_data.confirmPassword"
+					:error-messages="errors.confirmPassword"
 					:type="showPassword ? 'text' : 'password'"
 					:append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
 					@click:append="showPassword = !showPassword"
@@ -119,40 +129,60 @@ export default {
 				lastname: null,
 				username: null,
 				email: null,
-				account_type: null,
+				isAdmin: null,
 				password: null,
 				confirmPassword: null,
 				photo: null
 			},
 			fileValue: null,
-			showPassword: false
+			showPassword: false,
+
+			errors: {
+				firstname: "",
+				lastname: "",
+				username: "",
+				email: "",
+				account_type: "",
+				password: "",
+				confirmPassword: ""
+			},
+
+			accountTypes: [
+				{ label: "Administrator", value: true },
+				{ label: "Standard User", value: false }
+			]
 		};
 	},
-	computed: {
-		isAdmin() {
-			return this.form_data.account_type.toLowerCase() === "administrator"
-				? true
-				: false;
-		}
-	},
+	computed: {},
 	methods: {
 		registerUser() {
 			let user = { ...this.form_data };
 
-			// remove account_type property and replace with boolean 'isAdmin' field
-			delete user.account_type;
-			user.isAdmin = this.isAdmin;
-
-			this.$store.dispatch("user/ENROLL_USER", user).then(success => {
-				if (success) {
-					this.$refs.add_user_form.reset();
-					this.$emit("closeForm");
-				} else {
-					this.$emit("closeForm");
-				}
-			});
+			this.$store
+				.dispatch("user/ENROLL_USER", user)
+				.then(({ success, errors }) => {
+					if (!success) {
+						this.errors.firstname = errors.firstname.msg;
+						this.errors.lastname = errors.lastname.msg;
+						this.errors.username = errors.username.msg;
+						this.errors.email = errors.email.msg;
+						this.errors.account_type = errors.isAdmin.msg;
+						this.errors.password = errors.password.msg;
+						this.errors.confirmPassword = errors.username.msg;
+					} else {
+						this.resetForm();
+					}
+				});
 		},
 		resetForm() {
+			this.errors.firstname = "";
+			this.errors.lastname = "";
+			this.errors.username = "";
+			this.errors.email = "";
+			this.errors.account_type = "";
+			this.errors.password = "";
+			this.errors.confirmPassword = "";
+
 			this.$refs.add_user_form.reset();
 			this.$emit("closeForm");
 		}

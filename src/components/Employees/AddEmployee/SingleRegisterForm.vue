@@ -1,5 +1,6 @@
 <template>
 	<v-form
+		lazy-validation
 		@submit.prevent="registerEmployee"
 		class="single-register-form"
 		ref="single_register_form"
@@ -12,6 +13,7 @@
 				<v-text-field
 					v-model="form_data.firstname"
 					placeholder="First Name"
+					:error-messages="errors.firstname"
 					dense
 					filled
 					prepend-icon="mdi-account"
@@ -22,6 +24,7 @@
 				<v-text-field
 					v-model="form_data.lastname"
 					placeholder="Last Name"
+					:error-messages="errors.lastname"
 					dense
 					filled
 					color="black"
@@ -32,6 +35,7 @@
 			<v-select
 				v-model="form_data.gender"
 				:items="['Male', 'Female']"
+				:error-messages="errors.isMale"
 				filled
 				dense
 				color="black"
@@ -42,6 +46,7 @@
 			<v-text-field
 				v-model="form_data.email"
 				placeholder="Email"
+				:error-messages="errors.email"
 				dense
 				filled
 				color="black"
@@ -55,6 +60,7 @@
 				v-model="form_data.employee_id"
 				placeholder="Employee ID"
 				dense
+				:error-messages="errors.employee_id"
 				filled
 				color="black"
 				class="textfield"
@@ -63,6 +69,7 @@
 			<v-select
 				v-model="form_data.department"
 				:items="department_categories"
+				:error-messages="errors.department"
 				dense
 				filled
 				color="black"
@@ -71,6 +78,7 @@
 
 			<v-select
 				v-model="form_data.employment_status"
+				:error-messages="errors.employment_status"
 				:items="['Full-time', 'Part-time']"
 				filled
 				dense
@@ -80,6 +88,7 @@
 
 			<v-text-field
 				v-model="form_data.job_title"
+				:error-messages="errors.job_title"
 				placeholder="Job Title"
 				dense
 				filled
@@ -89,6 +98,7 @@
 
 			<v-text-field
 				v-model="form_data.fingerprint_id"
+				:error-messages="errors.fingerprint_id"
 				placeholder="Fingerprint Number"
 				min="0"
 				dense
@@ -145,6 +155,18 @@ export default {
 				photo: null
 			},
 
+			errors: {
+				firstname: "",
+				lastname: "",
+				isMale: "",
+				email: "",
+				employee_id: "",
+				department: "",
+				employment_status: "",
+				job_title: "",
+				fingerprint_id: ""
+			},
+
 			department_categories: this.$store.state.employees.departments
 		};
 	},
@@ -163,6 +185,9 @@ export default {
 			}
 
 			return male;
+		},
+		getError(field) {
+			return this.errors[field].msg;
 		}
 	},
 	methods: {
@@ -180,13 +205,35 @@ export default {
 				photo: this.form_data.photo
 			};
 
-			// TODO: Implement Client Side Validations
-
-			this.$store.dispatch('employees/ADD_EMPLOYEE', new_employee);
-			this.$emit('closeForm');
-			// if request is success, (emit an event | show a confirmation dialog)
+			this.$store
+				.dispatch("employees/ADD_EMPLOYEE", new_employee)
+				.then(({ success, errors }) => {
+					if (!success) {
+						this.errors.firstname = errors.firstname.msg;
+						this.errors.lastname = errors.lastname.msg;
+						this.errors.isMale = errors.isMale.msg;
+						this.errors.email = errors.email.msg;
+						this.errors.employee_id = errors.employee_id.msg;
+						this.errors.department = errors.department.msg;
+						this.errors.employment_status = errors.employment_status.msg;
+						this.errors.job_title = errors.job_title.msg;
+						this.errors.fingerprint_id = errors.fingerprint_id.msg;
+					} else {
+						this.$emit("closeForm");
+					}
+				});
 		},
 		resetForm() {
+			this.errors.firstname = "";
+			this.errors.lastname = "";
+			this.errors.isMale = "";
+			this.errors.email = "";
+			this.errors.employee_id = "";
+			this.errors.department = "";
+			this.errors.employment_status = "";
+			this.errors.job_title = "";
+			this.errors.fingerprint_id = "";
+
 			this.$refs.single_register_form.reset();
 			this.$emit("formCancel");
 		}
