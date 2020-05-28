@@ -34,6 +34,15 @@
 				</div>
 			</template>
 
+			<template #item.employmentStatus="{ value }">
+				<span
+					class="employmentStatus"
+					:class="{ 'full-time': value }"
+				>
+					{{ value === 1 ? "Full-time" : "Part-time" }}
+				</span>
+			</template>
+
 			<template #item.dateCreated="{ value }">
 				{{ moment_parseDateCreated(value) }}
 			</template>
@@ -47,7 +56,10 @@
 				</router-link>
 			</template>
 
-			<template #header.actions v-if="!isAdmin"></template>
+			<template
+				#header.actions
+				v-if="!isAdmin"
+			></template>
 
 			<template #item.actions="{ item }">
 				<div
@@ -109,6 +121,12 @@ export default {
 					{
 						text: "EMPLOYEE",
 						value: "name",
+						align: "start",
+						sortable: true
+					},
+					{
+						text: "EMPLOYMENT TYPE",
+						value: "employmentStatus",
 						align: "start",
 						sortable: true
 					},
@@ -209,6 +227,13 @@ export default {
 						this.getBooleanGender(this.filters.gender)
 				);
 			}
+			if (this.filters.employmentStatus) {
+				filtered = filtered.filter(
+					item =>
+						item.employeeRef.employmentStatus ===
+						parseInt(this.filters.employmentStatus)
+				);
+			}
 			if (this.filters.emotionIn.length > 0) {
 				filtered = filtered.filter(item =>
 					this.filters.emotionIn.includes(
@@ -236,6 +261,7 @@ export default {
 					employeeRef: log.employeeRef,
 					department: log.employeeRef.department,
 					dateCreated: log.dateCreated,
+					employmentStatus: log.employeeRef.employmentStatus,
 					timeIn: log.in,
 					timeOut: log.out,
 					emotionIn: log.emotionIn,
@@ -325,6 +351,14 @@ export default {
 	&:hover {
 		text-decoration: underline;
 	}
+}
+
+.employmentStatus {
+	color: #00000080;
+}
+
+.full-time {
+	color: #1985ff;
 }
 
 .actions {
