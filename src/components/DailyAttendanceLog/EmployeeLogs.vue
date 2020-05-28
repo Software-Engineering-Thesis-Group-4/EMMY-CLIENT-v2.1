@@ -15,6 +15,7 @@
 					v-if="value"
 				>
 					<v-img
+						v-if="isAdmin"
 						:src="parseEmotionImagePath(item.emotionIn)"
 						class="log_sentiment"
 					></v-img>
@@ -25,7 +26,7 @@
 			<template #item.timeOut="{ item, value }">
 				<div class="time-out">
 					<v-img
-						v-if="value"
+						v-if="value && isAdmin"
 						:src="parseEmotionImagePath(item.emotionOut)"
 						class="log_sentiment"
 					></v-img>
@@ -45,6 +46,8 @@
 					{{ value }}
 				</router-link>
 			</template>
+
+			<template #header.actions v-if="!isAdmin"></template>
 
 			<template #item.actions="{ item }">
 				<div
@@ -174,8 +177,12 @@ export default {
 
 				filtered = filtered.filter(
 					item =>
-						moment(item.dateCreated).isSameOrAfter(moment(range[0]).startOf('day')) &&
-						moment(item.dateCreated).isSameOrBefore(moment(range[1]).endOf('day'))
+						moment(item.dateCreated).isSameOrAfter(
+							moment(range[0]).startOf("day")
+						) &&
+						moment(item.dateCreated).isSameOrBefore(
+							moment(range[1]).endOf("day")
+						)
 				);
 			} else {
 				filtered = filtered.filter(
