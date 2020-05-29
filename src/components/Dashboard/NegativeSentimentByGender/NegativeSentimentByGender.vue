@@ -1,6 +1,6 @@
 <template>
 	<apexchart
-		type="area"
+		type="line"
 		width="100%"
 		height="250px"
 		:options="options"
@@ -63,7 +63,7 @@ export default {
 				},
 				colors: ["#FFC78E", "#E57579"],
 				stroke: {
-					curve: "smooth",
+					curve: "straight",
 					width: 3
 				},
 				xaxis: {

@@ -1,6 +1,6 @@
 <template>
 	<apexchart
-		type="area"
+		type="line"
 		width="100%"
 		height="250px"
 		:options="options"
@@ -67,11 +67,11 @@ export default {
 				},
 				colors: ["#82AAEF", "#DDA2FF"],
 				stroke: {
-					curve: "smooth",
+					curve: "straight",
 					width: 3
 				},
 				xaxis: {
-					type: "datetime",
+					type: "numeric",
 					labels: {
 						show: true,
 						style: {
@@ -94,6 +94,9 @@ export default {
 					},
 					tooltip: {
 						enabled: false
+					},
+					formatter: function(value, timestamp, index) {
+						return moment(new Date(timestamp)).format("DD MMM YYYY");
 					}
 				},
 				yaxis: {
