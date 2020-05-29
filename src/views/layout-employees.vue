@@ -138,7 +138,7 @@
 				<span
 					class="employment_status_label"
 					:class="{ 'fulltime-text': !!value }"
-				>{{ !!value ? "Regular" : "Part-time" }}</span>
+				>{{ !!value ? "Full-time" : "Part-time" }}</span>
 			</template>
 
 			<template
