@@ -13,6 +13,12 @@ const UserModule = {
 		userId: null,
 	},
 	mutations: {
+		UPDATE(state, payload) {
+			state.username = payload.username;
+			state.firstname = payload.firstname;
+			state.lastname = payload.lastname;
+			state.email = payload.email;
+		},
 		AUTH_ERROR() {
 			localStorage.clear();
 		},
@@ -38,14 +44,27 @@ const UserModule = {
 		},
 	},
 	actions: {
-		// TODO: Implement fetching of users
-		/* async FETCH_USERS(context) {
+		async UPDATE_USER({ commit, state }, payload) {
 			try {
-				let response = await Vue.axios.get('/api/')
+				let response = await Vue.axios.post("/api/users/change-user-profile", {
+					userId: state.userId,
+					loggedInUsername: state.username,
+					access_token: localStorage.getItem("access_token"),
+					...payload
+				});
+
+				console.log(response)
+
+				if (response.status === 200) {
+					commit('UPDATE', payload);
+					return true;
+				}
+
 			} catch (error) {
-				
+				console.error(error)
+				return false;
 			}
-		}, */
+		},
 		async LOGIN(context, { email, password }) {
 			try {
 				const response = await Vue.axios.post('/auth/login', { email, password });

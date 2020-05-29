@@ -2,7 +2,7 @@
 	<div class="layout-container">
 		<div class="form-container">
 			<v-form
-				@submit.prevent=""
+				@submit.prevent="updateProfile"
 				class="form"
 			>
 				<label for="firstname">Firstname</label>
@@ -183,6 +183,20 @@ export default {
 		},
 		saveImageFile() {
 			this.$refs.fileUploadInput.files;
+		},
+		updateProfile() {
+			this.$store
+				.dispatch("user/UPDATE_USER", {
+					email: this.email,
+					username: this.username,
+					firstname: this.firstname,
+					lastname: this.lastname
+				})
+				.then(success => {
+					if (success) {
+						alert("Successfully Updated Profile!");
+					}
+				});
 		}
 	}
 };

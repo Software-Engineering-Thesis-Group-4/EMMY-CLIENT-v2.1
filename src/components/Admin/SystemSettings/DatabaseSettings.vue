@@ -53,6 +53,7 @@
 			<button
 				class="backup-download-import__buttons download-button"
 				color="#82efca"
+				@click="downloadBackup"
 			>
 				<v-icon>mdi-download</v-icon>
 				<span class="button-label">Download Backup</span>
@@ -75,7 +76,8 @@ export default {
 	data() {
 		return {
 			showMenu: false,
-			timeString: "1:00"
+			timeString: "1:00",
+			downloadUrl: `http://${window.location.hostname}:3000/api/employees/db-backup`
 		};
 	},
 	computed: {
@@ -90,6 +92,15 @@ export default {
 	methods: {
 		saveDatabaseSettings() {
 			alert("saveDatabaseSettings() NOT IMPLEMENTED!");
+		},
+		downloadBackup() {
+			this.$http.get("/api/employees/db-backup", {
+				params: {
+					userId: this.$store.state.user.userId,
+					loggedInUsername: this.$store.state.user.username,
+					access_token: localStorage.getItem("access_token")
+				}
+			});
 		},
 		updateTime(time) {
 			// let splitTime = time.split(":");

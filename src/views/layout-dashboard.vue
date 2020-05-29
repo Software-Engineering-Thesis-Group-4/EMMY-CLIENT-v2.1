@@ -1,10 +1,12 @@
 <template>
 	<div class="main-container">
 
-		<button class="generate-pdf-report-button">
-			<v-icon class="button-icon">mdi-file-pdf</v-icon>
-			<span>Download PDF Report</span>
-		</button>
+		<a :href="downloadUrl" download="employee-logs.pdf">
+			<button class="generate-pdf-report-button">
+				<v-icon class="button-icon">mdi-file-pdf</v-icon>
+				<span>Download PDF Report</span>
+			</button>
+		</a>
 
 		<div class="chart_group-1">
 			<div class="cg1_subgroup">
@@ -54,7 +56,8 @@ import Leaderboard from "@/components/Dashboard/Leaderboard/Leaderboard.vue";
 export default {
 	data() {
 		return {
-			isAdmin: this.$store.state.user.isAdmin
+			isAdmin: this.$store.state.user.isAdmin,
+			downloadUrl: `http://${window.location.hostname}:3000/api/employeelogs/export-pdf/`
 		};
 	},
 	components: {

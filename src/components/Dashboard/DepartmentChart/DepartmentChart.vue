@@ -38,7 +38,7 @@ export default {
 		return {
 			departmentCategories: this.$store.state.employees.departments,
 			chartData,
-			selectedDepartment: null
+			selectedDepartment: "Admissions"
 		};
 	},
 	computed: {
@@ -74,10 +74,11 @@ export default {
 		let fulltimeEmployees = this.logs.filter(
 			item => item.employeeRef.employmentStatus === 1
 		);
-		this.$refs.departmentChart.updateSeries(
-			updateData(fulltimeEmployees),
-			true
-		);
+		// this.$refs.departmentChart.updateSeries(
+		// 	updateData(fulltimeEmployees),
+		// 	true
+		// );
+		this.changeDepartment(this.selectedDepartment);
 	}
 };
 </script>
