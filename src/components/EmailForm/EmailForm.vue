@@ -81,8 +81,10 @@
 					dense
 					:items="employees"
 					v-model="selectedEmployees"
-					label="Select Employees"
 					multiple
+					item-text="name"
+					item-value="email"
+					label="Select Employees"
 					outlined
 					single-line
 					color="#7198f3"
@@ -115,6 +117,7 @@
 				<button
 					type="submit"
 					class="email_form__submit_button"
+					:disabled="!(selectedEmployees.length > 0) || !subject  || !content"
 				>Send</button>
 			</v-form>
 		</div>
@@ -169,12 +172,32 @@ export default {
 			this.showForm = false;
 		},
 		sendEmail() {
-			console.log(this.content);
+			this.$http
+				.post("/api/users/email-notif", {
+					userId: this.$store.state.user.userId,
+					loggedInUsername: this.$store.state.user.username,
+					access_token: localStorage.getItem("access_token"),
+					emailBod: this.content,
+					empEmail: this.selectedEmployees,
+					subject: this.subject
+				})
+				.then(response => {
+					if(response.status === 200) {
+						alert('Email sent successfully.')
+					}
+				})
+				.catch(error => {
+					alert('Failed to send email.')
+					console.dir(error);
+				});
 		},
 		loadEmployees() {
 			let employees = this.$store.getters["employees/employees"];
 			this.employees = employees.map(item => {
-				return `${item.firstName} ${item.lastName}`;
+				return {
+					name: `${item.firstName} ${item.lastName}`,
+					email: item.email
+				};
 			});
 		}
 	},
@@ -327,5 +350,9 @@ export default {
 	&:hover {
 		filter: brightness(0.95);
 	}
+}
+
+.email_form__submit_button:disabled {
+	opacity: 0.5;
 }
 </style>
