@@ -109,6 +109,7 @@
 					<v-select
 						class="filter-input"
 						v-model="filters.emotionIn"
+						v-if="isAdmin"
 						:items="sentiments"
 						chips
 						label="Time In Emotion"
@@ -121,6 +122,7 @@
 					<v-select
 						class="filter-input"
 						v-model="filters.emotionOut"
+						v-if="isAdmin"
 						:items="sentiments"
 						chips
 						dense
