@@ -155,7 +155,17 @@ export default {
 	},
 	computed: {},
 	methods: {
+		resetValidations() {
+			this.errors.firstname = "";
+			this.errors.lastname = "";
+			this.errors.username = "";
+			this.errors.email = "";
+			this.errors.account_type = "";
+			this.errors.password = "";
+			this.errors.confirmPassword = "";
+		},
 		registerUser() {
+			this.resetValidations();
 			let user = { ...this.form_data };
 
 			this.$store
@@ -175,14 +185,7 @@ export default {
 				});
 		},
 		resetForm() {
-			this.errors.firstname = "";
-			this.errors.lastname = "";
-			this.errors.username = "";
-			this.errors.email = "";
-			this.errors.account_type = "";
-			this.errors.password = "";
-			this.errors.confirmPassword = "";
-
+			this.resetValidations();
 			this.$refs.add_user_form.reset();
 			this.$emit("closeForm");
 		}
